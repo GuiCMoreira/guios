@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Folder, FolderOpen, Smartphone, Star } from "lucide-react";
+import { Folder, FolderOpen, Star } from "lucide-react";
 import { projects, getProject } from "@/data/projects";
 import { useI18n } from "@/lib/i18n";
 import { useOSStore } from "@/lib/store";
@@ -14,7 +14,6 @@ type Category = "featured" | "web" | "mobile" | "all";
 const CATEGORIES: { id: Category; labelKey: string; icon: React.ComponentType<{ className?: string }> }[] = [
   { id: "featured", labelKey: "projects.featured", icon: Star },
   { id: "web", labelKey: "projects.web", icon: FolderOpen },
-  { id: "mobile", labelKey: "projects.mobile", icon: Smartphone },
   { id: "all", labelKey: "projects.all", icon: Folder },
 ];
 
