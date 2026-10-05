@@ -132,8 +132,9 @@ events puros sobre esses mesmos valores.
 <details>
 <summary><strong>Canais separados para arrastar e maximizar</strong></summary>
 
-A primeira versão usava o mesmo `x`/`y` para as duas coisas, e maximizar uma janela arrastada
-fazia ela "voltar" para a posição antiga ao soltar. Hoje o drag é dono de `x`/`y` e a maximização
+A primeira versão misturava o arrasto com a animação de layout e limitava o drag por uma ref: ao
+soltar, a janela repetia o movimento e tremia. O drag foi refeito com canais separados — hoje o
+drag é dono de `x`/`y` e a maximização
 tem os próprios `tx`/`ty`, que compensam a posição arrastada. O alvo da maximização é medido do
 DOM, então nunca fica fora de sincronia com o que está na tela.
 
