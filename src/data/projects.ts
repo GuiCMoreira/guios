@@ -72,29 +72,33 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: "my-finance",
-    name: "my_finance",
+    id: "financemy",
+    name: "FinanceMy",
     year: 2026,
     category: "web",
     featured: true,
-    stack: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Vitest"],
-    github: "https://github.com/GuiCMoreira/my_finance",
+    stack: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Vitest", "Docker"],
+    github: "https://github.com/GuiCMoreira/financemy",
     tagline: {
-      pt: "Controle financeiro que responde se o mês fecha — com data",
-      en: "Personal finance app that tells you if the month closes — by date",
+      pt: "Controle financeiro self-hosted que mostra em que dia o saldo fica negativo",
+      en: "Self-hosted finance app that shows the day your balance goes negative",
     },
     description: {
-      pt: "Para quem divide o cartão com outras pessoas: mostra entradas e saídas por dia, quanto da fatura volta como reembolso e quanto custa rolar a fatura. As regras de negócio vivem numa camada pura, sem banco nem React, coberta por testes.",
-      en: "For people who share their credit card: shows money in and out by day, how much of the bill comes back as reimbursement and what rolling the bill really costs. Business rules live in a pure layer, with no database or React, covered by tests.",
+      pt: "Fluxo de caixa por data, cartão com fechamento e vencimento de verdade, reembolsos de quem usa o seu cartão, parcelamentos, recorrências e relatórios. Cada pessoa sobe a própria instância, protegida por senha. As regras vivem numa camada pura, sem banco nem React, coberta por 85 testes.",
+      en: "Cash flow by date, credit cards with real closing and due dates, reimbursements from people who use your card, installments, recurring entries and reports. Each person runs their own password-protected instance. Business rules live in a pure layer, with no database or React, covered by 85 tests.",
     },
     highlights: [
+      {
+        pt: "Uma tabela de lançamentos: parcelamento e recorrência são geradores, não tipos",
+        en: "One entries table: installments and recurrences are generators, not types",
+      },
       {
         pt: "Dinheiro em centavos inteiros e datas como YYYY-MM-DD: nada de float nem fuso",
         en: "Money as integer cents and dates as YYYY-MM-DD: no floats, no timezone bugs",
       },
       {
-        pt: "Camada de domínio sem dependências, testada em milissegundos",
-        en: "Dependency-free domain layer, tested in milliseconds",
+        pt: "Demo completa com um comando: docker compose sobe banco, app e dados fictícios",
+        en: "Full demo in one command: docker compose brings up database, app and sample data",
       },
     ],
   },

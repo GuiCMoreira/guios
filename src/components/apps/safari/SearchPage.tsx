@@ -70,8 +70,8 @@ export function SearchPage({
       title: "GuiCMoreira (Guilherme Carvalho) · GitHub",
       url: "github.com › GuiCMoreira",
       snippet: pt
-        ? "Microsserviços com RabbitMQ, um TCC em PHP sem framework, um app de finanças com domínio testado e este portfólio que você está usando agora."
-        : "Microservices with RabbitMQ, a framework-free PHP final project, a finance app with a tested domain layer and this very portfolio you're using right now.",
+        ? "Microsserviços com RabbitMQ, um TCC em PHP sem framework, um app de finanças self-hosted com domínio testado e este portfólio que você está usando agora."
+        : "Microservices with RabbitMQ, a framework-free PHP final project, a self-hosted finance app with a tested domain layer and this very portfolio you're using right now.",
       action: () => onNavigate(GITHUB_URL),
     },
     {
