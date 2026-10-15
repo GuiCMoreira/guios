@@ -41,6 +41,11 @@
   --glass-highlight: rgba(255, 255, 255, 0.75);
   --window-solid: #f5f5f7;
   --desktop: #cfd0d4;
+
+  /* Landing editorial (off-white no claro, quase-preto no escuro) */
+  --landing-bg: #fafaf8;
+  --landing-card: #ffffff;
+  --mark: rgba(250, 204, 21, 0.55);
 }
 
 .dark {
@@ -60,12 +65,33 @@
   --glass-highlight: rgba(255, 255, 255, 0.14);
   --window-solid: #1e1f24;
   --desktop: #101114;
+
+  --landing-bg: #0b0c0f;
+  --landing-card: #14151a;
+  --mark: rgba(250, 204, 21, 0.28);
 }
 
 html,
 body {
   height: 100%;
   overscroll-behavior: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Marca-texto editorial da landing: pinta de baixo para cima, como caneta de verdade. */
+.mark {
+  background: linear-gradient(transparent 55%, var(--mark) 55%, var(--mark) 92%, transparent 92%);
+  border-radius: 2px;
+  padding-inline: 0.08em;
 }
 
 body {

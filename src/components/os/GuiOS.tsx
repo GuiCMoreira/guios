@@ -14,26 +14,35 @@ import { MobileShell } from "@/components/mobile/MobileShell";
 
 const BOOT_FLAG = "guios.booted";
 
-export function GuiOS() {
+// preview: modo vitrine para o iframe da landing — sem boot, sem notificação,
+// com o Sobre já aberto para a miniatura parecer viva.
+export function GuiOS({ preview = false }: { preview?: boolean }) {
   const booted = useOSStore((s) => s.booted);
   const setBooted = useOSStore((s) => s.setBooted);
+  const openApp = useOSStore((s) => s.openApp);
   // null = ainda não sabemos (SSR); evita flash do boot em quem já bootou na sessão.
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    if (storageGet("session", BOOT_FLAG) === "1") {
+    if (preview) {
+      setBooted(true);
+      openApp("about");
+    } else if (storageGet("session", BOOT_FLAG) === "1") {
       setBooted(true);
     }
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setReady(true);
-  }, [setBooted]);
+  }, [preview, setBooted, openApp]);
+
+  const isMobile = useIsMobile();
 
   const finishBoot = () => {
     storageSet("session", BOOT_FLAG, "1");
     setBooted(true);
+    // Primeiro boot da sessão: abre o Sobre para o visitante não cair numa
+    // mesa vazia sem saber onde clicar (no mobile a grade já se explica).
+    if (!isMobile) openApp("about");
   };
-
-  const isMobile = useIsMobile();
 
   if (!ready) return <div className="h-dvh w-full bg-ink" aria-hidden />;
 
@@ -41,7 +50,7 @@ export function GuiOS() {
     <>
       {isMobile ? <MobileShell /> : <Desktop />}
       <SystemDialogs />
-      <ContactNotification />
+      {!preview && <ContactNotification />}
       <AnimatePresence>{!booted && <BootScreen onDone={finishBoot} />}</AnimatePresence>
       <PowerOverlay />
     </>

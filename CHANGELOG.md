@@ -38,6 +38,20 @@
 - Preparado para rodar demos dos projetos embutidas quando forem hospedadas.
 - Ícone de bússola estilo macOS; no mobile o Safari entra na grade da home.
 
+## [3.0.0] — 2026-10-15
+
+### Landing híbrida 🏠
+
+- **Nova home clássica em `/`**: landing editorial (claro/escuro, PT/EN) com hero
+  "open to work", projetos selecionados, stack agrupada, timeline de experiência,
+  sobre e contato — pensada para recrutadores e visitantes fora da área.
+- **GuiOS movido para `/os`**, com seção na landing exibindo o sistema REAL rodando
+  em miniatura dentro de um mockup de MacBook (iframe lazy `?preview=1`, escalado e
+  não interativo) e CTA "Entrar no GuiOS".
+- **Onboarding no GuiOS**: no primeiro boot da sessão (desktop), o app Sobre abre
+  sozinho — ninguém mais cai numa mesa vazia sem saber onde clicar.
+- Sitemap com as duas rotas; metadata raiz atualizada para o formato híbrido.
+
 ## [2.2.0] — 2026-08-20
 
 ### Guigle, vida no sistema e prontidão para o mundo

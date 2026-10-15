@@ -23,9 +23,9 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Guilherme Carvalho — Fullstack Developer | GuiOS",
+  title: "Guilherme Carvalho — Desenvolvedor Fullstack",
   description:
-    "Portfólio de Guilherme Carvalho, desenvolvedor web fullstack (Next.js, React, PHP). Apresentado como GuiOS: um sistema operacional interativo — abra os apps, use o terminal, explore.",
+    "Portfólio de Guilherme Carvalho, desenvolvedor web fullstack (Next.js, React, TypeScript, PHP): projetos, experiência e stack — com um sistema operacional interativo dentro, o GuiOS.",
   keywords: [
     "Guilherme Carvalho",
     "desenvolvedor fullstack",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Guilherme Carvalho", url: "https://github.com/GuiCMoreira" }],
   openGraph: {
-    title: "Guilherme Carvalho — Fullstack Developer | GuiOS",
+    title: "Guilherme Carvalho — Desenvolvedor Fullstack",
     description:
       "Um portfólio que é um sistema operacional: janelas, dock, terminal interativo e command palette. Next.js · React · PHP.",
     type: "website",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Guilherme Carvalho — Fullstack Developer | GuiOS",
+    title: "Guilherme Carvalho — Desenvolvedor Fullstack",
     description:
       "Um portfólio que é um sistema operacional: janelas, dock, terminal interativo e command palette.",
   },

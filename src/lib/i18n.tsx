@@ -7,6 +7,67 @@ import { storageGet, storageSet } from "./safe-storage";
 const STORAGE_KEY = "guios.lang";
 
 const dict: Record<string, LocalizedText> = {
+  // Landing (portfólio clássico em /)
+  "landing.open": { pt: "Disponível para novas oportunidades", en: "Open to new opportunities" },
+  "landing.nav.projects": { pt: "Projetos", en: "Projects" },
+  "landing.nav.experience": { pt: "Experiência", en: "Experience" },
+  "landing.nav.about": { pt: "Sobre", en: "About" },
+  "landing.nav.contact": { pt: "Contato", en: "Contact" },
+  "landing.nav.os": { pt: "Entrar no GuiOS", en: "Enter GuiOS" },
+  "landing.hero.before": {
+    pt: "Construo sistemas que empresas e pessoas ",
+    en: "I build systems companies and people ",
+  },
+  "landing.hero.mark": { pt: "usam todos os dias.", en: "use every day." },
+  "landing.hero.sub": {
+    pt: "Desenvolvedor fullstack — Next.js, React, TypeScript e PHP. Hoje desenvolvo e evoluo um ERP multi-tenant para food service na Altec Sistemas.",
+    en: "Fullstack developer — Next.js, React, TypeScript and PHP. Currently building and evolving a multi-tenant ERP for the food service industry at Altec Sistemas.",
+  },
+  "landing.sec.projects": { pt: "Projetos selecionados", en: "Selected projects" },
+  "landing.sec.projectsAside": { pt: "Código real, no GitHub", en: "Real code, on GitHub" },
+  "landing.sec.os": { pt: "O diferencial", en: "The twist" },
+  "landing.sec.stack": { pt: "Ferramentas", en: "Tools" },
+  "landing.sec.stackAside": { pt: "Com o que eu construo", en: "What I build with" },
+  "landing.sec.exp": { pt: "Experiência", en: "Experience" },
+  "landing.sec.expAside": { pt: "Dos projetos próprios à produção", en: "From side projects to production" },
+  "landing.sec.about": { pt: "Além do código", en: "Beyond the code" },
+  "landing.os.title.before": { pt: "Este portfólio tem um ", en: "This portfolio ships with an " },
+  "landing.os.title.mark": { pt: "sistema operacional.", en: "operating system." },
+  "landing.os.body": {
+    pt: "O GuiOS é um mini-macOS que eu construí do zero dentro deste site: janelas que arrastam e redimensionam, dock, terminal com easter eggs e até um navegador com buscador próprio. É este mesmo portfólio — do jeito divertido. A prévia ao lado é o sistema de verdade, rodando agora.",
+    en: "GuiOS is a mini-macOS I built from scratch inside this site: draggable, resizable windows, a dock, a terminal full of easter eggs and even a browser with its own search engine. Same portfolio — the fun way. The preview here is the real system, running right now.",
+  },
+  "landing.os.cta": { pt: "Entrar no GuiOS", en: "Enter GuiOS" },
+  "landing.os.hint": {
+    pt: "Melhor no computador — no celular, ele vira um smartphone.",
+    en: "Best on a computer — on your phone, it becomes a smartphone.",
+  },
+  "landing.os.preview": { pt: "Prévia ao vivo do GuiOS", en: "Live GuiOS preview" },
+  "landing.projects.all": { pt: "Ver todos os repositórios", en: "Browse all repositories" },
+  "landing.exp.now": { pt: "atual", en: "present" },
+  "landing.stack.frontend": { pt: "Frontend", en: "Frontend" },
+  "landing.stack.backend": { pt: "Backend & dados", en: "Backend & data" },
+  "landing.stack.tools": { pt: "Infra & ferramentas", en: "Infra & tooling" },
+  "landing.about.p1": {
+    pt: "Sou o Guilherme — desenvolvedor fullstack em Bragança Paulista, SP. Comecei construindo projetos próprios em PHP e no ecossistema React, e hoje trabalho no desenvolvimento e evolução de um ERP de grande porte para o setor de food service.",
+    en: "I'm Guilherme — a fullstack developer from Bragança Paulista, Brazil. I started out building my own projects in PHP and the React ecosystem, and today I develop and evolve a large-scale ERP for the food service industry.",
+  },
+  "landing.about.p2": {
+    pt: "Gosto de entender o problema antes de escrever a primeira linha — e de cuidar tanto da experiência de quem usa quanto da qualidade do código. Este site é um exemplo: além desta página, ele carrega um sistema operacional inteiro construído do zero.",
+    en: "I like to understand the problem before writing the first line — and to care about the user's experience as much as the quality of the code. This site is an example: besides this page, it carries an entire operating system built from scratch.",
+  },
+  "landing.contact.title.before": { pt: "Vamos construir ", en: "Let's build " },
+  "landing.contact.title.mark": { pt: "algo juntos?", en: "something together?" },
+  "landing.contact.body": {
+    pt: "Estou aberto a novas oportunidades e bons projetos. O caminho mais rápido é o e-mail — ou me chame no LinkedIn.",
+    en: "I'm open to new opportunities and good projects. Email is the fastest way — or reach out on LinkedIn.",
+  },
+  "landing.footer.made": {
+    pt: "Feito com Next.js, Tailwind — e um sistema operacional inteiro dentro.",
+    en: "Built with Next.js, Tailwind — and an entire operating system inside.",
+  },
+  "landing.footer.top": { pt: "Voltar ao topo", en: "Back to top" },
+
   // Boot
   "boot.skip": { pt: "clique para pular", en: "click to skip" },
   "boot.msg1": { pt: "montando /dev/carreira…", en: "mounting /dev/career…" },
