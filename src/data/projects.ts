@@ -16,6 +16,7 @@ export const projects: Project[] = [
     stack: ["Next.js", "NestJS", "RabbitMQ", "Socket.IO", "Supabase", "Redis"],
     github: "https://github.com/GuiCMoreira/restaurant-digital",
     demo: "https://restaurant-digital-web.vercel.app",
+    image: "/projects/restaurant-digital.webp",
     tagline: {
       pt: "Cardápio digital em microsserviços que conversam por filas",
       en: "Digital menu built on microservices that talk through queues",
@@ -48,6 +49,7 @@ export const projects: Project[] = [
     stack: ["PHP 8", "PostgreSQL", "Supabase", "Tailwind CSS", "PHPUnit", "PHPStan"],
     github: "https://github.com/GuiCMoreira/valorant-strathub",
     demo: "https://valorantstrathub.vercel.app",
+    image: "/projects/valorant-strathub.webp",
     tagline: {
       pt: "Estratégias de Valorant por agente e mapa, em PHP sem framework",
       en: "Valorant strategies by agent and map, in framework-free PHP",
@@ -79,6 +81,8 @@ export const projects: Project[] = [
     featured: true,
     stack: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Vitest", "Docker"],
     github: "https://github.com/GuiCMoreira/financemy",
+    image: "/projects/financemy.png",
+    status: "wip",
     tagline: {
       pt: "Controle financeiro self-hosted que mostra em que dia o saldo fica negativo",
       en: "Self-hosted finance app that shows the day your balance goes negative",
@@ -110,6 +114,7 @@ export const projects: Project[] = [
     featured: true,
     stack: ["Next.js", "TypeScript", "Supabase", "PL/pgSQL", "Vitest"],
     demo: "https://www.elitehprotect.com",
+    image: "/projects/eliteh-protect.webp",
     tagline: {
       pt: "Site e sistema interno de uma empresa de segurança patrimonial",
       en: "Website and internal system for a property security company",
@@ -126,6 +131,71 @@ export const projects: Project[] = [
       {
         pt: "Regras críticas em funções PL/pgSQL, cobertas por 484 testes",
         en: "Critical rules in PL/pgSQL functions, covered by 484 tests",
+      },
+    ],
+  },
+  {
+    id: "guios",
+    name: "GuiOS",
+    year: 2026,
+    category: "web",
+    featured: true,
+    stack: ["Next.js", "React 19", "TypeScript", "Tailwind v4", "Motion", "Zustand"],
+    github: "https://github.com/GuiCMoreira/guios",
+    demo: "https://guicmoreira.vercel.app/os",
+    image: "/projects/guios.webp",
+    tagline: {
+      pt: "Este portfólio — o sistema operacional que você pode abrir agora",
+      en: "This portfolio — the operating system you can open right now",
+    },
+    description: {
+      pt: "Um mini-macOS construído do zero dentro do site: janelas que arrastam, redimensionam e maximizam com animação, dock com magnification, terminal com easter eggs, Safari com buscador paródia e até uma Lixeira com os bugs reais deletados durante o desenvolvimento. No celular, vira um smartphone.",
+      en: "A mini-macOS built from scratch inside the site: windows that drag, resize and maximize with animation, a dock with magnification, a terminal full of easter eggs, a Safari with a parody search engine and even a Trash holding the real bugs deleted during development. On a phone, it becomes a smartphone.",
+    },
+    highlights: [
+      {
+        pt: "Window manager próprio: geometria em motion values, sem re-render durante o drag",
+        en: "Custom window manager: geometry in motion values, zero re-renders while dragging",
+      },
+      {
+        pt: "Lighthouse 100 em acessibilidade, SEO e boas práticas",
+        en: "Lighthouse 100 on accessibility, SEO and best practices",
+      },
+      {
+        pt: "Tema claro/escuro, PT/EN e prefers-reduced-motion em todas as animações",
+        en: "Light/dark theme, PT/EN and prefers-reduced-motion across every animation",
+      },
+    ],
+  },
+  {
+    id: "navalhago",
+    name: "NavalhaGo",
+    year: 2026,
+    category: "web",
+    featured: false,
+    status: "wip",
+    stack: ["Next.js", "Supabase", "PostgreSQL", "Turborepo", "pgTAP", "Playwright"],
+    image: "/projects/navalhago.svg",
+    tagline: {
+      pt: "SaaS multi-tenant de agenda e gestão para barbearias",
+      en: "Multi-tenant SaaS for barbershop scheduling and management",
+    },
+    description: {
+      pt: "Reescrita do zero de um app abandonado, agora com fundação de produto: agenda por barbeiro, link público de agendamento para o cliente, caixa e assinatura. Monorepo Turborepo com pacotes de domínio puros, RLS do Postgres testada com pgTAP e E2E com Playwright. Em desenvolvimento ativo — repositório privado por enquanto.",
+      en: "A ground-up rewrite of an abandoned app, now with product-grade foundations: per-barber schedule, public booking link for customers, cash register and subscriptions. Turborepo monorepo with pure domain packages, Postgres RLS tested with pgTAP and Playwright E2E. Under active development — private repository for now.",
+    },
+    highlights: [
+      {
+        pt: "Horários sobrepostos são impossíveis por constraint EXCLUDE no Postgres, não por if no código",
+        en: "Overlapping bookings are impossible via a Postgres EXCLUDE constraint, not an if statement",
+      },
+      {
+        pt: "Testes em três camadas: unidade (Vitest), banco (pgTAP) e ponta a ponta (Playwright)",
+        en: "Three test layers: unit (Vitest), database (pgTAP) and end-to-end (Playwright)",
+      },
+      {
+        pt: "Migrations reproduzíveis: o schema inteiro nasce de supabase db reset, validado no CI",
+        en: "Reproducible migrations: the whole schema comes from supabase db reset, validated in CI",
       },
     ],
   },

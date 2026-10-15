@@ -38,6 +38,18 @@
 - Preparado para rodar demos dos projetos embutidas quando forem hospedadas.
 - Ícone de bússola estilo macOS; no mobile o Safari entra na grade da home.
 
+## [3.1.0] — 2026-10-15
+
+### Vitrine com imagens e detalhe por projeto 🖼️
+
+- **Cards com captura real** na landing: screenshot da página inicial de cada projeto
+  (sites em produção, captura oficial do FinanceMy com dados fictícios, capa própria do NavalhaGo).
+- **Modal de detalhe** ao clicar no card: imagem grande, descrição estendida, destaques técnicos,
+  stack completa e ações (demo/GitHub, ou nota de repositório privado). Esc/backdrop fecham.
+- **GuiOS entrou na vitrine como projeto** (com botão "Entrar no GuiOS") e **NavalhaGo** estreia
+  com selo "em desenvolvimento".
+- Selo WIP para projetos em desenvolvimento ativo (FinanceMy, NavalhaGo).
+
 ## [3.0.0] — 2026-10-15
 
 ### Landing híbrida 🏠

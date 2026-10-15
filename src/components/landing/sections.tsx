@@ -1,9 +1,10 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
-import { motion, useReducedMotion } from "motion/react";
-import { ArrowUpRight } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { ArrowUpRight, X } from "lucide-react";
+import type { Project } from "@/lib/types";
 import { useI18n } from "@/lib/i18n";
 import { career, education } from "@/data/career";
 import { projects, AVATAR_URL, GITHUB_URL } from "@/data/projects";
@@ -64,8 +65,134 @@ function Chip({ children }: { children: ReactNode }) {
 
 // ————— 01 · Projetos —————
 
+function WipBadge() {
+  const { t } = useI18n();
+  return (
+    <span className="rounded-full bg-amber-400/15 px-2 py-0.5 font-mono text-[10px] tracking-wide text-amber-600 uppercase dark:text-amber-400">
+      {t("landing.projects.wip")}
+    </span>
+  );
+}
+
+function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
+  const { lang, t } = useI18n();
+  const reduced = useReducedMotion();
+
+  // Esc fecha; scroll da página trava enquanto o modal vive.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [onClose]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm md:p-8"
+      onClick={onClose}
+    >
+      <motion.div
+        role="dialog"
+        aria-modal="true"
+        aria-label={project.name}
+        initial={reduced ? { opacity: 0 } : { opacity: 0, y: 28, scale: 0.97 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={reduced ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.98 }}
+        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+        className="max-h-full w-full max-w-3xl overflow-y-auto rounded-3xl border border-line bg-(--landing-card) shadow-2xl shadow-black/30"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {project.image && (
+          <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-line bg-fill-1">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={project.image}
+              alt={`${project.name} — ${project.tagline[lang]}`}
+              className="h-full w-full object-cover object-top"
+            />
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label={t("landing.projects.close")}
+              className="absolute top-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur transition-transform hover:scale-105"
+            >
+              <X className="h-4.5 w-4.5" />
+            </button>
+          </div>
+        )}
+        <div className="p-6 md:p-8">
+          <div className="flex flex-wrap items-center gap-3 font-mono text-[11px] tracking-[0.15em] text-text-lo uppercase">
+            <span>
+              {project.year} · {project.category === "web" ? "Web" : "Mobile"}
+            </span>
+            {project.status === "wip" && <WipBadge />}
+          </div>
+          <h3 className="mt-3 font-display text-3xl font-semibold tracking-tight">{project.name}</h3>
+          <p className="mt-1 text-sm text-text-lo">{project.tagline[lang]}</p>
+
+          <p className="mt-5 leading-relaxed text-text-lo">{project.description[lang]}</p>
+
+          {project.highlights && (
+            <ul className="mt-6 space-y-2.5">
+              {project.highlights.map((h, i) => (
+                <li key={i} className="flex gap-2.5 text-sm leading-relaxed text-text-lo">
+                  <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
+                  <span>{h[lang]}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div className="mt-6 flex flex-wrap gap-1.5">
+            {project.stack.map((s) => (
+              <Chip key={s}>{s}</Chip>
+            ))}
+          </div>
+
+          <div className="mt-8 flex flex-wrap items-center gap-4 border-t border-line pt-6">
+            {project.demo && (
+              <a
+                href={project.demo}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-text-hi px-5 py-2.5 text-sm font-semibold text-(--landing-bg) transition-transform hover:scale-[1.03] active:scale-95"
+              >
+                {project.id === "guios" ? t("landing.os.cta") : t("projects.viewDemo")}
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+            )}
+            {project.github ? (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noreferrer"
+                className="group inline-flex items-center gap-1.5 text-sm font-medium underline decoration-line underline-offset-4 transition-colors hover:decoration-text-hi"
+              >
+                {t("projects.viewGithub")}
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+            ) : (
+              <p className="text-xs text-text-lo">{t("landing.projects.private")}</p>
+            )}
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export function ProjectsSection() {
   const { lang, t } = useI18n();
+  const [openId, setOpenId] = useState<string | null>(null);
+  const open = projects.find((p) => p.id === openId) ?? null;
+
   return (
     <section id="projetos" className="scroll-mt-24 py-20 md:py-28">
       <Container>
@@ -73,29 +200,41 @@ export function ProjectsSection() {
         <div className="grid gap-4 md:grid-cols-2 md:gap-5">
           {projects.map((p, i) => (
             <Reveal key={p.id} delay={Math.min(i, 3) * 0.06}>
-              <a
-                href={p.github}
-                target="_blank"
-                rel="noreferrer"
-                className="group flex h-full flex-col rounded-2xl border border-line bg-(--landing-card) p-6 transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-xl hover:shadow-black/5 md:p-7"
+              <button
+                type="button"
+                onClick={() => setOpenId(p.id)}
+                aria-label={`${p.name} — ${t("landing.projects.details")}`}
+                className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-line bg-(--landing-card) text-left transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-xl hover:shadow-black/5"
               >
-                <div className="flex items-center justify-between font-mono text-[11px] tracking-[0.15em] text-text-lo uppercase">
-                  <span>
-                    {p.year} · {p.category === "web" ? "Web" : "Mobile"}
-                    {p.featured && <span className="mark ml-2 text-text-hi normal-case">★</span>}
-                  </span>
-                  <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                {p.image && (
+                  <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-line bg-fill-1">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={p.image}
+                      alt=""
+                      loading="lazy"
+                      className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
+                  </div>
+                )}
+                <div className="flex flex-1 flex-col p-6">
+                  <div className="flex items-center justify-between gap-3 font-mono text-[11px] tracking-[0.15em] text-text-lo uppercase">
+                    <span className="flex items-center gap-2">
+                      {p.year} · {p.category === "web" ? "Web" : "Mobile"}
+                      {p.status === "wip" && <WipBadge />}
+                    </span>
+                    <ArrowUpRight className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </div>
+                  <h3 className="mt-3 font-display text-xl font-semibold tracking-tight">{p.name}</h3>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-text-lo">{p.tagline[lang]}</p>
+                  <div className="mt-5 flex flex-wrap gap-1.5">
+                    {p.stack.slice(0, 4).map((s) => (
+                      <Chip key={s}>{s}</Chip>
+                    ))}
+                    {p.stack.length > 4 && <Chip>+{p.stack.length - 4}</Chip>}
+                  </div>
                 </div>
-                <h3 className="mt-4 font-display text-xl font-semibold tracking-tight">
-                  {p.name}
-                </h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-text-lo">{p.tagline[lang]}</p>
-                <div className="mt-5 flex flex-wrap gap-1.5">
-                  {p.stack.map((s) => (
-                    <Chip key={s}>{s}</Chip>
-                  ))}
-                </div>
-              </a>
+              </button>
             </Reveal>
           ))}
         </div>
@@ -111,6 +250,9 @@ export function ProjectsSection() {
           </a>
         </Reveal>
       </Container>
+      <AnimatePresence>
+        {open && <ProjectModal project={open} onClose={() => setOpenId(null)} />}
+      </AnimatePresence>
     </section>
   );
 }

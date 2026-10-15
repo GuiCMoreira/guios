@@ -45,6 +45,13 @@ const dict: Record<string, LocalizedText> = {
   },
   "landing.os.preview": { pt: "Prévia ao vivo do GuiOS", en: "Live GuiOS preview" },
   "landing.projects.all": { pt: "Ver todos os repositórios", en: "Browse all repositories" },
+  "landing.projects.wip": { pt: "em desenvolvimento", en: "in development" },
+  "landing.projects.private": {
+    pt: "Repositório privado — código sob demanda",
+    en: "Private repository — code available on request",
+  },
+  "landing.projects.details": { pt: "Ver detalhes", en: "View details" },
+  "landing.projects.close": { pt: "Fechar", en: "Close" },
   "landing.exp.now": { pt: "atual", en: "present" },
   "landing.stack.frontend": { pt: "Frontend", en: "Frontend" },
   "landing.stack.backend": { pt: "Backend & dados", en: "Backend & data" },

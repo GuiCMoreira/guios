@@ -19,6 +19,10 @@ export interface Project {
   demo?: string;
   year: number;
   highlights?: LocalizedText[];
+  /** Captura da página inicial, servida de /public/projects. */
+  image?: string;
+  /** "wip" = em desenvolvimento ativo, exibido com selo na vitrine. */
+  status?: "wip";
 }
 
 export interface CareerEntry {

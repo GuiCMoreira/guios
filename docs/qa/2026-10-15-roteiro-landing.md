@@ -40,3 +40,17 @@ Ambiente: dev server local, Chrome via chrome-devtools MCP, cliques REAIS.
 
 **10/10 PASS.** Ressalva conhecida: screenshot full-page mostra seções em branco porque o
 `whileInView` só anima com scroll real — comportamento esperado, conteúdo está no DOM (SEO ok).
+
+## Adendo — vitrine com imagens + modal de detalhe (15/10/2026, mesma sessão)
+
+11. PASS — cards com captura real: restaurant-digital, valorant-strathub, eliteh-protect
+    (screenshots dos sites em produção, 1280×800 webp), GuiOS (`/os?preview=1` em produção),
+    FinanceMy (captura oficial `docs/capturas/painel-desktop-claro.png` do repo — dados fictícios),
+    NavalhaGo (capa SVG própria "em desenvolvimento" — sem deploy e sem rodar o stack local,
+    que pertence a outra sessão ativa).
+12. PASS — clique real no card NavalhaGo abre modal com imagem, selo WIP, descrição,
+    highlights, stack e nota "repositório privado"; Esc fecha e `body.overflow` destrava.
+13. PASS — modal do GuiOS: botões "Entrar no GuiOS" → /os (produção) e "Ver no GitHub" → repo guios.
+14. PASS — mobile 390×844: cards empilhados com imagem, selo WIP legível.
+15. PASS — regressão GuiOS: ProjectsApp/Safari filtram `p.github` (navalhago e eliteh sem link
+    não quebram); build de produção limpo.
