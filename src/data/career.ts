@@ -1,13 +1,13 @@
 import type { CareerEntry } from "@/lib/types";
 
-// REVISAR: datas e detalhes de cargo devem ser confirmados pelo Guilherme.
+// Datas confirmadas pelo Guilherme em 15/10/2026.
 export const career: CareerEntry[] = [
   {
     id: "altec",
     role: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" },
     company: "Altec Sistemas",
     location: "Bragança Paulista — SP",
-    start: "2024",
+    start: "08/2026",
     end: null,
     summary: {
       pt: "Desenvolvimento e evolução de ERP para o setor de food service: novas funcionalidades, correções e integrações em sistema multi-tenant de grande porte, do banco de dados à interface.",
@@ -21,7 +21,7 @@ export const career: CareerEntry[] = [
     company: "Projetos próprios e estudos",
     location: "Remoto",
     start: "2022",
-    end: "2024",
+    end: null,
     summary: {
       pt: "Construção de base sólida em desenvolvimento web moderno: projetos completos em Next.js/React, PHP e React Native, do e-commerce ao sistema de agendamento.",
       en: "Building a solid foundation in modern web development: complete projects in Next.js/React, PHP and React Native, from e-commerce to booking systems.",
@@ -29,6 +29,16 @@ export const career: CareerEntry[] = [
     stack: ["Next.js", "React", "TypeScript", "PHP", "React Native"],
   },
 ];
+
+export const education = {
+  institution: "FATEC Bragança Paulista",
+  degree: {
+    pt: "Tecnólogo em Análise e Desenvolvimento de Sistemas",
+    en: "Associate degree in Systems Analysis and Development",
+  },
+  start: "2023",
+  end: "2025",
+};
 
 export const mainStack = [
   "Next.js",

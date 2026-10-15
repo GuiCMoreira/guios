@@ -31,6 +31,7 @@ const dict: Record<string, LocalizedText> = {
   "landing.sec.exp": { pt: "Experiência", en: "Experience" },
   "landing.sec.expAside": { pt: "Dos projetos próprios à produção", en: "From side projects to production" },
   "landing.sec.about": { pt: "Além do código", en: "Beyond the code" },
+  "landing.sec.edu": { pt: "Formação", en: "Education" },
   "landing.os.title.before": { pt: "Este portfólio tem um ", en: "This portfolio ships with an " },
   "landing.os.title.mark": { pt: "sistema operacional.", en: "operating system." },
   "landing.os.body": {

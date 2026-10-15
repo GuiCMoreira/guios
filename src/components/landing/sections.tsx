@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import { career } from "@/data/career";
+import { career, education } from "@/data/career";
 import { projects, AVATAR_URL, GITHUB_URL } from "@/data/projects";
 import { GuiOSShowcase } from "./GuiOSShowcase";
 
@@ -218,6 +218,24 @@ export function ExperienceSection() {
               </div>
             </Reveal>
           ))}
+
+          {/* Formação acadêmica, no mesmo ritmo visual da timeline */}
+          <Reveal>
+            <div className="grid gap-3 border-t border-line pt-10 md:grid-cols-[180px_1fr] md:gap-8">
+              <p className="pt-1 font-mono text-sm text-text-lo">
+                {education.start} — {education.end}
+              </p>
+              <div>
+                <p className="font-mono text-[11px] tracking-[0.2em] text-text-lo uppercase">
+                  {t("landing.sec.edu")}
+                </p>
+                <h3 className="mt-2 font-display text-xl font-semibold tracking-tight">
+                  {education.degree[lang]}{" "}
+                  <span className="font-normal text-text-lo">· {education.institution}</span>
+                </h3>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </Container>
     </section>
