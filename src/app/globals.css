@@ -241,6 +241,6 @@ textarea:focus-visible {
    durante a troca de tema, para não afetar outras View Transitions. */
 html.theme-fading::view-transition-old(root),
 html.theme-fading::view-transition-new(root) {
-  animation-duration: var(--theme-fade, 3000ms);
+  animation-duration: var(--theme-fade, 1500ms);
   animation-timing-function: ease-in-out;
 }

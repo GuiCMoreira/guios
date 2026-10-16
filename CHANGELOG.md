@@ -201,9 +201,7 @@
 
 ### Troca de tema com fade
 
-- Trocar entre claro e escuro não dá mais o clarão de uma vez: a página faz um fade de 3 segundos
+- Trocar entre claro e escuro não dá mais o clarão de uma vez: a página faz um fade de 1,5 segundo
   do tema antigo para o novo (View Transitions API), incluindo os efeitos em canvas e WebGL. Vale
   para a landing e para o GuiOS.
-- Rolar, tocar ou apertar uma tecla durante o fade encerra o fade na hora (a imagem parada com a
-  página se mexendo por baixo pareceria travada).
 - Com "reduzir movimento", ou em navegador sem suporte, a troca continua instantânea.
