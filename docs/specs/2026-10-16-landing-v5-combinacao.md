@@ -94,3 +94,4 @@ em tema escuro, claro e 390px; sem scroll lateral; zero erros de console.
 - Capas sem corte: moldura 16:10 (a proporção das capturas), imagem inteira (`object-contain`), sem o parallax/zoom que exigia cortar as bordas; a largura do slide acompanha a altura da janela.
 - Eliteh Protect recapturada sem a caixa de cookies (cookies recusados antes do print).
 - Fotos originais em alta: 3x4 no topo e 9:16 (original inteira) em "Além do código", regravadas em webp sem metadados (as originais não tinham GPS).
+- Capturas refeitas em Full HD (1920×1080, escala 1): em 1280×800 os sites usavam o layout de tela menor e os elementos saíam grandes demais. Barra de rolagem dos sites escondida antes do print; GuiOS capturado em português. Molduras voltaram para 16:9. NavalhaGo e FinanceMy não estão publicados, então seguem com as capturas oficiais dos READMEs (aparecem inteiras, com faixas finas nas laterais).

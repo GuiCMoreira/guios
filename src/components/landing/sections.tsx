@@ -140,7 +140,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
         onClick={(e) => e.stopPropagation()}
       >
         {project.image && (
-          <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-line bg-fill-1">
+          <div className="relative aspect-video w-full overflow-hidden border-b border-line bg-fill-1">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={project.image}
@@ -233,7 +233,7 @@ function ProjectCard({ p, onOpen }: { p: Project; onOpen: () => void }) {
       className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-line bg-(--landing-card) text-left transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-xl hover:shadow-black/5"
     >
       {p.image && (
-        <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-line bg-fill-1">
+        <div className="relative aspect-video w-full overflow-hidden border-b border-line bg-fill-1">
           <GlareImage className="absolute inset-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -287,10 +287,10 @@ function ProjectSlide({
       onClick={onOpen}
       data-cursor="hover"
       data-cursor-label={t("landing.cursor.open")}
-      className="group flex w-[min(58vw,980px,calc(50vh*1.6))] shrink-0 flex-col overflow-hidden rounded-[28px] border border-line bg-(--landing-card) text-left transition-[border-color,box-shadow] duration-300 hover:border-line-strong hover:shadow-2xl hover:shadow-black/10"
+      className="group flex w-[min(58vw,1040px,calc(52vh*16/9))] shrink-0 flex-col overflow-hidden rounded-[28px] border border-line bg-(--landing-card) text-left transition-[border-color,box-shadow] duration-300 hover:border-line-strong hover:shadow-2xl hover:shadow-black/10"
     >
-      {/* capturas são 16:10: a moldura tem a mesma proporção e a imagem aparece inteira */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-line bg-fill-1">
+      {/* capturas em Full HD (16:9): moldura na mesma proporção, imagem sempre inteira */}
+      <div className="relative aspect-video w-full overflow-hidden border-b border-line bg-fill-1">
         {p.image && (
           <GlareImage className="absolute inset-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
