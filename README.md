@@ -69,7 +69,7 @@ A versão atual separa os dois públicos sem abrir mão de nenhum:
 | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Topo**                | Nome desenhado em TechText sobre uma grade de pontos que reage ao mouse, cargo que alterna (fullstack, web, PHP…), foto com tilt 3D e atalhos sociais |
 | **Projetos**            | A tela trava e os seis projetos passam na horizontal, com contador e barra de progresso. Cada card abre um modal em duas colunas que nunca rola        |
-| **GuiOS no MacBook**    | A tampa do notebook abre conforme o scroll, de fechada até ficar de pé, mostrando o GuiOS real rodando lá dentro                                      |
+| **GuiOS no MacBook**    | Com o scroll, a tela do notebook se levanta, sai dele e cresce até quem lê, com o GuiOS real rodando lá dentro (MacBook Scroll, do Aceternity UI)     |
 | **Ferramentas**         | Faixas de tecnologias que deslizam e aceleram com a velocidade do scroll, agrupadas em front-end, back-end e ferramentas                              |
 | **Experiência**         | Cartões que empilham: Altec (trabalho), FATEC (formação) e projetos pessoais e estudos                                                                |
 | **Sobre**               | Texto que acende palavra por palavra enquanto se lê                                                                                                   |
@@ -103,7 +103,7 @@ cada efeito entrou, e o que ele substituiu, está em
 
 | GuiOS dentro do MacBook                                                                     | Experiência                                                                   |
 | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| ![MacBook com a tampa aberta mostrando o GuiOS](docs/screenshots/04-guios-macbook.webp) | ![Cartões empilhados da experiência](docs/screenshots/05-experiencia.webp) |
+| ![Tela do notebook saindo dele e crescendo, com o GuiOS rodando](docs/screenshots/04-guios-macbook.webp) | ![Cartões empilhados da experiência](docs/screenshots/05-experiencia.webp) |
 
 | Contato                                                                                   | Tema claro                                                          |
 | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
@@ -174,7 +174,11 @@ nasce é `src/lib/window-placement.ts`. Os apps são os mesmos componentes no de
 muda só a moldura.
 
 **O MacBook mostra o GuiOS real.** A seção da landing carrega `/os?preview=1` num iframe lazy,
-escalado e não interativo. Não é vídeo nem imagem: é o sistema rodando.
+escalado e não interativo. Não é vídeo nem imagem: é o sistema rodando. O notebook é o
+[MacBook Scroll](https://ui.aceternity.com/components/macbook-scroll), do Aceternity UI, adaptado
+em `src/components/aceternity/`: a tela recebe o iframe em vez de uma imagem, os ícones do teclado
+vêm do lucide-react e o quanto a tela desce é medido, para ela parar antes do botão "Entrar no
+GuiOS". Abaixo de 768px e com "reduzir movimento", fica um notebook parado.
 
 ---
 
@@ -419,6 +423,7 @@ própria e aprovada numa prévia da Vercel antes de ir para produção.
 | 4.1    | Scroll coreografado  | Cada seção rola de um jeito, acento azul, laboratório com 24 protótipos                     |
 | 5.0    | Landing v5           | Efeitos aprovados no lab, formulário de contato, vitrine em Full HD, modal sem rolagem      |
 | 5.1    | GuiOS para todos     | Capturas e linguagem simples no app Projetos, Sobre detalhado, janelas na área livre        |
+| 5.2    | Notebook novo        | MacBook Scroll do Aceternity UI no lugar da tampa feita à mão                                |
 
 O histórico detalhado está no [CHANGELOG](CHANGELOG.md).
 
@@ -438,6 +443,8 @@ O histórico detalhado está no [CHANGELOG](CHANGELOG.md).
 
 - Efeitos do laboratório e componentes em `src/components/rb`: [React Bits](https://reactbits.dev)
   (MIT + Commons Clause), de David Haz.
+- Notebook da seção do GuiOS (`src/components/aceternity`): [MacBook Scroll](https://ui.aceternity.com/components/macbook-scroll),
+  do [Aceternity UI](https://ui.aceternity.com), inspirado no site da Fey.
 - Ícones da Lixeira, Safari e Ajustes: [WhiteSur icon theme](https://github.com/vinceliuice/WhiteSur-icon-theme)
   (GPL-3), de Vince Liuice.
 - Wallpapers: [Lorem Picsum](https://picsum.photos/) (fotos do Unsplash).

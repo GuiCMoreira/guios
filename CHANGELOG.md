@@ -175,3 +175,16 @@
   pontuação que pede (vírgula, dois-pontos, ponto ou parênteses); títulos de página usam " | "
   (`Guilherme Carvalho | Desenvolvedor Fullstack`); intervalos e valores vazios usam hífen;
   comentários de código e documentos internos, hífen.
+
+## [5.2.0] - 2026-10-16
+
+### Notebook novo na seção do GuiOS
+
+- A tampa feita à mão (que ficava de lado no meio da animação e mudava de tamanho) deu lugar ao
+  **MacBook Scroll, do Aceternity UI**: com o scroll, a tela se levanta, sai do notebook e cresce até
+  quem lê, com o GuiOS real rodando dentro.
+- Adaptações: a tela recebe o iframe do GuiOS em vez de uma imagem; ícones do teclado trocados do
+  `@tabler/icons-react` pelo `lucide-react` (sem dependência nova); o percurso da tela é medido
+  para ela parar antes do texto e do botão "Entrar no GuiOS" em qualquer altura de janela.
+- Abaixo de 768px e com "reduzir movimento", aparece um notebook parado (o componente tem 512px
+  fixos e não foi pensado para ficar parado).
