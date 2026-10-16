@@ -38,6 +38,25 @@
 - Preparado para rodar demos dos projetos embutidas quando forem hospedadas.
 - Ícone de bússola estilo macOS; no mobile o Safari entra na grade da home.
 
+## [4.0.0] — 2026-10-15
+
+### Landing "a parte de fora do GuiOS" ⚡
+
+- **Full-width de verdade**: a página usa a tela inteira (respiro lateral fluido), hero de
+  100dvh com o nome em escala gigante — segunda linha só em contorno.
+- **Cursor próprio do sistema**: ponto + anel em mix-blend-difference, cresce sobre
+  interativos, vira rótulo "abrir ↗" nos cards e solta faíscas no clique. Só em ponteiro
+  fino e sem prefers-reduced-motion.
+- **Botão direito é nosso**: menu de contexto do sistema (Entrar no GuiOS, copiar e-mail,
+  tema, idioma, sociais) no lugar do menu do navegador.
+- **Voz de terminal**: títulos de seção viram prompts (`gui@os:~/projetos$ ls --destaques`)
+  e entram palavra por palavra (SplitText); números 01–05 aposentados.
+- **Marquee da stack** que acelera e inverte com a velocidade do scroll (ScrollVelocity).
+- **Foto com tilt 3D** que revela a cor no hover; **botões magnéticos**; **holofote** que
+  segue o mouse nos cards; **barra de progresso** de scroll âmbar.
+- Grid de projetos assimétrico (7/5 · 5/7 · 6/6). Tudo degradando com elegância no touch
+  e com reduced-motion. Inspiração: react-bits, implementado em casa só com motion.
+
 ## [3.1.0] — 2026-10-15
 
 ### Vitrine com imagens e detalhe por projeto 🖼️

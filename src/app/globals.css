@@ -87,6 +87,74 @@ html {
   }
 }
 
+/* ————— Efeitos da landing ————— */
+
+/* Cursor do sistema: some com o nativo só quando o CursorFX está ativo
+   (ponteiro fino + sem reduced-motion). */
+.os-cursor,
+.os-cursor * {
+  cursor: none !important;
+}
+
+/* Faíscas do clique (ClickSpark): 8 traços que voam do ponto do clique. */
+@keyframes spark-fly {
+  0% {
+    opacity: 1;
+    transform: rotate(var(--angle, 0deg)) translateX(4px) scaleX(1);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--angle, 0deg)) translateX(26px) scaleX(0.3);
+  }
+}
+.click-spark {
+  transform-origin: left center;
+  animation: spark-fly 0.5s ease-out forwards;
+}
+.click-spark:nth-child(1) { --angle: 0deg; }
+.click-spark:nth-child(2) { --angle: 45deg; }
+.click-spark:nth-child(3) { --angle: 90deg; }
+.click-spark:nth-child(4) { --angle: 135deg; }
+.click-spark:nth-child(5) { --angle: 180deg; }
+.click-spark:nth-child(6) { --angle: 225deg; }
+.click-spark:nth-child(7) { --angle: 270deg; }
+.click-spark:nth-child(8) { --angle: 315deg; }
+
+/* Card com holofote: brilho radial que segue o mouse (vars setadas via JS). */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+}
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  background: radial-gradient(
+    420px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(250, 204, 21, 0.1),
+    transparent 65%
+  );
+}
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+/* Nome em contorno no hero (2ª linha). */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--text-hi);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .click-spark {
+    animation: none;
+    opacity: 0;
+  }
+}
+
 /* Marca-texto editorial da landing: pinta de baixo para cima, como caneta de verdade. */
 .mark {
   background: linear-gradient(transparent 55%, var(--mark) 55%, var(--mark) 92%, transparent 92%);

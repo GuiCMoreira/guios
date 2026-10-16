@@ -75,6 +75,18 @@ const dict: Record<string, LocalizedText> = {
     en: "Built with Next.js, Tailwind — and an entire operating system inside.",
   },
   "landing.footer.top": { pt: "Voltar ao topo", en: "Back to top" },
+  "landing.ctx.copyEmail": { pt: "Copiar e-mail", en: "Copy email" },
+  "landing.ctx.copied": { pt: "Copiado!", en: "Copied!" },
+  "landing.ctx.light": { pt: "Modo claro", en: "Light mode" },
+  "landing.ctx.dark": { pt: "Modo escuro", en: "Dark mode" },
+  "landing.ctx.close": { pt: "Fechar menu", en: "Close menu" },
+  "landing.cursor.open": { pt: "abrir ↗", en: "open ↗" },
+  "landing.hero.role": { pt: "desenvolvedor fullstack", en: "fullstack developer" },
+  "landing.hint.rightClick": {
+    pt: "psiu — experimenta o botão direito",
+    en: "psst — try right-clicking",
+  },
+  "landing.scroll": { pt: "role", en: "scroll" },
 
   // Boot
   "boot.skip": { pt: "clique para pular", en: "click to skip" },
