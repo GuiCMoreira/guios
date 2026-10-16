@@ -239,7 +239,6 @@ function ProjectCard({ p, onOpen }: { p: Project; onOpen: () => void }) {
       onPointerMove={moveSpot}
       data-cursor="hover"
       data-cursor-label={t("landing.cursor.open")}
-      aria-label={`${p.name} — ${t("landing.projects.details")}`}
       className="spotlight-card group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-line bg-(--landing-card) text-left transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-xl hover:shadow-black/5"
     >
       {p.image && (
@@ -262,6 +261,7 @@ function ProjectCard({ p, onOpen }: { p: Project; onOpen: () => void }) {
           <ArrowUpRight className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </div>
         <h3 className="mt-3 font-display text-2xl font-semibold tracking-tight">{p.name}</h3>
+        <span className="sr-only">— {t("landing.projects.details")}</span>
         <p className="mt-2 flex-1 text-sm leading-relaxed text-text-lo">{p.tagline[lang]}</p>
         <div className="mt-5 flex flex-wrap gap-1.5">
           {p.stack.slice(0, 4).map((s) => (
@@ -301,7 +301,6 @@ function ProjectSlide({
       onPointerMove={moveSpot}
       data-cursor="hover"
       data-cursor-label={t("landing.cursor.open")}
-      aria-label={`${p.name} — ${t("landing.projects.details")}`}
       className="spotlight-card group flex w-[min(58vw,980px)] shrink-0 flex-col overflow-hidden rounded-[28px] border border-line bg-(--landing-card) text-left transition-[border-color,box-shadow] duration-300 hover:border-line-strong hover:shadow-2xl hover:shadow-black/10"
     >
       <div className="relative aspect-[16/9] max-h-[52vh] w-full overflow-hidden border-b border-line bg-fill-1">
@@ -325,6 +324,7 @@ function ProjectSlide({
             {p.status === "wip" && <WipBadge />}
           </div>
           <h3 className="mt-2 font-display text-3xl font-bold tracking-tight md:text-4xl">{p.name}</h3>
+          <span className="sr-only">— {t("landing.projects.details")}</span>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-text-lo md:text-base">{p.tagline[lang]}</p>
         </div>
         <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-line transition-all duration-300 group-hover:border-fx group-hover:bg-fx group-hover:text-black">

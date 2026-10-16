@@ -229,7 +229,8 @@ function RevealWord({
   progress: MotionValue<number>;
   range: [number, number];
 }) {
-  const opacity = useTransform(progress, range, [0.14, 1]);
+  // 0.5 é o mínimo que mantém contraste ≥3:1 (texto grande) nos dois temas
+  const opacity = useTransform(progress, range, [0.5, 1]);
   return (
     <>
       <motion.span style={{ opacity }}>{children}</motion.span>{" "}
@@ -243,12 +244,11 @@ export function ZoomIn({ children, className }: { children: ReactNode; className
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start 0.3"] });
   const scale = useTransform(scrollYProgress, [0, 1], [0.7, 1]);
-  const opacity = useTransform(scrollYProgress, [0, 0.6], [0.15, 1]);
   const blur = useTransform(scrollYProgress, [0, 0.7], ["blur(10px)", "blur(0px)"]);
   return (
     <motion.div
       ref={ref}
-      style={reduced ? undefined : { scale, opacity, filter: blur }}
+      style={reduced ? undefined : { scale, filter: blur }}
       className={`origin-left ${className ?? ""}`}
     >
       {children}
