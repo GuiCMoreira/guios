@@ -4,6 +4,9 @@ export const GITHUB_URL = "https://github.com/GuiCMoreira";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/guilherme-de-carvalho-moreira/";
 export const INSTAGRAM_URL = "https://www.instagram.com/_guic_m/";
 export const AVATAR_URL = "https://avatars.githubusercontent.com/u/142915547?v=4";
+// Fotos originais (regravadas sem metadados) para a landing.
+export const PHOTO_3X4 = "/me/guilherme-3x4.webp";
+export const PHOTO_9X16 = "/me/guilherme-9x16.webp";
 export const EMAIL = "gui0307carvalho@gmail.com";
 
 const allProjects: Project[] = [

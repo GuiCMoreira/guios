@@ -9,13 +9,12 @@ import {
   useReducedMotion,
   useScroll,
   useTransform,
-  type MotionValue,
 } from "motion/react";
 import { ArrowRight, ArrowUpRight, X } from "lucide-react";
 import type { Project } from "@/lib/types";
 import { useI18n } from "@/lib/i18n";
 import { career, education } from "@/data/career";
-import { projects, AVATAR_URL, GITHUB_URL } from "@/data/projects";
+import { projects, PHOTO_9X16, GITHUB_URL } from "@/data/projects";
 import { GuiOSShowcase } from "./GuiOSShowcase";
 import { Magnetic, SplitWords } from "./fx/bits";
 import { GlareImage, Gradient, PromptCommand, SectionCrosshair, StarButton } from "./fx/rb";
@@ -146,7 +145,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
             <img
               src={project.image}
               alt={`${project.name} — ${project.tagline[lang]}`}
-              className="h-full w-full object-cover object-top"
+              className="h-full w-full object-contain"
             />
             <button
               type="button"
@@ -234,14 +233,14 @@ function ProjectCard({ p, onOpen }: { p: Project; onOpen: () => void }) {
       className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-line bg-(--landing-card) text-left transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-xl hover:shadow-black/5"
     >
       {p.image && (
-        <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-line bg-fill-1">
+        <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-line bg-fill-1">
           <GlareImage className="absolute inset-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={p.image}
               alt=""
               loading="lazy"
-              className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
+              className="h-full w-full object-contain"
             />
           </GlareImage>
         </div>
@@ -275,37 +274,27 @@ function ProjectCard({ p, onOpen }: { p: Project; onOpen: () => void }) {
 function ProjectSlide({
   p,
   index,
-  total,
-  progress,
   onOpen,
 }: {
   p: Project;
   index: number;
-  total: number;
-  progress: MotionValue<number>;
   onOpen: () => void;
 }) {
   const { lang, t } = useI18n();
-  const center = (index + 1) / (total + 1);
-  const imgX = useTransform(progress, [center - 0.35, center + 0.35], ["7%", "-7%"]);
   return (
     <button
       type="button"
       onClick={onOpen}
       data-cursor="hover"
       data-cursor-label={t("landing.cursor.open")}
-      className="group flex w-[min(58vw,980px)] shrink-0 flex-col overflow-hidden rounded-[28px] border border-line bg-(--landing-card) text-left transition-[border-color,box-shadow] duration-300 hover:border-line-strong hover:shadow-2xl hover:shadow-black/10"
+      className="group flex w-[min(58vw,980px,calc(50vh*1.6))] shrink-0 flex-col overflow-hidden rounded-[28px] border border-line bg-(--landing-card) text-left transition-[border-color,box-shadow] duration-300 hover:border-line-strong hover:shadow-2xl hover:shadow-black/10"
     >
-      <div className="relative aspect-[16/9] max-h-[52vh] w-full overflow-hidden border-b border-line bg-fill-1">
+      {/* capturas são 16:10: a moldura tem a mesma proporção e a imagem aparece inteira */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-line bg-fill-1">
         {p.image && (
           <GlareImage className="absolute inset-0">
-            <motion.img
-              src={p.image}
-              alt=""
-              loading="lazy"
-              style={{ x: imgX }}
-              className="absolute inset-y-0 -left-[8%] h-full w-[116%] max-w-none object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
-            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={p.image} alt="" loading="lazy" className="h-full w-full object-contain" />
           </GlareImage>
         )}
         <span className="absolute top-4 left-4 rounded-full bg-black/55 px-3 py-1 font-mono text-[11px] text-white backdrop-blur">
@@ -347,7 +336,7 @@ function HorizontalProjects({ onOpen }: { onOpen: (id: string) => void }) {
         </div>
       )}
     >
-      {(progress) => (
+      {() => (
         <>
           <div className="flex w-[min(34vw,560px)] shrink-0 flex-col justify-center pr-6">
             <p className="font-mono text-sm text-text-lo">
@@ -363,8 +352,6 @@ function HorizontalProjects({ onOpen }: { onOpen: (id: string) => void }) {
               key={p.id}
               p={p}
               index={i}
-              total={projects.length}
-              progress={progress}
               onOpen={() => onOpen(p.id)}
             />
           ))}
@@ -636,16 +623,16 @@ export function AboutSection() {
     <section id="sobre" className="scroll-mt-24 py-20 md:py-32">
       <Container>
         <PromptHeading command="~/sobre$ cat bio.md" title={t("landing.sec.about")} />
-        <div className="grid items-start gap-10 lg:grid-cols-[280px_1fr] lg:gap-20">
+        <div className="grid items-start gap-10 lg:grid-cols-[300px_1fr] lg:gap-20">
           <div className="lg:sticky lg:top-28">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={AVATAR_URL}
+              src={PHOTO_9X16}
               alt="Guilherme Carvalho"
-              width={280}
-              height={280}
+              width={720}
+              height={1280}
               loading="lazy"
-              className="aspect-square w-44 rounded-3xl border border-line object-cover lg:w-full"
+              className="aspect-[9/16] w-48 rounded-3xl border border-line object-cover lg:w-full"
             />
           </div>
           <div className="max-w-5xl space-y-10">

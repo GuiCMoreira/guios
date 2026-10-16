@@ -88,3 +88,9 @@ em tema escuro, claro e 390px; sem scroll lateral; zero erros de console.
 | Card "Desenvolvedor Web" confuso | Agora: Altec (trabalho) · FATEC (formação) · Projetos pessoais e estudos (cartão mais claro, tracejado, "por conta própria") |
 | E-mail parecia o canal principal | LinkedIn e Instagram em destaque na landing, no app Contato e no terminal do GuiOS e no menu do botão direito; e-mail virou opção secundária |
 | Formulário de contato | Assunto, nome, canais de resposta (WhatsApp, LinkedIn, e-mail, ligação) que abrem o campo de cada um, melhor horário, mensagem; validação nos dois lados, campo-armadilha e limite de envios; entrega por FormSubmit (ou Resend com `RESEND_API_KEY`) |
+
+## Rodada 3 (16/10/2026)
+
+- Capas sem corte: moldura 16:10 (a proporção das capturas), imagem inteira (`object-contain`), sem o parallax/zoom que exigia cortar as bordas; a largura do slide acompanha a altura da janela.
+- Eliteh Protect recapturada sem a caixa de cookies (cookies recusados antes do print).
+- Fotos originais em alta: 3x4 no topo e 9:16 (original inteira) em "Além do código", regravadas em webp sem metadados (as originais não tinham GPS).

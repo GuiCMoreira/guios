@@ -6,7 +6,7 @@ import { ArrowDown, ArrowUpRight, Moon, Sun } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { useTheme } from "@/lib/theme";
 import { GitHubIcon, InstagramIcon, LinkedInIcon } from "@/components/ui/icons";
-import { AVATAR_URL, EMAIL, GITHUB_URL, INSTAGRAM_URL, LINKEDIN_URL } from "@/data/projects";
+import { PHOTO_3X4, EMAIL, GITHUB_URL, INSTAGRAM_URL, LINKEDIN_URL } from "@/data/projects";
 import { mainStack } from "@/data/career";
 import { ContactForm } from "./ContactForm";
 import { LandingContextMenu } from "./fx/LandingContextMenu";
@@ -190,9 +190,9 @@ function Hero() {
 
           <motion.div {...enter(0.2)} style={{ y: photoY }} className="justify-self-start lg:justify-self-end">
             <TiltPhoto
-              src={AVATAR_URL}
+              src={PHOTO_3X4}
               alt="Foto de Guilherme Carvalho"
-              className="h-56 w-56 sm:h-72 sm:w-72 lg:h-[clamp(20rem,29vw,34rem)] lg:w-[clamp(20rem,29vw,34rem)]"
+              className="aspect-[3/4] w-56 sm:w-64 lg:w-[clamp(17rem,24vw,27rem)]"
             />
           </motion.div>
         </div>
