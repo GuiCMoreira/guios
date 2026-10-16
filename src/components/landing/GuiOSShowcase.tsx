@@ -14,7 +14,13 @@ const PREVIEW_H = 800;
  * transform para caber na moldura e só monta quando a seção se aproxima do
  * viewport — ninguém paga o custo do OS sem rolar até aqui.
  */
-export function GuiOSShowcase({ label, tilt }: { label: string; tilt?: MotionValue<number> }) {
+export function GuiOSShowcase({
+  label,
+  tilt,
+}: {
+  label: string;
+  tilt?: MotionValue<number>;
+}) {
   const screenRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0);
   const [mounted, setMounted] = useState(false);
@@ -45,11 +51,23 @@ export function GuiOSShowcase({ label, tilt }: { label: string; tilt?: MotionVal
 
   return (
     // perspectiva vista de cima: com a tampa fechada sobre o teclado, aparece o lado de fora dela
-    <div aria-hidden className="select-none" style={{ perspective: 1800, perspectiveOrigin: "50% -20%" }}>
+    <div
+      aria-hidden
+      className="select-none"
+      style={{ perspective: 1800, perspectiveOrigin: "50% -20%" }}
+    >
       {/* Tampa com duas faces. Com `tilt`, gira na dobradiça (borda de baixo):
           começa deitada sobre o teclado e abre até ficar de pé. */}
       <motion.div
-        style={tilt ? { rotateX: tilt, transformOrigin: "50% 100%", transformStyle: "preserve-3d" } : undefined}
+        style={
+          tilt
+            ? {
+                rotateX: tilt,
+                transformOrigin: "50% 100%",
+                transformStyle: "preserve-3d",
+              }
+            : undefined
+        }
         className="relative"
       >
         <div className="rounded-[18px] bg-gradient-to-b from-zinc-300 to-zinc-400 p-[3px] shadow-2xl shadow-black/30 [backface-visibility:hidden] md:rounded-[22px] dark:from-zinc-600 dark:to-zinc-800">
@@ -65,7 +83,11 @@ export function GuiOSShowcase({ label, tilt }: { label: string; tilt?: MotionVal
                   tabIndex={-1}
                   loading="lazy"
                   className="pointer-events-none absolute top-0 left-0 origin-top-left border-0"
-                  style={{ width: PREVIEW_W, height: PREVIEW_H, transform: `scale(${scale})` }}
+                  style={{
+                    width: PREVIEW_W,
+                    height: PREVIEW_H,
+                    transform: `scale(${scale})`,
+                  }}
                 />
               )}
             </div>
@@ -73,7 +95,9 @@ export function GuiOSShowcase({ label, tilt }: { label: string; tilt?: MotionVal
         </div>
         {/* Lado de fora da tampa (alumínio + logo), visível enquanto está fechada */}
         <div className="absolute inset-0 flex items-center justify-center rounded-[18px] bg-gradient-to-b from-zinc-200 to-zinc-400 [backface-visibility:hidden] [transform:rotateX(180deg)] md:rounded-[22px] dark:from-zinc-500 dark:to-zinc-700">
-          <span className="font-display text-5xl font-bold text-white/70 md:text-7xl dark:text-zinc-300/60">G</span>
+          <span className="font-display text-5xl font-bold text-white/70 md:text-7xl dark:text-zinc-300/60">
+            G
+          </span>
         </div>
       </motion.div>
       {/* Base: mesma largura da tela, reta — só a tampa se move */}

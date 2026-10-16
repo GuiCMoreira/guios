@@ -1,8 +1,17 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ArrowUpRight, Check, Loader2, MessageCircle, Phone, AtSign, RotateCcw } from "lucide-react";
+import { useReducedMotionSafe } from "./fx/useReducedMotionSafe";
+import { AnimatePresence, motion } from "motion/react";
+import {
+  ArrowUpRight,
+  Check,
+  Loader2,
+  MessageCircle,
+  Phone,
+  AtSign,
+  RotateCcw,
+} from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { LinkedInIcon } from "@/components/ui/icons";
 import { LINKEDIN_URL } from "@/data/projects";
@@ -70,12 +79,19 @@ function Field({
   const { t } = useI18n();
   return (
     <div>
-      <label htmlFor={id} className="mb-1.5 block font-mono text-xs text-text-lo">
+      <label
+        htmlFor={id}
+        className="mb-1.5 block font-mono text-xs text-text-lo"
+      >
         {label}
       </label>
       {children}
       {error && (
-        <p id={`${id}-err`} className="mt-1.5 text-xs text-rose-500" role="alert">
+        <p
+          id={`${id}-err`}
+          className="mt-1.5 text-xs text-rose-500"
+          role="alert"
+        >
           {t(error)}
         </p>
       )}
@@ -88,7 +104,7 @@ const inputCls =
 
 export function ContactForm() {
   const { t } = useI18n();
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const [topic, setTopic] = useState<ContactTopic>("vaga");
   const [name, setName] = useState("");
   const [channels, setChannels] = useState<ContactChannel[]>([]);
@@ -113,10 +129,13 @@ export function ContactForm() {
 
   const toggleChannel = (c: ContactChannel) => {
     clearError("channels");
-    setChannels((prev) => (prev.includes(c) ? prev.filter((x) => x !== c) : [...prev, c]));
+    setChannels((prev) =>
+      prev.includes(c) ? prev.filter((x) => x !== c) : [...prev, c],
+    );
   };
 
-  const wantsCall = channels.includes("whatsapp") || channels.includes("ligacao");
+  const wantsCall =
+    channels.includes("whatsapp") || channels.includes("ligacao");
 
   const payload = (): ContactPayload => ({
     name,
@@ -150,7 +169,11 @@ export function ContactForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(p),
       });
-      const data = (await r.json().catch(() => ({}))) as { ok?: boolean; error?: string; errors?: ContactErrors };
+      const data = (await r.json().catch(() => ({}))) as {
+        ok?: boolean;
+        error?: string;
+        errors?: ContactErrors;
+      };
       if (r.ok && data.ok) {
         setStatus("sent");
         return;
@@ -205,8 +228,12 @@ export function ContactForm() {
             >
               <Check className="h-8 w-8" />
             </motion.span>
-            <h3 className="font-display text-3xl font-bold tracking-tight">{t("form.sent.title")}</h3>
-            <p className="max-w-sm leading-relaxed text-text-lo">{t("form.sent.body")}</p>
+            <h3 className="font-display text-3xl font-bold tracking-tight">
+              {t("form.sent.title")}
+            </h3>
+            <p className="max-w-sm leading-relaxed text-text-lo">
+              {t("form.sent.body")}
+            </p>
             <button
               type="button"
               onClick={reset}
@@ -218,19 +245,33 @@ export function ContactForm() {
             </button>
           </motion.div>
         ) : (
-          <motion.form key="form" onSubmit={submit} noValidate exit={{ opacity: 0 }} className="space-y-6">
+          <motion.form
+            key="form"
+            onSubmit={submit}
+            noValidate
+            exit={{ opacity: 0 }}
+            className="space-y-6"
+          >
             <div>
               <p className="font-mono text-xs text-text-lo">
                 <span className="text-fx-ink">gui@os</span>:~$ ./mensagem --nova
               </p>
-              <h3 className="mt-2 font-display text-2xl font-bold tracking-tight md:text-3xl">{t("form.title")}</h3>
+              <h3 className="mt-2 font-display text-2xl font-bold tracking-tight md:text-3xl">
+                {t("form.title")}
+              </h3>
             </div>
 
             <fieldset>
-              <legend className="mb-2 font-mono text-xs text-text-lo">{t("form.topic")}</legend>
+              <legend className="mb-2 font-mono text-xs text-text-lo">
+                {t("form.topic")}
+              </legend>
               <div className="flex flex-wrap gap-2">
                 {CONTACT_TOPICS.map((tp) => (
-                  <Pill key={tp} active={topic === tp} onClick={() => setTopic(tp)}>
+                  <Pill
+                    key={tp}
+                    active={topic === tp}
+                    onClick={() => setTopic(tp)}
+                  >
                     {t(`form.topic.${tp}`)}
                   </Pill>
                 ))}
@@ -254,12 +295,20 @@ export function ContactForm() {
             </Field>
 
             <fieldset>
-              <legend id="cf-channels" tabIndex={-1} className="mb-2 font-mono text-xs text-text-lo">
+              <legend
+                id="cf-channels"
+                tabIndex={-1}
+                className="mb-2 font-mono text-xs text-text-lo"
+              >
                 {t("form.channels")}
               </legend>
               <div className="flex flex-wrap gap-2">
                 {CHANNELS.map((c) => (
-                  <Pill key={c.id} active={channels.includes(c.id)} onClick={() => toggleChannel(c.id)}>
+                  <Pill
+                    key={c.id}
+                    active={channels.includes(c.id)}
+                    onClick={() => toggleChannel(c.id)}
+                  >
                     {c.icon}
                     {t(`form.ch.${c.id}`)}
                   </Pill>
@@ -275,9 +324,17 @@ export function ContactForm() {
               <div className="mt-1">
                 <AnimatePresence initial={false}>
                   {channels.includes("whatsapp") && (
-                    <motion.div key="wa" {...reveal} className="overflow-hidden">
+                    <motion.div
+                      key="wa"
+                      {...reveal}
+                      className="overflow-hidden"
+                    >
                       <div className="pt-4">
-                        <Field id="cf-whatsapp" label={t("form.ch.whatsapp")} error={errors.whatsapp}>
+                        <Field
+                          id="cf-whatsapp"
+                          label={t("form.ch.whatsapp")}
+                          error={errors.whatsapp}
+                        >
                           <input
                             id="cf-whatsapp"
                             type="tel"
@@ -297,9 +354,17 @@ export function ContactForm() {
                     </motion.div>
                   )}
                   {channels.includes("linkedin") && (
-                    <motion.div key="li" {...reveal} className="overflow-hidden">
+                    <motion.div
+                      key="li"
+                      {...reveal}
+                      className="overflow-hidden"
+                    >
                       <div className="pt-4">
-                        <Field id="cf-linkedin" label={t("form.linkedin")} error={errors.linkedin}>
+                        <Field
+                          id="cf-linkedin"
+                          label={t("form.linkedin")}
+                          error={errors.linkedin}
+                        >
                           <input
                             id="cf-linkedin"
                             value={linkedin}
@@ -316,9 +381,17 @@ export function ContactForm() {
                     </motion.div>
                   )}
                   {channels.includes("email") && (
-                    <motion.div key="em" {...reveal} className="overflow-hidden">
+                    <motion.div
+                      key="em"
+                      {...reveal}
+                      className="overflow-hidden"
+                    >
                       <div className="pt-4">
-                        <Field id="cf-email" label={t("form.email")} error={errors.email}>
+                        <Field
+                          id="cf-email"
+                          label={t("form.email")}
+                          error={errors.email}
+                        >
                           <input
                             id="cf-email"
                             type="email"
@@ -338,9 +411,17 @@ export function ContactForm() {
                     </motion.div>
                   )}
                   {channels.includes("ligacao") && (
-                    <motion.div key="ph" {...reveal} className="overflow-hidden">
+                    <motion.div
+                      key="ph"
+                      {...reveal}
+                      className="overflow-hidden"
+                    >
                       <div className="pt-4">
-                        <Field id="cf-phone" label={t("form.phone")} error={errors.phone}>
+                        <Field
+                          id="cf-phone"
+                          label={t("form.phone")}
+                          error={errors.phone}
+                        >
                           <input
                             id="cf-phone"
                             type="tel"
@@ -360,12 +441,24 @@ export function ContactForm() {
                     </motion.div>
                   )}
                   {wantsCall && (
-                    <motion.fieldset key="period" {...reveal} className="overflow-hidden">
+                    <motion.fieldset
+                      key="period"
+                      {...reveal}
+                      className="overflow-hidden"
+                    >
                       <div className="pt-4">
-                        <legend className="mb-2 font-mono text-xs text-text-lo">{t("form.period")}</legend>
+                        <legend className="mb-2 font-mono text-xs text-text-lo">
+                          {t("form.period")}
+                        </legend>
                         <div className="flex flex-wrap gap-2">
                           {CONTACT_PERIODS.map((pd) => (
-                            <Pill key={pd} active={period === pd} onClick={() => setPeriod(period === pd ? undefined : pd)}>
+                            <Pill
+                              key={pd}
+                              active={period === pd}
+                              onClick={() =>
+                                setPeriod(period === pd ? undefined : pd)
+                              }
+                            >
                               {t(`form.period.${pd}`)}
                             </Pill>
                           ))}
@@ -377,7 +470,11 @@ export function ContactForm() {
               </div>
             </fieldset>
 
-            <Field id="cf-message" label={t("form.message")} error={errors.message}>
+            <Field
+              id="cf-message"
+              label={t("form.message")}
+              error={errors.message}
+            >
               <textarea
                 id="cf-message"
                 value={message}
@@ -391,27 +488,53 @@ export function ContactForm() {
                 aria-describedby={errors.message ? "cf-message-err" : undefined}
                 className={`${inputCls} resize-y`}
               />
-              <p className="mt-1 text-right font-mono text-[11px] text-text-lo">{message.length}/2000</p>
+              <p className="mt-1 text-right font-mono text-[11px] text-text-lo">
+                {message.length}/2000
+              </p>
             </Field>
 
             {/* campo-armadilha: invisível para pessoas, irresistível para robôs */}
-            <div aria-hidden className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+            <div
+              aria-hidden
+              className="absolute -left-[9999px] h-0 w-0 overflow-hidden"
+            >
               <label htmlFor="cf-website">Website</label>
-              <input id="cf-website" tabIndex={-1} autoComplete="off" value={website} onChange={(e) => setWebsite(e.target.value)} />
+              <input
+                id="cf-website"
+                tabIndex={-1}
+                autoComplete="off"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+              />
             </div>
 
             {status === "error" && serverError && (
-              <p className="rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-500" role="alert">
+              <p
+                className="rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-500"
+                role="alert"
+              >
                 {t(serverError)}{" "}
-                <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" className="font-semibold underline">
+                <a
+                  href={LINKEDIN_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-semibold underline"
+                >
                   LinkedIn ↗
                 </a>
               </p>
             )}
 
             <div className="flex flex-wrap items-center justify-between gap-4">
-              <p className="max-w-xs text-xs leading-relaxed text-text-lo">{t("form.privacy")}</p>
-              <StarButton as="button" type="submit" disabled={status === "sending"} data-cursor="hover">
+              <p className="max-w-xs text-xs leading-relaxed text-text-lo">
+                {t("form.privacy")}
+              </p>
+              <StarButton
+                as="button"
+                type="submit"
+                disabled={status === "sending"}
+                data-cursor="hover"
+              >
                 <span className="inline-flex items-center gap-2 text-sm font-semibold">
                   {status === "sending" ? (
                     <>

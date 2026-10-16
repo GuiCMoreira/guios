@@ -1,11 +1,16 @@
 "use client";
 
-import { useRef, useState, type ReactNode, type PointerEvent as ReactPointerEvent } from "react";
+import { useReducedMotionSafe } from "./useReducedMotionSafe";
+import {
+  useRef,
+  useState,
+  type ReactNode,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 import {
   motion,
   useAnimationFrame,
   useMotionValue,
-  useReducedMotion,
   useScroll,
   useSpring,
   useTransform,
@@ -15,7 +20,11 @@ import {
 /** Barra de progresso de leitura — fio azul colado no topo. */
 export function ScrollProgress() {
   const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 140, damping: 28, restDelta: 0.001 });
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 140,
+    damping: 28,
+    restDelta: 0.001,
+  });
   return (
     <motion.div
       aria-hidden
@@ -29,20 +38,19 @@ export function ScrollProgress() {
  * Título que entra palavra por palavra, cada uma subindo da própria linha
  * (SplitText do react-bits, versão caseira). Com reduced-motion vira fade.
  */
-export function SplitWords({ text, className }: { text: string; className?: string }) {
-  const reduced = useReducedMotion();
-  if (reduced) {
-    return (
-      <motion.span
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        className={className}
-      >
-        {text}
-      </motion.span>
-    );
-  }
+export function SplitWords({
+  text,
+  className,
+}: {
+  text: string;
+  className?: string;
+}) {
+  const reduced = useReducedMotionSafe();
+  // Mesma estrutura com ou sem "reduzir movimento" (no servidor não dá para saber a
+  // preferência): trocar de árvore aqui causava erro de hidratação. Reduzido = só fade.
+  const word = reduced
+    ? { hidden: { opacity: 0 }, show: { opacity: 1 } }
+    : { hidden: { y: "110%" }, show: { y: 0 } };
   // O gatilho fica no PAI: os spans internos nascem 110% para baixo e são
   // clipados pelo overflow-hidden — clipado nunca "entra em view" para o
   // IntersectionObserver, então whileInView neles jamais dispararia.
@@ -57,10 +65,14 @@ export function SplitWords({ text, className }: { text: string; className?: stri
       {/* leitores de tela leem o texto inteiro; a cópia animada fica oculta deles */}
       <span className="sr-only">{text}</span>
       {text.split(" ").map((w, i) => (
-        <span key={i} aria-hidden className="inline-block overflow-hidden pb-[0.08em] align-bottom">
+        <span
+          key={i}
+          aria-hidden
+          className="inline-block overflow-hidden pb-[0.08em] align-bottom"
+        >
           <motion.span
             className="inline-block"
-            variants={{ hidden: { y: "110%" }, show: { y: 0 } }}
+            variants={word}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
             {w}
@@ -77,8 +89,14 @@ export function SplitWords({ text, className }: { text: string; className?: stri
  * scroll (ScrollVelocity). Conteúdo repetido 4x para nunca abrir buraco.
  * baseSpeed é em % da faixa por SEGUNDO (1% ≈ um quarto de uma cópia do conteúdo).
  */
-export function VelocityMarquee({ children, baseSpeed = 0.5 }: { children: ReactNode; baseSpeed?: number }) {
-  const reduced = useReducedMotion();
+export function VelocityMarquee({
+  children,
+  baseSpeed = 0.5,
+}: {
+  children: ReactNode;
+  baseSpeed?: number;
+}) {
+  const reduced = useReducedMotionSafe();
   const baseX = useMotionValue(0);
   const { scrollY } = useScroll();
   const velocity = useVelocity(scrollY);
@@ -92,7 +110,8 @@ export function VelocityMarquee({ children, baseSpeed = 0.5 }: { children: React
     const f = factor.get();
     if (f < 0) dir.current = -1;
     else if (f > 0) dir.current = 1;
-    const move = dir.current * baseSpeed * (delta / 1000) * Math.max(1, Math.abs(f));
+    const move =
+      dir.current * baseSpeed * (delta / 1000) * Math.max(1, Math.abs(f));
     let next = baseX.get() - move;
     // wrap em 25% (conteúdo 4x)
     const wrap = -25;
@@ -107,7 +126,11 @@ export function VelocityMarquee({ children, baseSpeed = 0.5 }: { children: React
     <div className="overflow-hidden whitespace-nowrap">
       <motion.div style={reduced ? undefined : { x }} className="flex w-max">
         {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} aria-hidden={i > 0} className="flex shrink-0 items-center">
+          <div
+            key={i}
+            aria-hidden={i > 0}
+            className="flex shrink-0 items-center"
+          >
             {children}
           </div>
         ))}
@@ -126,7 +149,7 @@ export function Magnetic({
   strength?: number;
   className?: string;
 }) {
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -161,8 +184,16 @@ export function Magnetic({
  * Foto com tilt 3D que acompanha o mouse e revela a cor (TiltedCard).
  * Em touch/reduced-motion fica parada e colorida.
  */
-export function TiltPhoto({ src, alt, className }: { src: string; alt: string; className?: string }) {
-  const reduced = useReducedMotion();
+export function TiltPhoto({
+  src,
+  alt,
+  className,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+}) {
+  const reduced = useReducedMotionSafe();
   const ref = useRef<HTMLDivElement>(null);
   const [hover, setHover] = useState(false);
   const rx = useMotionValue(0);
@@ -204,4 +235,3 @@ export function TiltPhoto({ src, alt, className }: { src: string; alt: string; c
     </div>
   );
 }
-
