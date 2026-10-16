@@ -33,7 +33,7 @@ function rateLimited(ip: string) {
   return recent.length > MAX_PER_WINDOW;
 }
 
-const subject = (p: ContactPayload) => `Portfólio — ${TOPIC_LABEL[p.topic]} — ${p.name}`;
+const subject = (p: ContactPayload) => `Portfólio | ${TOPIC_LABEL[p.topic]} | ${p.name}`;
 
 function summary(p: ContactPayload) {
   const lines = [
@@ -61,11 +61,11 @@ function formSubmitRelay(p: ContactPayload) {
       ...(p.email ? { _replyto: p.email } : {}),
       Assunto: TOPIC_LABEL[p.topic],
       Nome: p.name,
-      WhatsApp: p.whatsapp ?? "—",
-      "Telefone (ligação)": p.phone ?? "—",
-      "E-mail": p.email ?? "—",
-      LinkedIn: p.linkedin ?? "—",
-      "Melhor horário": p.period ? PERIOD_LABEL[p.period] : "—",
+      WhatsApp: p.whatsapp ?? "-",
+      "Telefone (ligação)": p.phone ?? "-",
+      "E-mail": p.email ?? "-",
+      LinkedIn: p.linkedin ?? "-",
+      "Melhor horário": p.period ? PERIOD_LABEL[p.period] : "-",
       Mensagem: p.message,
     },
   };

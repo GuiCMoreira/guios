@@ -68,7 +68,7 @@ function neofetch(lang: Lang): string[] {
         `Uptime:   ${uptime}+ anos codando`,
         "Shell:    fullstack (front + back)",
         "Kernel:   Next.js / React / PHP",
-        "Local:    Bragança Paulista — SP",
+        "Local:    Bragança Paulista, SP",
         "Fuel:     café ☕",
       ]
     : [
@@ -79,7 +79,7 @@ function neofetch(lang: Lang): string[] {
         `Uptime:   ${uptime}+ years coding`,
         "Shell:    fullstack (front + back)",
         "Kernel:   Next.js / React / PHP",
-        "Location: Bragança Paulista — SP, Brazil",
+        "Location: Bragança Paulista, SP, Brazil",
         "Fuel:     coffee ☕",
       ];
   return art.map((line, i) => `${line}  ${info[i] ?? ""}`).concat(info.slice(art.length));
@@ -108,12 +108,12 @@ export function runCommand(input: string, ctx: CommandContext): string[] | "CLEA
     case "whoami":
       return isPt
         ? [
-            "Guilherme Carvalho — Desenvolvedor Web Fullstack.",
+            "Guilherme Carvalho, Desenvolvedor Web Fullstack.",
             "Next.js · React · TypeScript · PHP · MySQL.",
             "Construo sistemas corporativos de dia e ideias próprias à noite.",
           ]
         : [
-            "Guilherme Carvalho — Fullstack Web Developer.",
+            "Guilherme Carvalho, Fullstack Web Developer.",
             "Next.js · React · TypeScript · PHP · MySQL.",
             "I build corporate systems by day and my own ideas by night.",
           ];
@@ -130,13 +130,13 @@ export function runCommand(input: string, ctx: CommandContext): string[] | "CLEA
 
     case "open": {
       if (!arg) {
-        return isPt ? ["uso: open <projeto> — veja 'ls projetos'"] : ["usage: open <project> — see 'ls projects'"];
+        return isPt ? ["uso: open <projeto> (veja 'ls projetos')"] : ["usage: open <project> (see 'ls projects')"];
       }
       const project = getProject(arg.toLowerCase());
       if (!project) {
         return isPt
-          ? [`open: '${arg}' não encontrado — veja 'ls projetos'`]
-          : [`open: '${arg}' not found — see 'ls projects'`];
+          ? [`open: '${arg}' não encontrado, veja 'ls projetos'`]
+          : [`open: '${arg}' not found, see 'ls projects'`];
       }
       ctx.openApp("projects", project.id);
       return isPt ? [`abrindo ${project.name}…`] : [`opening ${project.name}…`];
@@ -149,7 +149,7 @@ export function runCommand(input: string, ctx: CommandContext): string[] | "CLEA
     case "career":
       return career.flatMap((entry) => [
         `${entry.start}–${entry.end ?? (isPt ? "presente" : "present")}  ${entry.company}`,
-        `  ${isPt ? entry.role.pt : entry.role.en} — [${entry.stack.join(", ")}]`,
+        `  ${isPt ? entry.role.pt : entry.role.en}: [${entry.stack.join(", ")}]`,
       ]);
 
     case "neofetch":
@@ -208,7 +208,7 @@ export function runCommand(input: string, ctx: CommandContext): string[] | "CLEA
 
     default:
       return isPt
-        ? [`comando não encontrado: ${cmd} — tente 'help'`]
-        : [`command not found: ${cmd} — try 'help'`];
+        ? [`comando não encontrado: ${cmd}, tente 'help'`]
+        : [`command not found: ${cmd}, try 'help'`];
   }
 }

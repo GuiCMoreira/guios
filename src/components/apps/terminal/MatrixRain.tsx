@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 
 const GLYPHS = "アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789GUIOS";
 
-// Chuva de caracteres estilo Matrix — roda dentro do terminal por alguns
+// Chuva de caracteres estilo Matrix - roda dentro do terminal por alguns
 // segundos e sai com clique/tecla.
 export function MatrixRain({ onDone }: { onDone: () => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -19,7 +19,7 @@ export function MatrixRain({ onDone }: { onDone: () => void }) {
     const fontSize = 14;
     let drops: number[] = [];
 
-    // (re)dimensiona o bitmap junto com a janela — sem isso, maximizar o
+    // (re)dimensiona o bitmap junto com a janela - sem isso, maximizar o
     // terminal deixava o canvas esticado no tamanho antigo
     const setup = () => {
       canvas.width = parent.clientWidth;

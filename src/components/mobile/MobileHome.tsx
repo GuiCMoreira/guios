@@ -168,7 +168,7 @@ export function MobileHome({ onOpen }: MobileHomeProps) {
         <p className="mt-3 text-[13px] leading-relaxed text-text-lo">{t("welcome.tagline")}</p>
       </div>
 
-      {/* Apps de sistema: Ajustes e Lixeira — mesma geometria de colunas do dock */}
+      {/* Apps de sistema: Ajustes e Lixeira - mesma geometria de colunas do dock */}
       <div className="mt-8 grid grid-cols-4 justify-items-center gap-y-6">
         {systemTiles.map((tile) => (
           <motion.button
@@ -195,7 +195,7 @@ export function MobileHome({ onOpen }: MobileHomeProps) {
         ))}
       </div>
 
-      {/* Pílula de pesquisa, entre os apps e o dock — como no iOS */}
+      {/* Pílula de pesquisa, entre os apps e o dock - como no iOS */}
       <button
         type="button"
         onClick={() => setPaletteOpen(true)}

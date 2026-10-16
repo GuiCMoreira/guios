@@ -14,9 +14,9 @@ import { cn } from "@/lib/utils";
 import type { LocalizedText } from "@/lib/types";
 
 /*
- * Notas no estilo do app Notas do Mac. Cada nota é uma lista de blocos —
+ * Notas no estilo do app Notas do Mac. Cada nota é uma lista de blocos -
  * título de seção, parágrafo, lista, etiquetas, entrada de linha do tempo,
- * pares chave/valor — para caber conteúdo detalhado sem virar um paredão de texto.
+ * pares chave/valor - para caber conteúdo detalhado sem virar um paredão de texto.
  */
 
 type Block =
@@ -63,7 +63,7 @@ function buildNotes(): Note[] {
         {
           kind: "p",
           text: {
-            pt: "Sou o Guilherme Carvalho, desenvolvedor fullstack em Bragança Paulista — SP. Programo desde 2022, sou formado em Análise e Desenvolvimento de Sistemas pela FATEC e, desde agosto de 2026, trabalho na Altec Sistemas, empresa de software para o setor de food service.",
+            pt: "Sou o Guilherme Carvalho, desenvolvedor fullstack em Bragança Paulista, SP. Programo desde 2022, sou formado em Análise e Desenvolvimento de Sistemas pela FATEC e, desde agosto de 2026, trabalho na Altec Sistemas, empresa de software para o setor de food service.",
             en: "I'm Guilherme Carvalho, a fullstack developer from Bragança Paulista, Brazil. I've been coding since 2022, I hold a degree in Systems Analysis and Development from FATEC and, since August 2026, I've worked at Altec Sistemas, a software company for the food service industry.",
           },
         },
@@ -76,16 +76,16 @@ function buildNotes(): Note[] {
               en: "Complete web systems, from database to screen: business rules, API and interface.",
             },
             {
-              pt: "Evolução de produtos grandes que já estão em uso — ERP, frente de caixa, apps e BI na Altec.",
-              en: "Evolving large products already in use — ERP, point of sale, apps and BI at Altec.",
+              pt: "Evolução de produtos grandes que já estão em uso: ERP, frente de caixa, apps e BI na Altec.",
+              en: "Evolving large products already in use: ERP, point of sale, apps and BI at Altec.",
             },
             {
               pt: "Produtos próprios do zero, como o NavalhaGo (agenda para barbearias) e o FinanceMy (finanças pessoais).",
               en: "My own products from scratch, like NavalhaGo (barbershop scheduling) and FinanceMy (personal finance).",
             },
             {
-              pt: "Interfaces com cuidado de produto — como este GuiOS, construído do zero.",
-              en: "Interfaces built with product care — like this GuiOS, built from scratch.",
+              pt: "Interfaces com cuidado de produto, como este GuiOS, construído do zero.",
+              en: "Interfaces built with product care, like this GuiOS, built from scratch.",
             },
           ],
         },
@@ -102,8 +102,8 @@ function buildNotes(): Note[] {
               en: "Automated tests are part of the delivery: the showcased projects add up to more than 1,200 tests.",
             },
             {
-              pt: "Segurança, acessibilidade e desempenho desde o começo — este site tem nota 100 de acessibilidade no Lighthouse.",
-              en: "Security, accessibility and performance from the start — this site scores 100 for accessibility on Lighthouse.",
+              pt: "Segurança, acessibilidade e desempenho desde o começo: este site tem nota 100 de acessibilidade no Lighthouse.",
+              en: "Security, accessibility and performance from the start: this site scores 100 for accessibility on Lighthouse.",
             },
             {
               pt: "Documento o que faço: cada projeto tem README com as decisões e como rodar.",
@@ -134,7 +134,7 @@ function buildNotes(): Note[] {
           ? [
               {
                 kind: "entry" as const,
-                period: `${job.start} — ${job.end ?? "%NOW%"}`,
+                period: `${job.start} - ${job.end ?? "%NOW%"}`,
                 title: job.role,
                 place: `${job.company} · ${job.location}`,
                 body: job.summary,
@@ -142,7 +142,7 @@ function buildNotes(): Note[] {
                 bullets: [
                   {
                     pt: "Retaguarda: ERP multi-tenant em PHP e MySQL, com novas funcionalidades, correções e integrações.",
-                    en: "Back office: multi-tenant ERP in PHP and MySQL — new features, fixes and integrations.",
+                    en: "Back office: multi-tenant ERP in PHP and MySQL: new features, fixes and integrations.",
                   },
                   {
                     pt: "Apps em Flutter para ponto de venda, totem de autoatendimento e tela da cozinha.",
@@ -163,7 +163,7 @@ function buildNotes(): Note[] {
           : []),
         {
           kind: "entry",
-          period: `${education.start} — ${education.end}`,
+          period: `${education.start} - ${education.end}`,
           title: education.degree,
           place: education.institution,
           tag: { pt: "formação", en: "education" },
@@ -176,14 +176,14 @@ function buildNotes(): Note[] {
           ? [
               {
                 kind: "entry" as const,
-                period: `${personal.start} — ${personal.end ?? "%NOW%"}`,
+                period: `${personal.start} - ${personal.end ?? "%NOW%"}`,
                 title: personal.role,
                 place: personal.company,
                 tag: { pt: "por conta própria", en: "on my own" },
                 body: personal.summary,
                 bullets: projects.map((p) => ({
-                  pt: `${p.name} — ${p.tagline.pt}`,
-                  en: `${p.name} — ${p.tagline.en}`,
+                  pt: `${p.name}: ${p.tagline.pt}`,
+                  en: `${p.name}: ${p.tagline.en}`,
                 })),
                 chips: personal.stack,
               },

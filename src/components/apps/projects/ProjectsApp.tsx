@@ -41,7 +41,7 @@ export function ProjectsApp() {
     } else if (process.env.NODE_ENV !== "production") {
       console.warn(`[GuiOS] payload de projeto inválido: ${payload}`);
     }
-    // Consome o payload mesmo quando inválido — não fica retido no store.
+    // Consome o payload mesmo quando inválido - não fica retido no store.
     clearPayload("projects");
   }, [payload, clearPayload]);
 

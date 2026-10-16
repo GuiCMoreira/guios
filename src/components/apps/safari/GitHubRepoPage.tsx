@@ -41,7 +41,7 @@ function useRepo(name: string): RepoState {
           clearTimeout(id);
         };
       } catch {
-        // cache corrompido — segue para o fetch
+        // cache corrompido - segue para o fetch
       }
     }
 

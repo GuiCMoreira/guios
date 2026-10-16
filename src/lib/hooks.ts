@@ -112,7 +112,7 @@ export function useWeather(): WeatherInfo | null {
           return;
         }
       } catch {
-        // cache corrompido — segue para o fetch
+        // cache corrompido - segue para o fetch
       }
     }
 
@@ -128,7 +128,7 @@ export function useWeather(): WeatherInfo | null {
         apply(w);
       })
       .catch(() => {
-        // sem clima hoje — o widget simplesmente não aparece
+        // sem clima hoje - o widget simplesmente não aparece
       });
 
     return () => {
@@ -145,7 +145,7 @@ export function useBattery(): BatteryInfo {
   useEffect(() => {
     const nav = navigator as Navigator & { getBattery?: () => Promise<BatteryManager> };
     if (!nav.getBattery) {
-      // Fallback único por sessão + atualização por minuto — sem cascata de renders.
+      // Fallback único por sessão + atualização por minuto - sem cascata de renders.
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setInfo(caffeineLevel());
       const id = setInterval(() => setInfo(caffeineLevel()), 60_000);

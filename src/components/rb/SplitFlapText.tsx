@@ -1,5 +1,5 @@
  
-// React Bits — https://reactbits.dev (SplitFlapText). © 2026 David Haz, MIT + Commons Clause: ver ./LICENSE.md
+// React Bits - https://reactbits.dev (SplitFlapText). © 2026 David Haz, MIT + Commons Clause: ver ./LICENSE.md
 'use client';
 
 import { CSSProperties, HTMLAttributes, useEffect, useMemo, useRef, useState } from 'react';

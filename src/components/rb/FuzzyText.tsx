@@ -1,5 +1,5 @@
  
-// React Bits — https://reactbits.dev (FuzzyText). © 2026 David Haz, MIT + Commons Clause: ver ./LICENSE.md
+// React Bits - https://reactbits.dev (FuzzyText). © 2026 David Haz, MIT + Commons Clause: ver ./LICENSE.md
 'use client';
 
 import React, { useEffect, useRef } from 'react';

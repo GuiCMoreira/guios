@@ -17,7 +17,7 @@ import {
   useVelocity,
 } from "motion/react";
 
-/** Barra de progresso de leitura — fio azul colado no topo. */
+/** Barra de progresso de leitura - fio azul colado no topo. */
 export function ScrollProgress() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -52,7 +52,7 @@ export function SplitWords({
     ? { hidden: { opacity: 0 }, show: { opacity: 1 } }
     : { hidden: { y: "110%" }, show: { y: 0 } };
   // O gatilho fica no PAI: os spans internos nascem 110% para baixo e são
-  // clipados pelo overflow-hidden — clipado nunca "entra em view" para o
+  // clipados pelo overflow-hidden - clipado nunca "entra em view" para o
   // IntersectionObserver, então whileInView neles jamais dispararia.
   return (
     <motion.span

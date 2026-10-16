@@ -26,7 +26,7 @@ export function MobileShell() {
   const activeApp =
     focused && windows[focused].open && !windows[focused].minimized ? focused : null;
 
-  // Ícone de origem do último toque — habilita o morph "app cresce do ícone".
+  // Ícone de origem do último toque - habilita o morph "app cresce do ícone".
   // Aberturas sem toque (terminal, palette) ficam sem origem e usam o zoom padrão.
   const [origin, setOrigin] = useState<{ app: AppId; layoutId: string } | null>(null);
 
@@ -58,7 +58,7 @@ export function MobileShell() {
             type="button"
             onClick={() => setLang(lang === "pt" ? "en" : "pt")}
             className="glass flex h-8 items-center rounded-full px-3 font-mono text-[11px] text-text-hi/80"
-            aria-label={`${lang.toUpperCase()} — ${lang === "pt" ? "switch to English" : "mudar para português"}`}
+            aria-label={`${lang.toUpperCase()}: ${lang === "pt" ? "switch to English" : "mudar para português"}`}
           >
             {lang.toUpperCase()}
           </button>

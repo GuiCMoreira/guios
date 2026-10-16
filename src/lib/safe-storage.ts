@@ -20,6 +20,6 @@ export function storageSet(kind: Kind, key: string, value: string): void {
   try {
     storage(kind).setItem(key, value);
   } catch {
-    // sem persistência disponível — segue o baile
+    // sem persistência disponível - segue o baile
   }
 }

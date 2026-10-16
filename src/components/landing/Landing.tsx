@@ -86,7 +86,7 @@ function Header() {
             data-cursor="hover"
             onClick={() => setLang(lang === "pt" ? "en" : "pt")}
             className="flex h-8 items-center rounded-full border border-line px-3 font-mono text-[11px] text-text-lo transition-colors hover:border-line-strong hover:text-text-hi"
-            aria-label={`${lang.toUpperCase()} — ${lang === "pt" ? "switch to English" : "mudar para português"}`}
+            aria-label={`${lang.toUpperCase()}: ${lang === "pt" ? "switch to English" : "mudar para português"}`}
           >
             {lang.toUpperCase()}
           </button>
@@ -125,7 +125,7 @@ function Hero() {
   const { scrollY } = useScroll();
   // parallax sutil: a foto sobe mais devagar que o texto ao rolar
   const photoY = useTransform(scrollY, [0, 600], [0, reduced ? 0 : 70]);
-  // ao rolar, o hero se afasta: encolhe, desfoca e some — a página "entra" no conteúdo
+  // ao rolar, o hero se afasta: encolhe, desfoca e some - a página "entra" no conteúdo
   const exitScale = useTransform(scrollY, [0, 700], [1, 0.9]);
   const exitOpacity = useTransform(scrollY, [150, 700], [1, 0]);
   const exitBlur = useTransform(

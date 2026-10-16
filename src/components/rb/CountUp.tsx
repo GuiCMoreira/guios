@@ -1,5 +1,5 @@
  
-// React Bits — https://reactbits.dev (CountUp). © 2026 David Haz, MIT + Commons Clause: ver ./LICENSE.md
+// React Bits - https://reactbits.dev (CountUp). © 2026 David Haz, MIT + Commons Clause: ver ./LICENSE.md
 'use client';
 
 import { animate, cubicBezier, useInView } from 'motion/react';

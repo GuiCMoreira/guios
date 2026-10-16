@@ -9,7 +9,7 @@ import { AppErrorBoundary } from "@/components/os/AppErrorBoundary";
 
 interface MobileAppViewProps {
   appId: AppId;
-  /** layoutId do ícone de origem — presente quando o app foi aberto por toque */
+  /** layoutId do ícone de origem - presente quando o app foi aberto por toque */
   originLayoutId?: string;
   onClose: () => void;
 }

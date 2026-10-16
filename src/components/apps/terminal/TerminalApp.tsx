@@ -72,7 +72,7 @@ export function TerminalApp() {
 
   return (
      
-    // Terminal é escuro nos dois temas — autenticidade de Terminal.app.
+    // Terminal é escuro nos dois temas - autenticidade de Terminal.app.
     // min-h-full (não h-full): o fundo precisa crescer junto com o conteúdo rolável.
     <div
       className="relative flex min-h-full cursor-text flex-col bg-[#0d1117] p-4 font-mono text-[13px] leading-relaxed"

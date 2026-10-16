@@ -223,7 +223,7 @@ export function MenuBar() {
       className="glass glass-bar fixed inset-x-0 top-0 z-40 flex h-8 items-center justify-between border-x-0 border-t-0 px-3"
     >
       <div className="flex items-center gap-1">
-        {/* logo do sistema, no lugar da maçã — abre o menu do GuiOS */}
+        {/* logo do sistema, no lugar da maçã - abre o menu do GuiOS */}
         <div className="relative">
           <button
             type="button"
@@ -334,7 +334,7 @@ export function MenuBar() {
           type="button"
           onClick={() => setLang(lang === "pt" ? "en" : "pt")}
           className="rounded-md px-1.5 py-0.5 text-[11px] font-semibold text-text-hi/80 hover:bg-fill-1"
-          aria-label={`${lang.toUpperCase()} — ${lang === "pt" ? "switch to English" : "mudar para português"}`}
+          aria-label={`${lang.toUpperCase()}: ${lang === "pt" ? "switch to English" : "mudar para português"}`}
         >
           {lang.toUpperCase()}
         </button>

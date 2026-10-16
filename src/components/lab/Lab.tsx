@@ -129,7 +129,7 @@ const GROUPS: { title: string; prompt: string; items: Proto[] }[] = [
         component: "TextPressure",
         slug: "text-animations/text-pressure",
         where: "Seu nome no hero (alternativa ao 02)",
-        why: "Cada letra engorda e estica conforme o mouse passa perto — o nome 'respira'.",
+        why: "Cada letra engorda e estica conforme o mouse passa perto: o nome 'respira'.",
         demo: ({ dark }) => (
           <div className="flex h-full items-center px-8">
             <TextPressure text="GUILHERME" textColor={dark ? "#f2f4f8" : "#1d1d1f"} minFontSize={48} />
@@ -162,7 +162,7 @@ const GROUPS: { title: string; prompt: string; items: Proto[] }[] = [
         component: "DecryptedText",
         slug: "text-animations/decrypted-text",
         where: "Os prompts `gui@os:~$` e subtítulos ao entrar na tela",
-        why: "O texto aparece embaralhado e se resolve letra a letra — perfeito para a voz de terminal.",
+        why: "O texto aparece embaralhado e se resolve letra a letra, perfeito para a voz de terminal.",
         demo: () => (
           <div className="flex h-full flex-col justify-center gap-4 px-10 font-mono">
             <DecryptedText
@@ -208,7 +208,7 @@ const GROUPS: { title: string; prompt: string; items: Proto[] }[] = [
         component: "SplitFlapText",
         slug: "text-animations/split-flap-text",
         where: "Selo 'disponível para novas oportunidades'",
-        why: "As placas giram até formar a frase — chama atenção para o que mais importa ao recrutador.",
+        why: "As placas giram até formar a frase e chamam atenção para o que mais importa ao recrutador.",
         demo: () => (
           <div className="flex h-full items-center justify-center px-6">
             <SplitFlapText words={["DISPONIVEL", "FULLSTACK", "CONTRATE"]} fontSize={44} textColor={SKY} />
@@ -310,7 +310,7 @@ const GROUPS: { title: string; prompt: string; items: Proto[] }[] = [
         component: "ElectricBorder",
         slug: "animations/electric-border",
         where: "Botão 'Entrar no GuiOS'",
-        why: "Raios correndo pela borda — o botão mais importante da página vira o mais vivo.",
+        why: "Raios correndo pela borda: o botão mais importante da página vira o mais vivo.",
         demo: ({ dark }) => (
           <div className="flex h-full items-center justify-center">
             <ElectricBorder color={SKY} borderRadius={999} theme={dark ? "dark" : "light"}>
@@ -438,7 +438,7 @@ const GROUPS: { title: string; prompt: string; items: Proto[] }[] = [
         component: "LetterGlitch",
         slug: "backgrounds/letter-glitch",
         where: "Fundo da página 404 ou do contato",
-        why: "Uma parede de caracteres trocando de cor — o 'Matrix' do GuiOS em versão página.",
+        why: "Uma parede de caracteres trocando de cor: o 'Matrix' do GuiOS em versão página.",
         demo: ({ dark }) => (
           <LetterGlitch glitchColors={[SKY, SKY_DEEP, "#1e3a5f"]} lightMode={!dark} interactive />
         ),
@@ -465,7 +465,7 @@ const GROUPS: { title: string; prompt: string; items: Proto[] }[] = [
         component: "LightRays",
         slug: "backgrounds/light-rays",
         where: "Topo do hero, caindo sobre o seu nome",
-        why: "Feixes de luz azul descendo do topo, seguindo o mouse — dá um ar de 'palco'.",
+        why: "Feixes de luz azul descendo do topo, seguindo o mouse, dá um ar de 'palco'.",
         demo: ({ dark }) => (
           <div className="relative h-full w-full">
             <LightRays raysColor={SKY} followMouse lightMode={!dark} />
@@ -667,7 +667,7 @@ export function Lab() {
       <div className="glass-solid fixed inset-x-4 bottom-4 z-50 mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-3 rounded-2xl px-5 py-3 shadow-2xl shadow-black/30">
         <p className="font-mono text-sm">
           <span className="text-fx-ink">{approved.length}</span> / {ALL_IDS.length} aprovados
-          {approved.length > 0 && <span className="text-text-lo"> — {approved.map((i) => `#${i}`).join(" ")}</span>}
+          {approved.length > 0 && <span className="text-text-lo">: {approved.map((i) => `#${i}`).join(" ")}</span>}
         </p>
         <button
           type="button"

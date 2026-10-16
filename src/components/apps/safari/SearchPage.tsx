@@ -6,7 +6,7 @@ import { useI18n } from "@/lib/i18n";
 import { useOSStore } from "@/lib/store";
 import { GITHUB_URL, INSTAGRAM_URL, LINKEDIN_URL } from "@/data/projects";
 
-// Logo do Guigle™ — o buscador do GuiOS que só encontra uma pessoa.
+// Logo do Guigle™ - o buscador do GuiOS que só encontra uma pessoa.
 export function GuigleLogo({ className }: { className?: string }) {
   const letters: [string, string][] = [
     ["G", "#4285F4"],
@@ -58,8 +58,8 @@ export function SearchPage({
   const results: SearchResult[] = [
     {
       title: pt
-        ? "Guilherme de Carvalho Moreira — Desenvolvedor Web Fullstack | LinkedIn"
-        : "Guilherme de Carvalho Moreira — Fullstack Web Developer | LinkedIn",
+        ? "Guilherme de Carvalho Moreira | Desenvolvedor Web Fullstack | LinkedIn"
+        : "Guilherme de Carvalho Moreira | Fullstack Web Developer | LinkedIn",
       url: "linkedin.com › in › guilherme-de-carvalho-moreira",
       snippet: pt
         ? "Next.js · React · TypeScript · PHP · MySQL. Sistemas corporativos de dia, ideias próprias à noite. Exatamente o dev que você pesquisou."
@@ -76,8 +76,8 @@ export function SearchPage({
     },
     {
       title: pt
-        ? "Falar com o Guilherme agora — Contato"
-        : "Talk to Guilherme now — Contact",
+        ? "Falar com o Guilherme agora | Contato"
+        : "Talk to Guilherme now | Contact",
       url: "guios.dev › contato",
       snippet: pt
         ? "Resposta rápida garantida. Abre direto o app de contato deste sistema operacional (sim, você continua dentro dele)."
@@ -93,7 +93,7 @@ export function SearchPage({
       action: () => window.open(INSTAGRAM_URL, "_blank", "noopener,noreferrer"),
     },
     {
-      title: "restaurant-digital — microserviços com RabbitMQ · GitHub",
+      title: "restaurant-digital: microserviços com RabbitMQ · GitHub",
       url: "github.com › GuiCMoreira › restaurant-digital",
       snippet: pt
         ? "O projeto em destaque: cardápio digital com arquitetura orientada a eventos. Abre renderizado aqui dentro do Safari."

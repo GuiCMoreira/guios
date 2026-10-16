@@ -1,5 +1,5 @@
 /* eslint-disable */
-// React Bits — https://reactbits.dev (LetterGlitch). © 2026 David Haz, MIT + Commons Clause: ver ./LICENSE.md
+// React Bits - https://reactbits.dev (LetterGlitch). © 2026 David Haz, MIT + Commons Clause: ver ./LICENSE.md
 'use client';
 
 import { useEffect, useRef, type CSSProperties, type HTMLAttributes } from 'react';
@@ -982,7 +982,7 @@ const LetterGlitch = ({
       gl.deleteTexture(stateTexture);
       gl.deleteVertexArray(vao);
       gl.deleteProgram(program.program);
-      // Portfólio: o StrictMode (dev) remonta no MESMO canvas — só destrói o contexto
+      // Portfólio: o StrictMode (dev) remonta no MESMO canvas - só destrói o contexto
       // se o canvas realmente saiu da página, senão a remontagem herda um contexto morto.
       const lose = gl.getExtension('WEBGL_lose_context');
       setTimeout(() => {

@@ -14,7 +14,7 @@ import { MobileShell } from "@/components/mobile/MobileShell";
 
 const BOOT_FLAG = "guios.booted";
 
-// preview: modo vitrine para o iframe da landing — sem boot, sem notificação,
+// preview: modo vitrine para o iframe da landing - sem boot, sem notificação,
 // com o Sobre já aberto para a miniatura parecer viva.
 export function GuiOS({ preview = false }: { preview?: boolean }) {
   const booted = useOSStore((s) => s.booted);

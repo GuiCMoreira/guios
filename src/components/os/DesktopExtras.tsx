@@ -131,7 +131,7 @@ export function DesktopContextMenu() {
     const onContext = (e: MouseEvent) => {
       const target = e.target;
       if (!(target instanceof HTMLElement)) return;
-      // só no "fundo" do desktop — janelas, dock, menus etc. ficam de fora
+      // só no "fundo" do desktop - janelas, dock, menus etc. ficam de fora
       if (target.closest("section, nav, header, button, a, input, [role='dialog']")) return;
       e.preventDefault();
       setPos({ x: Math.min(e.clientX, window.innerWidth - 230), y: Math.min(e.clientY, window.innerHeight - 180) });

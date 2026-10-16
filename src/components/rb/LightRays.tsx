@@ -1,5 +1,5 @@
 /* eslint-disable */
-// React Bits — https://reactbits.dev (LightRays). © 2026 David Haz, MIT + Commons Clause: ver ./LICENSE.md
+// React Bits - https://reactbits.dev (LightRays). © 2026 David Haz, MIT + Commons Clause: ver ./LICENSE.md
 'use client';
 
 import { useEffect, useRef, useState, type CSSProperties } from 'react';

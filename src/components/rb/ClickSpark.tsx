@@ -1,5 +1,5 @@
  
-// React Bits — https://reactbits.dev (ClickSpark). © 2026 David Haz, MIT + Commons Clause: ver ./LICENSE.md
+// React Bits - https://reactbits.dev (ClickSpark). © 2026 David Haz, MIT + Commons Clause: ver ./LICENSE.md
 'use client';
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, type CSSProperties, type ReactNode } from 'react';

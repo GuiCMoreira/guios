@@ -7,12 +7,12 @@ export const career: CareerEntry[] = [
     kind: "job",
     role: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" },
     company: "Altec Sistemas",
-    location: "Bragança Paulista — SP",
+    location: "Bragança Paulista, SP",
     start: "08/2026",
     end: null,
     summary: {
-      pt: "Desenvolvimento e evolução do ecossistema de produtos para food service: ERP multi-tenant de retaguarda, frente de caixa, apps de PDV, totem e cozinha em Flutter e BI — do banco de dados à interface.",
-      en: "Building and evolving a product ecosystem for the food service industry: a multi-tenant back-office ERP, point of sale, Flutter apps for POS, kiosk and kitchen, and BI — from database to UI.",
+      pt: "Desenvolvimento e evolução do ecossistema de produtos para food service: ERP multi-tenant de retaguarda, frente de caixa, apps de PDV, totem e cozinha em Flutter e BI, do banco de dados à interface.",
+      en: "Building and evolving a product ecosystem for the food service industry: a multi-tenant back-office ERP, point of sale, Flutter apps for POS, kiosk and kitchen, and BI, from database to UI.",
     },
     // levantado dos repositórios da Altec com commits do Guilherme (out/2026)
     stack: [
@@ -95,7 +95,7 @@ export const mainStack = [
   "RabbitMQ",
 ];
 
-// Ferramentas agrupadas — do README do perfil no GitHub + o que uso na Altec.
+// Ferramentas agrupadas - do README do perfil no GitHub + o que uso na Altec.
 // Usado pela landing (faixas da seção Ferramentas) e pela nota "Stack & specs" do GuiOS.
 // Para incluir uma ferramenta, basta acrescentar o nome no grupo certo.
 export const toolGroups: {

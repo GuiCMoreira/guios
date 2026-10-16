@@ -165,7 +165,7 @@ e alimentam a landing e o GuiOS ao mesmo tempo. Cada projeto tem dois textos: o 
 fez). Adicionar um projeto é editar um arquivo; a ordem da vitrine é a constante `ORDER`.
 
 **A landing chega pronta do servidor.** Todo o texto da página está no HTML que o servidor manda
-(cerca de 100 KB). Os efeitos visuais — WebGL, canvas, cursor — são componentes só do cliente,
+(cerca de 100 KB). Os efeitos visuais (WebGL, canvas, cursor) são componentes só do cliente,
 carregados depois e por cima do conteúdo, nunca em volta dele.
 
 **O GuiOS é uma store.** O estado de todas as janelas vive numa única store do Zustand. Dock,
@@ -232,13 +232,13 @@ o canvas carrega (`useReady` em `fx/rb.tsx`). O `<h1>` com "Guilherme Carvalho" 
 
 O `useReducedMotion` do Motion devolve `null` no servidor e o valor real no primeiro render do
 cliente. Para quem tem "reduzir movimento" ligado, o cliente renderizava uma árvore diferente da do
-servidor e o React acusava erro de hidratação — texto diferente, ref sem elemento, atributos
+servidor e o React acusava erro de hidratação: texto diferente, ref sem elemento, atributos
 trocados.
 
 `useReducedMotionSafe` usa `useSyncExternalStore` com o snapshot do servidor fixo em `false`: o
 primeiro render bate com o HTML e a troca acontece logo depois, como uma atualização normal. Além
 disso, os componentes de texto animado (`SplitWords`, `WordReveal`) mantêm **a mesma estrutura de
-DOM** nos dois modos — no modo reduzido as palavras continuam em `<span>`, só que paradas. Zero
+DOM** nos dois modos: no modo reduzido as palavras continuam em `<span>`, só que paradas. Zero
 erros de console nos dois modos.
 
 </details>
@@ -247,7 +247,7 @@ erros de console nos dois modos.
 <summary><strong>Janelas que não cobrem a apresentação</strong></summary>
 
 No GuiOS, as janelas nasciam em posições fixas e caíam em cima do cartão "Olá, eu sou Guilherme
-Carvalho" e do widget de clima — justamente o que quem chega precisa ver.
+Carvalho" e do widget de clima, justamente o que quem chega precisa ver.
 
 `window-placement.ts` mede, no momento de abrir, a camada de janelas e os widgets marcados com
 `data-desktop-widget`. A janela vai para a maior área livre, encolhe se a tela for pequena e as
@@ -263,14 +263,14 @@ seguintes saem em cascata. Se o usuário arrastou ou redimensionou uma janela, e
 Uma janela que re-renderiza a cada pixel arrastado engasga com o conteúdo pesado dentro dela. A
 posição e o tamanho ficam em *motion values* do Motion, atualizados direto no DOM durante o gesto;
 o React só fica sabendo quando o gesto termina. A maximização tem os próprios `tx`/`ty`, separados
-do arrasto, e mede o alvo no DOM — por isso a janela não treme ao soltar.
+do arrasto, e mede o alvo no DOM, por isso a janela não treme ao soltar.
 
 </details>
 
 <details>
 <summary><strong>Um modal de projeto que nunca rola</strong></summary>
 
-Um modal com rolagem esconde a metade de baixo — e a metade de baixo é onde estão os botões de demo
+Um modal com rolagem esconde a metade de baixo, e a metade de baixo é onde estão os botões de demo
 e GitHub. A partir de 1024px o modal é duas colunas (captura à esquerda, informações à direita) com
 proporções que mudam por breakpoint, e um modo compacto para telas baixas
 (`[@media(max-height:820px)]`). Verificado sem rolagem para os seis projetos em 1920×1080, 1536×864,
@@ -290,13 +290,13 @@ campo desconhecido é descartado, texto é cortado no tamanho máximo, só os ca
 contato.
 
 Contra robôs, sem captcha: um campo-armadilha (`website`) que humanos não veem e robôs preenchem
-— quando vem preenchido, a API responde sucesso e não envia nada — e um limite de 5 envios a cada
+(quando vem preenchido, a API responde sucesso e não envia nada) e um limite de 5 envios a cada
 10 minutos por IP. A entrega usa o Resend se houver `RESEND_API_KEY` e o FormSubmit caso contrário,
 para o site funcionar no primeiro deploy sem configurar nada.
 
 O FormSubmit fica atrás do Cloudflare, que recusa chamadas vindas de IPs de datacenter: a partir da
 Vercel, a resposta é `403 · Error 1010`. Por isso, sem Resend, a rota valida e devolve o pedido
-pronto (`relay`), e quem o envia ao FormSubmit é o navegador do visitante — o endpoint `/ajax` foi
+pronto (`relay`), e quem o envia ao FormSubmit é o navegador do visitante. O endpoint `/ajax` foi
 feito para isso e aceita CORS. O FormSubmit também ativa cada domínio uma vez: envios de
 `localhost` ou de uma prévia da Vercel pedem ativação própria e não chegam até ela ser feita.
 
@@ -331,7 +331,7 @@ primeiro no GuiOS, e o texto técnico logo abaixo, sob "Por dentro (para quem é
 Tema, idioma e "já viu o boot" ficam no `localStorage` e no `sessionStorage`. Acessar o storage pode
 lançar `SecurityError` (cookies bloqueados, iframe em sandbox, modo privado antigo). Todo acesso
 passa por `safe-storage.ts`: a leitura devolve `null` e a escrita vira no-op. O site perde a
-memória, mas não para de funcionar — o que importa também para o GuiOS dentro do iframe do MacBook.
+memória, mas não para de funcionar, o que importa também para o GuiOS dentro do iframe do MacBook.
 
 </details>
 
@@ -348,7 +348,7 @@ tela pequena e os elementos saem grandes demais no card.
 
 ## Testes
 
-Não há suíte automatizada no repositório — e este README não vai fingir que há. A garantia vem de
+Não há suíte automatizada no repositório, e este README não vai fingir que há. A garantia vem de
 três lugares:
 
 | O quê                         | Como                                                                                                       |
