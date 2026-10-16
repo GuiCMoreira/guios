@@ -109,3 +109,8 @@ em tema escuro, claro e 390px; sem scroll lateral; zero erros de console.
   quem sou, o que faço, como trabalho e contato; Experiência com Altec (frentes levantadas dos
   repositórios com commits), FATEC (TCC) e projetos pessoais; Stack & specs com os grupos de
   ferramentas (agora em `toolGroups`, compartilhado com a landing) e números.
+- GuiOS: janelas nascem na área livre da mesa (`src/lib/window-placement.ts`): medem o cartão de
+  apresentação e o widget de clima na hora de abrir, encolhem para caber em telas menores e saem em
+  cascata. Janela arrastada ou redimensionada pelo usuário mantém a posição dele (`userPlaced`).
+  Medido sem sobreposição em 1920×1080, 1600×900, 1366×768 e 1280×720.
+- Boot: progresso não fica mais negativo no 1º quadro (índice de mensagem -1 → aviso de i18n).

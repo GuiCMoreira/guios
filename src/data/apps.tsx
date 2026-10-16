@@ -1,4 +1,5 @@
 import type { AppId } from "@/lib/types";
+import { DEFAULT_SIZE } from "@/lib/window-placement";
 import {
   FinderIcon,
   MailIcon,
@@ -27,35 +28,35 @@ export const APPS: AppDefinition[] = [
     titleKey: "apps.projects",
     icon: FinderIcon,
     component: ProjectsApp,
-    defaultSize: { w: 860, h: 560 },
+    defaultSize: DEFAULT_SIZE.projects,
   },
   {
     id: "safari",
     titleKey: "apps.safari",
     icon: SafariIcon,
     component: SafariApp,
-    defaultSize: { w: 900, h: 600 },
+    defaultSize: DEFAULT_SIZE.safari,
   },
   {
     id: "terminal",
     titleKey: "apps.terminal",
     icon: TerminalMacIcon,
     component: TerminalApp,
-    defaultSize: { w: 680, h: 440 },
+    defaultSize: DEFAULT_SIZE.terminal,
   },
   {
     id: "about",
     titleKey: "apps.about",
     icon: NotesIcon,
     component: AboutApp,
-    defaultSize: { w: 760, h: 560 },
+    defaultSize: DEFAULT_SIZE.about,
   },
   {
     id: "contact",
     titleKey: "apps.contact",
     icon: MailIcon,
     component: ContactApp,
-    defaultSize: { w: 520, h: 440 },
+    defaultSize: DEFAULT_SIZE.contact,
   },
 ];
 
