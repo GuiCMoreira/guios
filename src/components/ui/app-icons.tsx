@@ -1,4 +1,4 @@
-// Ícones de app no estilo macOS — recriações próprias em SVG (não são os
+// Ícones de app no estilo macOS - recriações próprias em SVG (não são os
 // assets da Apple). Todos em squircle 64x64, prontos para dock/grade/palette.
 
 interface IconProps {
@@ -133,7 +133,7 @@ export function SettingsTileIcon({ className }: IconProps) {
 }
 
 export function TrashIcon({ className }: IconProps) {
-  // Cesto cheio estilo macOS — asset do tema WhiteSur (GPL-3, crédito no README).
+  // Cesto cheio estilo macOS - asset do tema WhiteSur (GPL-3, crédito no README).
   // eslint-disable-next-line @next/next/no-img-element
   return <img src="/trash-full.svg" alt="" className={className} draggable={false} aria-hidden />;
 }

@@ -1,4 +1,4 @@
-// Contrato do formulário de contato — compartilhado entre o client e a rota da API.
+// Contrato do formulário de contato - compartilhado entre o client e a rota da API.
 
 export const CONTACT_TOPICS = ["vaga", "freelance", "parceria", "oi"] as const;
 export const CONTACT_CHANNELS = ["whatsapp", "ligacao", "email", "linkedin"] as const;

@@ -20,8 +20,8 @@ const dict: Record<string, LocalizedText> = {
   },
   "landing.hero.mark": { pt: "usam todos os dias.", en: "use every day." },
   "landing.hero.sub": {
-    pt: "Desenvolvedor fullstack — Next.js, React, TypeScript e PHP. Hoje desenvolvo e evoluo um ERP multi-tenant para food service na Altec Sistemas.",
-    en: "Fullstack developer — Next.js, React, TypeScript and PHP. Currently building and evolving a multi-tenant ERP for the food service industry at Altec Sistemas.",
+    pt: "Desenvolvedor fullstack: Next.js, React, TypeScript e PHP. Hoje desenvolvo e evoluo um ERP multi-tenant para food service na Altec Sistemas.",
+    en: "Fullstack developer: Next.js, React, TypeScript and PHP. Currently building and evolving a multi-tenant ERP for the food service industry at Altec Sistemas.",
   },
   "landing.sec.projects": { pt: "Projetos selecionados", en: "Selected projects" },
   "landing.sec.projectsAside": { pt: "Código real, no GitHub", en: "Real code, on GitHub" },
@@ -35,20 +35,20 @@ const dict: Record<string, LocalizedText> = {
   "landing.os.title.before": { pt: "Este portfólio tem um ", en: "This portfolio ships with an " },
   "landing.os.title.mark": { pt: "sistema operacional.", en: "operating system." },
   "landing.os.body": {
-    pt: "O GuiOS é um mini-macOS que eu construí do zero dentro deste site: janelas que arrastam e redimensionam, dock, terminal com easter eggs e até um navegador com buscador próprio. É este mesmo portfólio — do jeito divertido. A prévia acima é o sistema de verdade, rodando agora.",
-    en: "GuiOS is a mini-macOS I built from scratch inside this site: draggable, resizable windows, a dock, a terminal full of easter eggs and even a browser with its own search engine. Same portfolio — the fun way. The preview above is the real system, running right now.",
+    pt: "O GuiOS é um mini-macOS que eu construí do zero dentro deste site: janelas que arrastam e redimensionam, dock, terminal com easter eggs e até um navegador com buscador próprio. É este mesmo portfólio, do jeito divertido. A prévia acima é o sistema de verdade, rodando agora.",
+    en: "GuiOS is a mini-macOS I built from scratch inside this site: draggable, resizable windows, a dock, a terminal full of easter eggs and even a browser with its own search engine. Same portfolio, the fun way. The preview above is the real system, running right now.",
   },
   "landing.os.cta": { pt: "Entrar no GuiOS", en: "Enter GuiOS" },
   "landing.os.hint": {
-    pt: "Melhor no computador — no celular, ele vira um smartphone.",
-    en: "Best on a computer — on your phone, it becomes a smartphone.",
+    pt: "Melhor no computador. No celular, ele vira um smartphone.",
+    en: "Best on a computer. On your phone, it becomes a smartphone.",
   },
   "landing.os.preview": { pt: "Prévia ao vivo do GuiOS", en: "Live GuiOS preview" },
   "landing.projects.all": { pt: "Ver todos os repositórios", en: "Browse all repositories" },
   "landing.projects.wip": { pt: "em desenvolvimento", en: "in development" },
   "landing.projects.private": {
-    pt: "Repositório privado — código sob demanda",
-    en: "Private repository — code available on request",
+    pt: "Repositório privado, código sob demanda",
+    en: "Private repository, code available on request",
   },
   "landing.projects.details": { pt: "Ver detalhes", en: "View details" },
   "landing.projects.scrollHint": { pt: "continue rolando", en: "keep scrolling" },
@@ -63,22 +63,22 @@ const dict: Record<string, LocalizedText> = {
   "landing.stack.backend": { pt: "Backend & dados", en: "Backend & data" },
   "landing.stack.tools": { pt: "Infra & ferramentas", en: "Infra & tooling" },
   "landing.about.p1": {
-    pt: "Sou o Guilherme — desenvolvedor fullstack em Bragança Paulista, SP. Comecei construindo projetos próprios em PHP e no ecossistema React, e hoje trabalho no desenvolvimento e evolução de um ERP de grande porte para o setor de food service.",
-    en: "I'm Guilherme — a fullstack developer from Bragança Paulista, Brazil. I started out building my own projects in PHP and the React ecosystem, and today I develop and evolve a large-scale ERP for the food service industry.",
+    pt: "Sou o Guilherme, desenvolvedor fullstack em Bragança Paulista, SP. Comecei construindo projetos próprios em PHP e no ecossistema React, e hoje trabalho no desenvolvimento e evolução de um ERP de grande porte para o setor de food service.",
+    en: "I'm Guilherme, a fullstack developer from Bragança Paulista, Brazil. I started out building my own projects in PHP and the React ecosystem, and today I develop and evolve a large-scale ERP for the food service industry.",
   },
   "landing.about.p2": {
-    pt: "Gosto de entender o problema antes de escrever a primeira linha — e de cuidar tanto da experiência de quem usa quanto da qualidade do código. Este site é um exemplo: além desta página, ele carrega um sistema operacional inteiro construído do zero.",
-    en: "I like to understand the problem before writing the first line — and to care about the user's experience as much as the quality of the code. This site is an example: besides this page, it carries an entire operating system built from scratch.",
+    pt: "Gosto de entender o problema antes de escrever a primeira linha, e de cuidar tanto da experiência de quem usa quanto da qualidade do código. Este site é um exemplo: além desta página, ele carrega um sistema operacional inteiro construído do zero.",
+    en: "I like to understand the problem before writing the first line, and to care about the user's experience as much as the quality of the code. This site is an example: besides this page, it carries an entire operating system built from scratch.",
   },
   "landing.contact.title.before": { pt: "Vamos construir ", en: "Let's build " },
   "landing.contact.title.mark": { pt: "algo juntos?", en: "something together?" },
   "landing.contact.body": {
-    pt: "Estou aberto a novas oportunidades e bons projetos. Me chama no LinkedIn ou no Instagram — ou deixa seus dados aqui ao lado que eu te procuro.",
-    en: "I'm open to new opportunities and good projects. Message me on LinkedIn or Instagram — or leave your details here and I'll reach out.",
+    pt: "Estou aberto a novas oportunidades e bons projetos. Me chama no LinkedIn ou no Instagram, ou deixa seus dados aqui ao lado que eu te procuro.",
+    en: "I'm open to new opportunities and good projects. Message me on LinkedIn or Instagram, or leave your details here and I'll reach out.",
   },
   "landing.footer.made": {
-    pt: "Feito com Next.js, Tailwind — e um sistema operacional inteiro dentro.",
-    en: "Built with Next.js, Tailwind — and an entire operating system inside.",
+    pt: "Feito com Next.js, Tailwind e um sistema operacional inteiro dentro.",
+    en: "Built with Next.js, Tailwind and an entire operating system inside.",
   },
   "landing.footer.top": { pt: "Voltar ao topo", en: "Back to top" },
   "landing.contact.channels": { pt: "Onde me encontrar", en: "Where to find me" },
@@ -133,7 +133,7 @@ const dict: Record<string, LocalizedText> = {
   "form.sent.title": { pt: "Mensagem enviada!", en: "Message sent!" },
   "form.sent.body": {
     pt: "Recebi seus dados e te respondo pelo canal que você escolheu o quanto antes.",
-    en: "Got your details — I'll get back to you through the channel you picked as soon as I can.",
+    en: "Got your details. I'll get back to you through the channel you picked as soon as I can.",
   },
   "form.sent.again": { pt: "Enviar outra mensagem", en: "Send another message" },
   "form.err.name": { pt: "Digite seu nome (2 a 80 caracteres).", en: "Enter your name (2 to 80 characters)." },
@@ -145,7 +145,7 @@ const dict: Record<string, LocalizedText> = {
     pt: "Escolha pelo menos um jeito de eu te responder.",
     en: "Pick at least one way for me to reply.",
   },
-  "form.err.phone": { pt: "Número incompleto — inclua o DDD.", en: "Incomplete number — include the area code." },
+  "form.err.phone": { pt: "Número incompleto: inclua o DDD.", en: "Incomplete number: include the area code." },
   "form.err.email": { pt: "Esse e-mail não parece válido.", en: "That email doesn't look valid." },
   "form.err.linkedin": { pt: "Coloque o link ou o nome do seu perfil.", en: "Add your profile link or name." },
   "form.err.rate": {
@@ -175,8 +175,8 @@ const dict: Record<string, LocalizedText> = {
   },
   "landing.hero.talk": { pt: "fale comigo", en: "get in touch" },
   "landing.hint.rightClick": {
-    pt: "psiu — experimenta o botão direito",
-    en: "psst — try right-clicking",
+    pt: "psiu, experimenta o botão direito",
+    en: "psst, try right-clicking",
   },
   "landing.scroll": { pt: "role", en: "scroll" },
 
@@ -207,7 +207,7 @@ const dict: Record<string, LocalizedText> = {
   // Welcome widget
   "welcome.hello": { pt: "Olá, eu sou", en: "Hi, I'm" },
   "welcome.role": { pt: "Desenvolvedor Web Fullstack", en: "Fullstack Web Developer" },
-  "welcome.location": { pt: "Bragança Paulista — SP, Brasil", en: "Bragança Paulista — SP, Brazil" },
+  "welcome.location": { pt: "Bragança Paulista, SP, Brasil", en: "Bragança Paulista, SP, Brazil" },
   "welcome.tagline": {
     pt: "Construo sistemas que empresas e pessoas usam todos os dias.",
     en: "I build systems that companies and people use every day.",
@@ -242,20 +242,20 @@ const dict: Record<string, LocalizedText> = {
 
   // Terminal
   "terminal.welcome": {
-    pt: "GuiOS Terminal — digite 'help' para ver os comandos.",
-    en: "GuiOS Terminal — type 'help' to see available commands.",
+    pt: "GuiOS Terminal: digite 'help' para ver os comandos.",
+    en: "GuiOS Terminal: type 'help' to see available commands.",
   },
 
   // Sobre
   "about.bio": {
-    pt: "Desenvolvedor Web Fullstack apaixonado por transformar problemas reais em software bem construído. Trabalho com sistemas corporativos no dia a dia e adoro explorar arquiteturas modernas — de microserviços com mensageria a interfaces que fogem do comum (como este site).",
-    en: "Fullstack Web Developer passionate about turning real problems into well-built software. I work with corporate systems daily and love exploring modern architectures — from microservices with messaging to interfaces that break the mold (like this site).",
+    pt: "Desenvolvedor Web Fullstack apaixonado por transformar problemas reais em software bem construído. Trabalho com sistemas corporativos no dia a dia e adoro explorar arquiteturas modernas, de microserviços com mensageria a interfaces que fogem do comum (como este site).",
+    en: "Fullstack Web Developer passionate about turning real problems into well-built software. I work with corporate systems daily and love exploring modern architectures, from microservices with messaging to interfaces that break the mold (like this site).",
   },
   "about.career": { pt: "Trajetória", en: "Career" },
   "about.present": { pt: "presente", en: "present" },
   "about.thisDev": { pt: "Sobre este Dev", en: "About this Dev" },
   "about.chip": { pt: "Chip", en: "Chip" },
-  "about.chipValue": { pt: "Cérebro G1 Pro — movido a café", en: "G1 Pro Brain — caffeine powered" },
+  "about.chipValue": { pt: "Cérebro G1 Pro, movido a café", en: "G1 Pro Brain, caffeine powered" },
   "about.memory": { pt: "Memória", en: "Memory" },
   "about.storage": { pt: "Armazenamento", en: "Storage" },
   "about.storageValue": {
@@ -270,8 +270,8 @@ const dict: Record<string, LocalizedText> = {
   // Contato
   "contact.title": { pt: "Vamos conversar?", en: "Let's talk?" },
   "contact.subtitle": {
-    pt: "Escolha o canal — respondo em todos.",
-    en: "Pick a channel — I reply on all of them.",
+    pt: "Escolha o canal: respondo em todos.",
+    en: "Pick a channel: I reply on all of them.",
   },
   "contact.email": { pt: "E-mail", en: "Email" },
   "contact.openLink": { pt: "Abrir", en: "Open" },
@@ -315,14 +315,14 @@ const dict: Record<string, LocalizedText> = {
   },
   "safari.recentSearches": { pt: "Pesquisas recentes", en: "Recent searches" },
 
-  // Guigle™ — o buscador que só encontra uma pessoa
+  // Guigle™ - o buscador que só encontra uma pessoa
   "guigle.searching": {
     pt: "vasculhando a internet inteira…",
     en: "scouring the entire internet…",
   },
   "guigle.stats": {
-    pt: "Aproximadamente 6.740.000 resultados (0,42 segundos) — curiosamente, todos apontam para a mesma pessoa.",
-    en: "About 6,740,000 results (0.42 seconds) — curiously, they all point to the same person.",
+    pt: "Aproximadamente 6.740.000 resultados (0,42 segundos). Curiosamente, todos apontam para a mesma pessoa.",
+    en: "About 6,740,000 results (0.42 seconds). Curiously, they all point to the same person.",
   },
   "guigle.didYouMean": { pt: "Você quis dizer:", en: "Did you mean:" },
   "guigle.didYouMeanQuery": {
@@ -330,8 +330,8 @@ const dict: Record<string, LocalizedText> = {
     en: "hire Guilherme Carvalho",
   },
   "guigle.footer": {
-    pt: "Guigle™ — resultados imparciais desde nunca. Nenhum outro dev foi consultado na produção desta página.",
-    en: "Guigle™ — unbiased results since never. No other devs were consulted in the making of this page.",
+    pt: "Guigle™: resultados imparciais desde nunca. Nenhum outro dev foi consultado na produção desta página.",
+    en: "Guigle™: unbiased results since never. No other devs were consulted in the making of this page.",
   },
   "safari.start": { pt: "Página inicial", en: "Start page" },
   "safari.back": { pt: "Voltar", en: "Back" },
@@ -340,8 +340,8 @@ const dict: Record<string, LocalizedText> = {
   "safari.favorites": { pt: "Favoritos", en: "Favorites" },
   "safari.myProjects": { pt: "Meus projetos", en: "My projects" },
   "safari.myProjectsHint": {
-    pt: "abre o repositório aqui mesmo — demos ao vivo em breve",
-    en: "opens the repository right here — live demos coming soon",
+    pt: "abre o repositório aqui mesmo, demos ao vivo em breve",
+    en: "opens the repository right here, live demos coming soon",
   },
   "safari.blockedTitle1": { pt: "Infelizmente o", en: "Unfortunately" },
   "safari.blockedTitle2": {
@@ -381,8 +381,8 @@ const dict: Record<string, LocalizedText> = {
     en: "Real bugs found and deleted while building this system.",
   },
   "trash.footer": {
-    pt: "A lixeira não pode ser esvaziada — esses bugs são troféus. 🏆",
-    en: "The trash can't be emptied — these bugs are trophies. 🏆",
+    pt: "A lixeira não pode ser esvaziada: esses bugs são troféus. 🏆",
+    en: "The trash can't be emptied: these bugs are trophies. 🏆",
   },
 
   // Menu do sistema (logo G)
@@ -399,7 +399,7 @@ const dict: Record<string, LocalizedText> = {
   "sysmenu.sourceCode": { pt: "Código-fonte deste Mac", en: "This Mac's source code" },
   "sysmenu.poweredOff": { pt: "GuiOS foi desligado", en: "GuiOS is powered off" },
   "sysmenu.powerOn": { pt: "Ligar", en: "Power on" },
-  "sysmenu.sleeping": { pt: "Em repouso — toque para acordar", en: "Sleeping — tap to wake" },
+  "sysmenu.sleeping": { pt: "Em repouso, toque para acordar", en: "Sleeping, tap to wake" },
 
   // Ajustes
   "settings.title": { pt: "Ajustes do Sistema", en: "System Settings" },
@@ -439,7 +439,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLangState] = useState<Lang>("pt");
 
   useEffect(() => {
-    // Hidratação única a partir do localStorage/navigator — não há cascata de renders.
+    // Hidratação única a partir do localStorage/navigator - não há cascata de renders.
     const saved = storageGet("local", STORAGE_KEY);
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setLangState(

@@ -1,5 +1,5 @@
  
-// React Bits — https://reactbits.dev (TextPressure). © 2026 David Haz, MIT + Commons Clause: ver ./LICENSE.md
+// React Bits - https://reactbits.dev (TextPressure). © 2026 David Haz, MIT + Commons Clause: ver ./LICENSE.md
 'use client';
 
 // Component ported from https://codepen.io/JuanFuentes/full/rgXKGQ

@@ -58,7 +58,7 @@ export function Window({ app, constraintsRef }: WindowProps) {
   // Canais separados de transform:
   // - x/y pertencem SÓ ao drag (sem re-render, sem replay ao soltar);
   // - tx/ty pertencem SÓ à maximização (compensam a posição arrastada).
-  // O alvo da maximização é medido do DOM — nunca dessincroniza do visual.
+  // O alvo da maximização é medido do DOM - nunca dessincroniza do visual.
   const x = useMotionValue(win.pos.x);
   const y = useMotionValue(win.pos.y);
   const tx = useMotionValue(0);
@@ -69,14 +69,14 @@ export function Window({ app, constraintsRef }: WindowProps) {
 
   const sectionRef = useRef<HTMLElement>(null);
   const firstRun = useRef(true);
-  // tamanho "normal" atual (pós-resize) — alvo do restaurar-da-maximização
+  // tamanho "normal" atual (pós-resize) - alvo do restaurar-da-maximização
   const normalSize = useRef({
     w: win.size?.w ?? app.defaultSize.w,
     h: win.size?.h ?? app.defaultSize.h,
   });
 
   // Redimensionamento pelas bordas/cantos: pointer events puros direto nos
-  // motion values — sem re-render durante o gesto e sem tocar no drag.
+  // motion values - sem re-render durante o gesto e sem tocar no drag.
   const startResize = (dir: ResizeDir) => (e: React.PointerEvent<HTMLDivElement>) => {
     if (win.maximized) return;
     e.stopPropagation();
@@ -85,7 +85,7 @@ export function Window({ app, constraintsRef }: WindowProps) {
     try {
       handle.setPointerCapture(e.pointerId);
     } catch {
-      // sem pointer capture disponível — os listeners no window cobrem
+      // sem pointer capture disponível - os listeners no window cobrem
     }
     const start = { px: e.clientX, py: e.clientY, x: x.get(), y: y.get(), w: w.get(), h: h.get() };
 
@@ -219,7 +219,7 @@ export function Window({ app, constraintsRef }: WindowProps) {
       }}
       aria-label={t(app.titleKey)}
     >
-      {/* Barra de título — alça de drag */}
+      {/* Barra de título - alça de drag */}
       <header
         className="group flex h-9 shrink-0 cursor-grab items-center gap-2 border-b border-line px-3 select-none active:cursor-grabbing"
         onPointerDown={(e) => {

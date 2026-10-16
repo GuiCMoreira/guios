@@ -93,8 +93,8 @@ export const deletedBugs: DeletedBug[] = [
       en: "Ghost light window in dark theme",
     },
     detail: {
-      pt: "Ao trocar de tema, uma janela desfocada chegou a pintar clara sobre o desktop escuro — camada de composição desatualizada do navegador. Fundos sólidos eliminaram a classe do problema.",
-      en: "When switching themes, an unfocused window once painted light over the dark desktop — a stale browser compositing layer. Solid backgrounds killed that class of problem.",
+      pt: "Ao trocar de tema, uma janela desfocada chegou a pintar clara sobre o desktop escuro: camada de composição desatualizada do navegador. Fundos sólidos eliminaram a classe do problema.",
+      en: "When switching themes, an unfocused window once painted light over the dark desktop: a stale browser compositing layer. Solid backgrounds killed that class of problem.",
     },
   },
   {
@@ -181,8 +181,8 @@ export const deletedBugs: DeletedBug[] = [
       en: "Blue focus ring on every text field",
     },
     detail: {
-      pt: "A regra global de acessibilidade valia para tudo — e o terminal e a busca focam o campo ao abrir, então o anel aparecia sempre. Campos de texto ganharam exceção: o cursor já sinaliza o foco.",
-      en: "The global accessibility rule applied to everything — and the terminal and search auto-focus their fields, so the ring always showed. Text fields got an exception: the caret already signals focus.",
+      pt: "A regra global de acessibilidade valia para tudo, e o terminal e a busca focam o campo ao abrir, então o anel aparecia sempre. Campos de texto ganharam exceção: o cursor já sinaliza o foco.",
+      en: "The global accessibility rule applied to everything, and the terminal and search auto-focus their fields, so the ring always showed. Text fields got an exception: the caret already signals focus.",
     },
   },
   {

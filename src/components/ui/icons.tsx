@@ -1,4 +1,4 @@
-// Ícones de marca (removidos do lucide v1) — SVGs próprios.
+// Ícones de marca (removidos do lucide v1) - SVGs próprios.
 
 export function GitHubIcon({ className }: { className?: string }) {
   return (

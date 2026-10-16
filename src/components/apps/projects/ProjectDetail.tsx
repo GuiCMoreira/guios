@@ -47,7 +47,7 @@ export function ProjectDetail({ project, onBack }: ProjectDetailProps) {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={project.image}
-                  alt={`${project.name} — ${tx(project.tagline)}`}
+                  alt={`${project.name}: ${tx(project.tagline)}`}
                   className="absolute inset-0 h-full w-full object-cover object-top"
                 />
               </div>

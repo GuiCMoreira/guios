@@ -1,5 +1,5 @@
 /* eslint-disable */
-// React Bits — https://reactbits.dev (Threads). © 2026 David Haz, MIT + Commons Clause: ver ./LICENSE.md
+// React Bits - https://reactbits.dev (Threads). © 2026 David Haz, MIT + Commons Clause: ver ./LICENSE.md
 'use client';
 
 import { useEffect, useRef, type HTMLAttributes } from 'react';

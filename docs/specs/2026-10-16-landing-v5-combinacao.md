@@ -1,4 +1,4 @@
-# Landing v5 — combinação dos efeitos aprovados no /lab
+# Landing v5 - combinação dos efeitos aprovados no /lab
 
 Aprovados (16/10/2026): #01 DotGrid, #02 TechText, #05 DecryptedText, #06 RotatingText,
 #07 SplitFlapText, #09 TargetCursor, #10 Crosshair, #11 ClickSpark, #13 StarBorder,
@@ -14,13 +14,13 @@ Aprovados (16/10/2026): #01 DotGrid, #02 TechText, #05 DecryptedText, #06 Rotati
 | 06 | RotatingText | linha do cargo | `// desenvolvedor fullstack` fixo |
 | 07 | SplitFlapText | selo de disponibilidade | texto "disponível para novas oportunidades" |
 | 09 | TargetCursor | cursor da página | anel + ponto (CursorFX, removido) |
-| 10 | Crosshair | só na seção do GuiOS | — |
+| 10 | Crosshair | só na seção do GuiOS | - |
 | 11 | ClickSpark | clique em qualquer lugar | faíscas em CSS do CursorFX |
 | 13 | StarBorder | CTAs principais (Ver projetos, Entrar no GuiOS, e-mail) | pílula lisa |
 | 14 | GlareHover | imagem dos cards de projeto | holofote que seguia o mouse (removido) |
 | 17 | LogoLoop | faixa da stack abaixo do hero | marquee de texto (VelocityMarquee, removido) |
 | 20 | Threads | fundo da seção de contato | fundo liso |
-| 23 | ShinyText | dica "psiu — experimenta o botão direito" | texto fixo |
+| 23 | ShinyText | dica "psiu, experimenta o botão direito" | texto fixo |
 | 23 | GradientText | "sistema operacional." e "algo juntos?" | marca-texto azul |
 | 24 | FuzzyText | "404" na tela de kernel panic | emoji 💥 |
 
@@ -69,14 +69,14 @@ direito, barra de progresso, títulos que sobem palavra a palavra, modal de proj
 Lighthouse local 100/100/100/100 (desktop e mobile). Capturas no Playwright (com WebGL)
 em tema escuro, claro e 390px; sem scroll lateral; zero erros de console.
 
-## Rodada 2 (16/10/2026) — pedidos do Guilherme sobre a prévia
+## Rodada 2 (16/10/2026) - pedidos do Guilherme sobre a prévia
 
 | Pedido | O que foi feito |
 |---|---|
 | Remover o painel de aeroporto (#07) | Saiu da landing; o selo "disponível" voltou a ser texto com o ponto verde |
 | Header com o usuário do GitHub | `gui@os` → `GuiCMoreira` |
 | Foto pequena perto do nome | Foto acompanha o bloco do nome: até 34rem (≈480px em 1600px de largura) |
-| "psiu — botão direito" ilegível | O ShinyText converte a cor sozinho e não entende `var()` (virava preto); cores literais por tema |
+| "psiu, botão direito" ilegível | O ShinyText converte a cor sozinho e não entende `var()` (virava preto); cores literais por tema |
 | Carrossel da stack em arco | Voltou o carrossel reto da produção, idêntico, com o losango ✦ menor |
 | Ordem dos projetos | Eliteh Protect, valorant-strathub, GuiOS, restaurant-digital, NavalhaGo, FinanceMy (constante `ORDER` em `projects.ts`) |
 | NavalhaGo com imagens | Captura real do README (`hoje-desktop-claro`, dados de demonstração) e texto refeito a partir do README; repositório segue privado |

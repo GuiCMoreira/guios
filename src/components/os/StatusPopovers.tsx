@@ -79,7 +79,7 @@ export function WifiPopover() {
         </span>
       </div>
 
-      {/* Rede "conectada" — aparece na hora, já estamos nela */}
+      {/* Rede "conectada" - aparece na hora, já estamos nela */}
       <div className="mt-3 flex items-center gap-2 rounded-lg bg-accent/15 px-2.5 py-1.5">
         <WifiStrength strength={3} className="h-4 w-4 text-accent" />
         <span className="text-[12px] font-medium text-text-hi">Internet do Gui</span>

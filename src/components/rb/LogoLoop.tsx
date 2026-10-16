@@ -1,5 +1,5 @@
 /* eslint-disable */
-// React Bits — https://reactbits.dev (LogoLoop). © 2026 David Haz, MIT + Commons Clause: ver ./LICENSE.md
+// React Bits - https://reactbits.dev (LogoLoop). © 2026 David Haz, MIT + Commons Clause: ver ./LICENSE.md
 'use client';
 
 import React, { memo, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';

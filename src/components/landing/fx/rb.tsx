@@ -15,7 +15,7 @@ import { useMediaQuery } from "./scroll";
 /*
  * Adaptadores dos efeitos do React Bits aprovados no /lab: cada um é carregado
  * sob demanda (chunk próprio, só no client) e já recebe cores do tema atual.
- * O fallback de cada dynamic() é a versão estática — sem JS ou sem WebGL,
+ * O fallback de cada dynamic() é a versão estática - sem JS ou sem WebGL,
  * o conteúdo continua lá.
  */
 
@@ -59,7 +59,7 @@ const GradientText = dynamic(() => import("@/components/rb/GradientText"), {
 
 /**
  * true quando o chunk do efeito já carregou. Enquanto isso, quem usa renderiza a
- * versão estática com o conteúdo — o HTML do servidor nunca chega vazio.
+ * versão estática com o conteúdo - o HTML do servidor nunca chega vazio.
  */
 function useReady(load: () => Promise<unknown>) {
   const [ready, setReady] = useState(false);
@@ -115,9 +115,9 @@ export function NearView({
   );
 }
 
-// ————— Hero —————
+// ----- Hero -----
 
-/** #01 — grade de pontos viva atrás do hero (substitui a grade CSS estática). */
+/** #01 - grade de pontos viva atrás do hero (substitui a grade CSS estática). */
 export function HeroDots() {
   const dark = useDark();
   return (
@@ -139,7 +139,7 @@ export function HeroDots() {
 }
 
 /**
- * #02 — nome em TechText, uma instância por linha (o componente desenha uma
+ * #02 - nome em TechText, uma instância por linha (o componente desenha uma
  * linha e encolhe para caber). O <h1> real fica no DOM para SEO e leitores de
  * tela; a versão estática aparece enquanto o canvas carrega.
  */
@@ -194,7 +194,7 @@ export function HeroName({ first, last }: { first: string; last: string }) {
   );
 }
 
-/** #06 — cargo que alterna. */
+/** #06 - cargo que alterna. */
 export function RoleRotator({
   prefix,
   roles,
@@ -224,9 +224,9 @@ export function RoleRotator({
   );
 }
 
-// ————— Prompts e textos —————
+// ----- Prompts e textos -----
 
-/** #05 — comando do prompt se descriptografa ao entrar na tela. */
+/** #05 - comando do prompt se descriptografa ao entrar na tela. */
 export function PromptCommand({ text }: { text: string }) {
   const ready = useReady(loadDecrypt);
   if (!ready) return <span className="text-text-lo">{text}</span>;
@@ -242,7 +242,7 @@ export function PromptCommand({ text }: { text: string }) {
   );
 }
 
-/** #23 — reflexo que passa pelo texto de tempos em tempos (dicas discretas). */
+/** #23 - reflexo que passa pelo texto de tempos em tempos (dicas discretas). */
 export function Shiny({
   text,
   className,
@@ -267,7 +267,7 @@ export function Shiny({
   );
 }
 
-/** #23 — gradiente azul animado nas frases de destaque (no lugar do marca-texto). */
+/** #23 - gradiente azul animado nas frases de destaque (no lugar do marca-texto). */
 export function Gradient({
   children,
   className,
@@ -289,10 +289,10 @@ export function Gradient({
   );
 }
 
-// ————— Cursor e clique —————
+// ----- Cursor e clique -----
 
 /**
- * #09 + #11 — mira que trava nos alvos ([data-cursor], com o rótulo de
+ * #09 + #11 - mira que trava nos alvos ([data-cursor], com o rótulo de
  * data-cursor-label) e faíscas em cada clique. O TargetCursor se desliga
  * sozinho em touch; as faíscas funcionam em toque também.
  */
@@ -325,7 +325,7 @@ export function CursorLayer({ children }: { children: ReactNode }) {
   );
 }
 
-/** #10 — mira com coordenadas, só dentro do container (seção do GuiOS). */
+/** #10 - mira com coordenadas, só dentro do container (seção do GuiOS). */
 export function SectionCrosshair({
   container,
 }: {
@@ -345,11 +345,11 @@ export function SectionCrosshair({
   );
 }
 
-// ————— Botões, cards, faixas e fundos —————
+// ----- Botões, cards, faixas e fundos -----
 
 type StarProps = ComponentProps<typeof StarBorder>;
 
-/** #13 — estrelas orbitando a borda dos botões principais (fundo cheio: continuam sendo o CTA). */
+/** #13 - estrelas orbitando a borda dos botões principais (fundo cheio: continuam sendo o CTA). */
 export function StarButton(props: StarProps) {
   const dark = useDark();
   const ready = useReady(loadStar);
@@ -380,7 +380,7 @@ export function StarButton(props: StarProps) {
   );
 }
 
-/** #14 — reflexo de vidro atravessando a imagem do projeto no hover. */
+/** #14 - reflexo de vidro atravessando a imagem do projeto no hover. */
 export function GlareImage({
   children,
   className,
@@ -406,7 +406,7 @@ export function GlareImage({
   );
 }
 
-/** #20 — fios ondulando atrás do contato. */
+/** #20 - fios ondulando atrás do contato. */
 export function ContactThreads() {
   const dark = useDark();
   return (

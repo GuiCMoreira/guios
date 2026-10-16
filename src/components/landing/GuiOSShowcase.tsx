@@ -12,7 +12,7 @@ const PREVIEW_H = 800;
  * Mockup de MacBook com o GuiOS REAL rodando em miniatura.
  * O iframe carrega /os?preview=1 (sem boot, Sobre aberto), é escalado por
  * transform para caber na moldura e só monta quando a seção se aproxima do
- * viewport — ninguém paga o custo do OS sem rolar até aqui.
+ * viewport - ninguém paga o custo do OS sem rolar até aqui.
  */
 export function GuiOSShowcase({
   label,
@@ -100,7 +100,7 @@ export function GuiOSShowcase({
           </span>
         </div>
       </motion.div>
-      {/* Base: mesma largura da tela, reta — só a tampa se move */}
+      {/* Base: mesma largura da tela, reta - só a tampa se move */}
       <div className="relative h-3 w-full rounded-b-[16px] bg-gradient-to-b from-zinc-200 to-zinc-400 shadow-xl shadow-black/25 md:h-4 dark:from-zinc-500 dark:to-zinc-800">
         <span className="absolute top-0 left-1/2 h-1.5 w-[14%] -translate-x-1/2 rounded-b-lg bg-zinc-400/80 dark:bg-zinc-700" />
       </div>

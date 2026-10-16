@@ -1,4 +1,4 @@
-# Landing híbrida — portfólio clássico + GuiOS
+# Landing híbrida - portfólio clássico + GuiOS
 
 ## Problema
 O GuiOS é um ótimo destino, mas uma porta de entrada ruim para quem não é da área:
@@ -8,14 +8,14 @@ Dentro do GuiOS, visitantes leigos caem numa mesa vazia sem saber onde clicar.
 
 ## Decisões (com o Guilherme, 15/10/2026)
 1. **Híbrido**: landing clássica em `/`, GuiOS movido para `/os`.
-2. **Estética**: editorial claro+escuro (ref.: lucasweb.dev + gabrieloliroddev.online) —
+2. **Estética**: editorial claro+escuro (ref.: lucasweb.dev + gabrieloliroddev.online) -
    tipografia display grande, numeração de seções (01–05), marca-texto amarelo,
    badge "open to work", muito respiro. Segue o tema do sistema com toggle (já existente).
 3. **Entrada do GuiOS**: seção com mockup de MacBook exibindo o GuiOS REAL em miniatura
    (iframe `/os?preview=1`, lazy + escalado, não interativo) e CTA "Entrar no GuiOS".
 4. **Mobile**: landing é a experiência principal; GuiOS mobile continua acessível em `/os`.
 5. **Onboarding no GuiOS**: no primeiro boot da sessão (desktop), o app **Sobre** abre
-   sozinho — ninguém mais cai numa mesa vazia.
+   sozinho - ninguém mais cai numa mesa vazia.
 
 ## Estrutura da landing (`/`)
 Header fixo (nome, âncoras, PT/EN, tema, botão GuiOS) →
@@ -38,5 +38,5 @@ Contato (CTA gigante + e-mail/GitHub/LinkedIn/Instagram) → footer.
 - Sitemap ganha `/os`. Metadata raiz passa a descrever o portfólio; `/os` tem título próprio.
 
 ## Fora de escopo / pendente do usuário
-- Formação acadêmica: sem dado real, NÃO inventar — seção omitida até o Guilherme informar.
+- Formação acadêmica: sem dado real, NÃO inventar - seção omitida até o Guilherme informar.
 - E-mail público e datas de carreira seguem com `// REVISAR`.

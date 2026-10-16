@@ -34,7 +34,7 @@ export function CommandPalette() {
     setOpen(false);
   };
 
-  // Popup blocker pode devolver null — cai para navegação direta.
+  // Popup blocker pode devolver null - cai para navegação direta.
   const openExternal = (url: string) => {
     const w = window.open(url, "_blank", "noopener,noreferrer");
     if (!w) window.location.href = url;

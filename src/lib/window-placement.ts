@@ -9,7 +9,7 @@ export const DEFAULT_SIZE: Record<AppId, { w: number; h: number }> = {
   contact: { w: 520, h: 440 },
 };
 
-// Mínimos do resize em Window.tsx — a janela nunca nasce menor que isso.
+// Mínimos do resize em Window.tsx - a janela nunca nasce menor que isso.
 const MIN_W = 320;
 const MIN_H = 220;
 const GAP = 24;

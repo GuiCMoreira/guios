@@ -64,7 +64,7 @@ function useGitHubProfile(): GhState {
           clearTimeout(id);
         };
       } catch {
-        // cache corrompido — segue para o fetch
+        // cache corrompido - segue para o fetch
       }
     }
 
@@ -183,7 +183,7 @@ export function GitHubPage() {
           >
             <p className="truncate font-mono text-[13px] font-semibold text-accent">{repo.name}</p>
             <p className="mt-1 line-clamp-2 min-h-8 text-[12px] text-text-lo">
-              {repo.description ?? "—"}
+              {repo.description ?? "-"}
             </p>
             <p className="mt-2 flex items-center gap-3 text-[11px] text-text-lo">
               {repo.language && (

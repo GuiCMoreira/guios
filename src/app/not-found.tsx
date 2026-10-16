@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <main className="flex min-h-dvh flex-col items-center justify-center bg-[#07080c] p-8 text-center font-mono">
       <FuzzyCode />
-      <h1 className="mt-6 text-xl font-bold text-white">KERNEL PANIC — 404</h1>
+      <h1 className="mt-6 text-xl font-bold text-white">KERNEL PANIC: 404</h1>
       <div className="mt-4 max-w-md space-y-1 text-[13px] leading-relaxed text-neutral-400">
         <p>panic: page_not_found at 0x00000194</p>
         <p>&gt; você encontrou uma tela que nem o GuiOS sabia que existia.</p>

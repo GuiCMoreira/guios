@@ -3,10 +3,10 @@ import type { MetadataRoute } from "next";
 // PWA: o GuiOS pode ser instalado como app de verdade. 😎
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "GuiOS — Guilherme Carvalho",
+    name: "GuiOS | Guilherme Carvalho",
     short_name: "GuiOS",
     description:
-      "Portfólio de Guilherme Carvalho, desenvolvedor web fullstack — um sistema operacional interativo.",
+      "Portfólio de Guilherme Carvalho, desenvolvedor web fullstack, com um sistema operacional interativo.",
     start_url: "/",
     display: "standalone",
     background_color: "#07080c",

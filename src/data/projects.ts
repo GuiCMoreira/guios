@@ -39,8 +39,8 @@ const allProjects: Project[] = [
       },
     },
     description: {
-      pt: "O cliente pede pela mesa, a cozinha recebe na hora e o garçom fecha a conta. Três apps Next.js e quatro serviços NestJS — pedido, cozinha, comanda e notificação —, cada um com o próprio banco, trocando eventos por um exchange do RabbitMQ.",
-      en: "Customers order from their table, the kitchen sees it instantly and the waiter closes the bill. Three Next.js apps and four NestJS services — order, kitchen, billing and notification —, each with its own database, exchanging events through a RabbitMQ exchange.",
+      pt: "O cliente pede pela mesa, a cozinha recebe na hora e o garçom fecha a conta. Três apps Next.js e quatro serviços NestJS (pedido, cozinha, comanda e notificação), cada um com o próprio banco, trocando eventos por um exchange do RabbitMQ.",
+      en: "Customers order from their table, the kitchen sees it instantly and the waiter closes the bill. Three Next.js apps and four NestJS services (order, kitchen, billing and notification), each with its own database, exchanging events through a RabbitMQ exchange.",
     },
     highlights: [
       {
@@ -86,8 +86,8 @@ const allProjects: Project[] = [
       },
     },
     description: {
-      pt: "Plataforma colaborativa onde jogadores publicam, avaliam e encontram estratégias. Trabalho de conclusão de curso escrito sem framework — roteamento, sessão, CSRF e camada de dados feitos à mão — e revisado depois com foco em segurança.",
-      en: "Collaborative platform where players publish, rate and find strategies. Final college project written without a framework — routing, sessions, CSRF and data layer by hand — and later reviewed with a security focus.",
+      pt: "Plataforma colaborativa onde jogadores publicam, avaliam e encontram estratégias. Trabalho de conclusão de curso escrito sem framework (roteamento, sessão, CSRF e camada de dados feitos à mão) e revisado depois com foco em segurança.",
+      en: "Collaborative platform where players publish, rate and find strategies. Final college project written without a framework (routing, sessions, CSRF and data layer by hand) and later reviewed with a security focus.",
     },
     highlights: [
       {
@@ -179,8 +179,8 @@ const allProjects: Project[] = [
       },
     },
     description: {
-      pt: "Duas aplicações no mesmo projeto, em produção: o site institucional, com foco em SEO local, e o painel administrativo que a empresa usa no dia a dia — estoque, financeiro, RH e ordens de serviço. Repositório privado.",
-      en: "Two applications in one project, in production: the company website, focused on local SEO, and the admin panel the team uses daily — inventory, finance, HR and service orders. Private repository.",
+      pt: "Duas aplicações no mesmo projeto, em produção: o site institucional, com foco em SEO local, e o painel administrativo que a empresa usa no dia a dia: estoque, financeiro, RH e ordens de serviço. Repositório privado.",
+      en: "Two applications in one project, in production: the company website, focused on local SEO, and the admin panel the team uses daily: inventory, finance, HR and service orders. Private repository.",
     },
     highlights: [
       {
@@ -204,8 +204,8 @@ const allProjects: Project[] = [
     demo: "https://guicmoreira.vercel.app/os",
     image: "/projects/guios.webp",
     tagline: {
-      pt: "Este portfólio — o sistema operacional que você pode abrir agora",
-      en: "This portfolio — the operating system you can open right now",
+      pt: "Este portfólio: o sistema operacional que você pode abrir agora",
+      en: "This portfolio: the operating system you can open right now",
     },
     plain: {
       what: {
@@ -268,8 +268,8 @@ const allProjects: Project[] = [
       },
     },
     description: {
-      pt: "SaaS multi-tenant para barbearias: cada cadeira tem a sua agenda, o cliente marca sozinho pelo link da barbearia e confirma pelo WhatsApp, e a comanda já sai com a comissão de cada barbeiro calculada. Tem Pix no agendamento, clube de assinatura, fidelidade, campanhas para clientes sumidos, relatórios e app instalável. Em desenvolvimento ativo — repositório privado por enquanto.",
-      en: "Multi-tenant SaaS for barbershops: each chair has its own schedule, customers book on their own through the shop's link and confirm on WhatsApp, and the bill comes out with each barber's commission already calculated. It has Pix at booking, a subscription club, loyalty, win-back campaigns, reports and an installable app. Under active development — private repository for now.",
+      pt: "SaaS multi-tenant para barbearias: cada cadeira tem a sua agenda, o cliente marca sozinho pelo link da barbearia e confirma pelo WhatsApp, e a comanda já sai com a comissão de cada barbeiro calculada. Tem Pix no agendamento, clube de assinatura, fidelidade, campanhas para clientes sumidos, relatórios e app instalável. Em desenvolvimento ativo, com repositório privado por enquanto.",
+      en: "Multi-tenant SaaS for barbershops: each chair has its own schedule, customers book on their own through the shop's link and confirm on WhatsApp, and the bill comes out with each barber's commission already calculated. It has Pix at booking, a subscription club, loyalty, win-back campaigns, reports and an installable app. Under active development, with a private repository for now.",
     },
     highlights: [
       {

@@ -106,7 +106,7 @@ export function SlideCounter({
 
 /**
  * Faixas de palavras gigantes ligadas ao scroll: linhas pares vão para a
- * esquerda, ímpares para a direita. Quem rola controla a velocidade —
+ * esquerda, ímpares para a direita. Quem rola controla a velocidade -
  * diferente do marquee automático, aqui dá para parar e ler.
  */
 export function ScrollRows({
@@ -240,7 +240,7 @@ function StackCard({
       <motion.div
         style={reduced ? undefined : { scale }}
         className={`relative origin-top overflow-hidden rounded-[28px] shadow-2xl shadow-black/10 ${
-          // "soft": cartão mais leve, tracejado — projetos pessoais não são vínculo de trabalho
+          // "soft": cartão mais leve, tracejado - projetos pessoais não são vínculo de trabalho
           tone === "soft"
             ? "border border-dashed border-fx/40 bg-[color-mix(in_oklab,var(--landing-card)_90%,var(--fx))]"
             : "border border-line bg-(--landing-card)"
@@ -260,7 +260,7 @@ function StackCard({
 /**
  * Texto que acende palavra por palavra conforme a leitura avança
  * (ScrollReveal). O texto inteiro está no DOM desde o início: leitor de tela
- * e SEO leem normalmente — só a opacidade é coreografada.
+ * e SEO leem normalmente - só a opacidade é coreografada.
  */
 export function WordReveal({
   text,

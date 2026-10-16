@@ -1,6 +1,6 @@
-# Landing v4 — "a parte de fora do GuiOS"
+# Landing v4 - "a parte de fora do GuiOS"
 
-Pedido do Guilherme (15/10/2026): experiência única estilo react-bits — cursor custom,
+Pedido do Guilherme (15/10/2026): experiência única estilo react-bits - cursor custom,
 menu de contexto próprio, full-width 16:9, efeito na foto, scrolls diferentes, botões
 com estrutura própria. Referências: Gustavo Domingues (brutalist/marquee) e Caio Scura.
 
@@ -14,13 +14,13 @@ disciplinadas. Números 01–05 removidos (não eram sequência) → caminhos de
 | Efeito | Inspiração react-bits | Gate |
 |---|---|---|
 | CursorFX: dot+anel difference, rótulo "abrir ↗", ClickSpark | TargetCursor/ClickSpark | pointer:fine && !reduced |
-| LandingContextMenu (botão direito) | — (linguagem do GuiOS) | desktop |
+| LandingContextMenu (botão direito) | - (linguagem do GuiOS) | desktop |
 | VelocityMarquee da stack | ScrollVelocity | reduced → estático |
 | SplitWords nos títulos | SplitText | reduced → fade |
 | TiltPhoto (3D + P&B→cor) | TiltedCard | touch/reduced → off |
 | Magnetic + brilho no CTA | Magnet/StarBorder | idem |
 | SpotlightCard nos projetos | SpotlightCard/GlareHover | hover-only |
-| ScrollProgress amarelo | — | sempre |
+| ScrollProgress amarelo | - | sempre |
 
 ## Layout
 Container full-bleed `px-[clamp(20px,5vw,96px)]`; hero 100dvh; marquee full-bleed;

@@ -65,7 +65,7 @@ function StartPage({ onNavigate }: { onNavigate: (input: string) => void }) {
         ))}
       </div>
 
-      {/* Pesquisas "recentes" — a isca de humor do Guigle */}
+      {/* Pesquisas "recentes" - a isca de humor do Guigle */}
       <h3 className="mt-8 mb-2 font-mono text-[11px] tracking-widest text-text-lo uppercase">
         {t("safari.recentSearches")}
       </h3>
@@ -141,14 +141,14 @@ function BlockedPage({ url, host }: { url: string; host: string }) {
 export function SafariApp() {
   const { t } = useI18n();
   // Pilha + índice num estado único: atualização atômica e idempotente
-  // (o StrictMode roda effects 2x em dev — estados separados dessincronizavam).
+  // (o StrictMode roda effects 2x em dev - estados separados dessincronizavam).
   const [nav, setNav] = useState<{ stack: SafariPage[]; index: number }>({
     stack: [START],
     index: 0,
   });
   const [address, setAddress] = useState("");
   const [frameKey, setFrameKey] = useState(0);
-  // incrementa a cada navegação — reinicia a barra de progresso do toolbar
+  // incrementa a cada navegação - reinicia a barra de progresso do toolbar
   const [navTick, setNavTick] = useState(0);
 
   const page = nav.stack[nav.index];
@@ -172,7 +172,7 @@ export function SafariApp() {
   const clearPayload = useOSStore((s) => s.clearPayload);
   useEffect(() => {
     if (!payload) return;
-    // Navegação única disparada por deep-link — idempotente via samePage.
+    // Navegação única disparada por deep-link - idempotente via samePage.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     navigateTo(resolveInput(payload));
     clearPayload("safari");

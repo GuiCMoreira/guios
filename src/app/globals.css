@@ -7,7 +7,7 @@
   --font-mono: var(--font-mono);
   --font-display: var(--font-display);
 
-  /* Tokens semânticos — os valores trocam com o tema em :root/.dark */
+  /* Tokens semânticos - os valores trocam com o tema em :root/.dark */
   --color-text-hi: var(--text-hi);
   --color-text-lo: var(--text-lo);
   --color-accent: var(--accent);
@@ -27,7 +27,7 @@
 }
 
 :root {
-  /* Tema claro — macOS-like */
+  /* Tema claro - macOS-like */
   --text-hi: #1d1d1f;
   --text-lo: #636368;
   --accent: #007aff;
@@ -94,7 +94,7 @@ html {
   }
 }
 
-/* ————— Efeitos da landing ————— */
+/* ----- Efeitos da landing ----- */
 
 /* Nome em contorno no hero (2ª linha). */
 .text-outline {
@@ -116,7 +116,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, var(--font-sans), system-ui, sans-serif;
 }
 
-/* Superfícies de vidro do GuiOS — tratamento estilo Liquid Glass:
+/* Superfícies de vidro do GuiOS - tratamento estilo Liquid Glass:
    blur alto, saturação forte e highlight interno na borda superior. */
 .glass {
   background: var(--glass);
@@ -140,7 +140,7 @@ body {
   box-shadow: none;
 }
 
-/* Vidro quase opaco: folhas e diálogos com conteúdo denso atrás —
+/* Vidro quase opaco: folhas e diálogos com conteúdo denso atrás -
    legibilidade acima do efeito. */
 .glass-solid {
   background: var(--glass-solid);
@@ -150,7 +150,7 @@ body {
   -webkit-backdrop-filter: blur(24px) saturate(1.6);
 }
 
-/* Janelas de app: fundo SÓLIDO — conteúdo nunca vaza por trás. */
+/* Janelas de app: fundo SÓLIDO - conteúdo nunca vaza por trás. */
 .window-surface {
   background: var(--window-solid);
   border: 1px solid var(--line);
@@ -231,7 +231,7 @@ body {
   border-radius: 4px;
 }
 
-/* Campos de texto não ganham anel de foco — o caret já sinaliza o foco. */
+/* Campos de texto não ganham anel de foco - o caret já sinaliza o foco. */
 input:focus-visible,
 textarea:focus-visible {
   outline: none;

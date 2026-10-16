@@ -50,7 +50,7 @@ const MENU_H = 308;
 
 /**
  * Botão direito da landing: em vez do menu do Chrome, o menu do sistema.
- * Desktop com mouse apenas — no touch o long-press continua nativo.
+ * Desktop com mouse apenas - no touch o long-press continua nativo.
  */
 export function LandingContextMenu() {
   const { lang, setLang, t } = useI18n();

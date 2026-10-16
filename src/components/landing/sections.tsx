@@ -33,7 +33,7 @@ import {
   useMediaQuery,
 } from "./fx/scroll";
 
-// ————— blocos compartilhados —————
+// ----- blocos compartilhados -----
 
 export function Reveal({
   children,
@@ -115,7 +115,7 @@ function Chip({ children }: { children: ReactNode }) {
   );
 }
 
-// ————— Projetos —————
+// ----- Projetos -----
 
 function WipBadge() {
   const { t } = useI18n();
@@ -186,7 +186,7 @@ function ProjectModal({
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={project.image}
-                alt={`${project.name} — ${project.tagline[lang]}`}
+                alt={`${project.name}: ${project.tagline[lang]}`}
                 className="absolute inset-0 h-full w-full object-contain"
               />
             </div>
@@ -315,7 +315,7 @@ function ProjectCard({ p, onOpen }: { p: Project; onOpen: () => void }) {
         <h3 className="mt-3 font-display text-2xl font-semibold tracking-tight">
           {p.name}
         </h3>
-        <span className="sr-only">— {t("landing.projects.details")}</span>
+        <span className="sr-only">, {t("landing.projects.details")}</span>
         <p className="mt-2 flex-1 text-sm leading-relaxed text-text-lo">
           {p.tagline[lang]}
         </p>
@@ -378,7 +378,7 @@ function ProjectSlide({
           <h3 className="mt-2 font-display text-3xl font-bold tracking-tight md:text-4xl">
             {p.name}
           </h3>
-          <span className="sr-only">— {t("landing.projects.details")}</span>
+          <span className="sr-only">, {t("landing.projects.details")}</span>
           <p className="mt-2 line-clamp-2 min-h-[2lh] max-w-xl text-sm leading-relaxed text-text-lo md:text-base">
             {p.tagline[lang]}
           </p>
@@ -507,7 +507,7 @@ export function ProjectsSection() {
   );
 }
 
-// ————— GuiOS: a tela se levanta com o scroll —————
+// ----- GuiOS: a tela se levanta com o scroll -----
 
 export function GuiOSSection() {
   const { t } = useI18n();
@@ -594,7 +594,7 @@ export function GuiOSSection() {
   );
 }
 
-// ————— Ferramentas: faixas que andam com o scroll —————
+// ----- Ferramentas: faixas que andam com o scroll -----
 
 export function StackSection() {
   const { t, tx } = useI18n();
@@ -617,7 +617,7 @@ export function StackSection() {
   );
 }
 
-// ————— Experiência: cartões que empilham —————
+// ----- Experiência: cartões que empilham -----
 
 export function ExperienceSection() {
   const { lang, t } = useI18n();
@@ -629,7 +629,7 @@ export function ExperienceSection() {
       <div className="flex flex-col justify-between gap-6">
         <div className="flex flex-wrap items-center gap-3">
           <p className="font-mono text-sm text-fx-ink">
-            {c.start} — {c.end ?? t("landing.exp.now")}
+            {c.start} - {c.end ?? t("landing.exp.now")}
           </p>
           {soft && (
             <span className="rounded-full border border-line px-2.5 py-0.5 font-mono text-[11px] text-text-lo">
@@ -668,7 +668,7 @@ export function ExperienceSection() {
         <div className="grid min-h-[min(56vh,460px)] gap-6 p-8 md:grid-cols-[1fr_1.4fr] md:p-12">
           <div className="flex flex-col justify-between gap-6">
             <p className="font-mono text-sm text-fx-ink">
-              {education.start} — {education.end}
+              {education.start} - {education.end}
             </p>
             <div>
               <p className="font-mono text-xs text-text-lo">
@@ -716,7 +716,7 @@ export function ExperienceSection() {
   );
 }
 
-// ————— Sobre: o texto acende conforme a leitura —————
+// ----- Sobre: o texto acende conforme a leitura -----
 
 export function AboutSection() {
   const { t } = useI18n();
