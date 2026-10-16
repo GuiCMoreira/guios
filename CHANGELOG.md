@@ -188,3 +188,11 @@
   para ela parar antes do texto e do botão "Entrar no GuiOS" em qualquer altura de janela.
 - Abaixo de 768px e com "reduzir movimento", aparece um notebook parado (o componente tem 512px
   fixos e não foi pensado para ficar parado).
+
+## [5.2.1] - 2026-10-16
+
+### Papel de parede padrão
+
+- O GuiOS abre com o **gradiente** como papel de parede (antes, a água-viva). Vale para quem nunca
+  escolheu outro nos Ajustes e para a prévia no MacBook da landing; quem já escolheu mantém a
+  escolha. O padrão fica em `DEFAULT_WALLPAPER`, em `src/lib/wallpaper.tsx`.

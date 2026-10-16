@@ -14,6 +14,9 @@ export const WALLPAPERS: { id: WallpaperId; src?: string; labelPt: string; label
 
 const STORAGE_KEY = "guios.wallpaper";
 
+// Papel de parede de quem nunca escolheu um nos Ajustes (inclui a prévia no MacBook da landing).
+export const DEFAULT_WALLPAPER: WallpaperId = "gradient";
+
 interface WallpaperValue {
   wallpaper: WallpaperId;
   setWallpaper: (w: WallpaperId) => void;
@@ -23,7 +26,7 @@ interface WallpaperValue {
 const WallpaperContext = createContext<WallpaperValue | null>(null);
 
 export function WallpaperProvider({ children }: { children: React.ReactNode }) {
-  const [wallpaper, setWallpaperState] = useState<WallpaperId>("jellyfish");
+  const [wallpaper, setWallpaperState] = useState<WallpaperId>(DEFAULT_WALLPAPER);
 
   useEffect(() => {
     const saved = storageGet("local", STORAGE_KEY);
