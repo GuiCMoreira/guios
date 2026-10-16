@@ -27,6 +27,8 @@ export interface Project {
 
 export interface CareerEntry {
   id: string;
+  /** "personal" = projetos próprios e estudos (não é vínculo de trabalho). */
+  kind?: "job" | "personal";
   role: LocalizedText;
   company: string;
   location: string;

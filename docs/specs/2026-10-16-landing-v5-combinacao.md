@@ -68,3 +68,23 @@ direito, barra de progresso, títulos que sobem palavra a palavra, modal de proj
 
 Lighthouse local 100/100/100/100 (desktop e mobile). Capturas no Playwright (com WebGL)
 em tema escuro, claro e 390px; sem scroll lateral; zero erros de console.
+
+## Rodada 2 (16/10/2026) — pedidos do Guilherme sobre a prévia
+
+| Pedido | O que foi feito |
+|---|---|
+| Remover o painel de aeroporto (#07) | Saiu da landing; o selo "disponível" voltou a ser texto com o ponto verde |
+| Header com o usuário do GitHub | `gui@os` → `GuiCMoreira` |
+| Foto pequena perto do nome | Foto acompanha o bloco do nome: até 34rem (≈480px em 1600px de largura) |
+| "psiu — botão direito" ilegível | O ShinyText converte a cor sozinho e não entende `var()` (virava preto); cores literais por tema |
+| Carrossel da stack em arco | Voltou o carrossel reto da produção, idêntico, com o losango ✦ menor |
+| Ordem dos projetos | Eliteh Protect, valorant-strathub, GuiOS, restaurant-digital, NavalhaGo, FinanceMy (constante `ORDER` em `projects.ts`) |
+| NavalhaGo com imagens | Captura real do README (`hoje-desktop-claro`, dados de demonstração) e texto refeito a partir do README; repositório segue privado |
+| Tela do MacBook abrindo ao contrário | Tampa com duas faces e perspectiva de cima: começa fechada (vê-se o logo por fora) e abre até ficar de pé |
+| Base mais estreita que a tela | Base com a mesma largura da tela, reta; só a tampa se move |
+| Texto e botão do GuiOS sumindo | Ficam visíveis depois de aparecer e só somem se rolar de volta para cima; MacBook dimensionado para tudo caber na altura da janela |
+| Mais ferramentas, fonte menor | 30 ferramentas (perfil do GitHub + Altec) em fonte menor; para acrescentar, basta editar `STACK_ROWS` |
+| Tags da Altec | Levantadas dos repositórios da organização com commits do Guilherme (riser3, logos, caixa-legado, BI, riser1, one-landing, comanda) |
+| Card "Desenvolvedor Web" confuso | Agora: Altec (trabalho) · FATEC (formação) · Projetos pessoais e estudos (cartão mais claro, tracejado, "por conta própria") |
+| E-mail parecia o canal principal | LinkedIn e Instagram em destaque na landing, no app Contato e no terminal do GuiOS e no menu do botão direito; e-mail virou opção secundária |
+| Formulário de contato | Assunto, nome, canais de resposta (WhatsApp, LinkedIn, e-mail, ligação) que abrem o campo de cada um, melhor horário, mensagem; validação nos dois lados, campo-armadilha e limite de envios; entrega por FormSubmit (ou Resend com `RESEND_API_KEY`) |

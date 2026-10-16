@@ -5,6 +5,7 @@ import Link from "next/link";
 import {
   AnimatePresence,
   motion,
+  useMotionValueEvent,
   useReducedMotion,
   useScroll,
   useTransform,
@@ -442,10 +443,16 @@ export function GuiOSSection() {
   const ref = useRef<HTMLElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const tilt = useTransform(scrollYProgress, [0, 0.6], [62, 0]);
+  // -88° = tampa deitada sobre o teclado; 0° = aberta, de pé
+  const tilt = useTransform(scrollYProgress, [0.04, 0.6], [-88, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.6], [0.78, 1]);
-  const ctaOpacity = useTransform(scrollYProgress, [0.55, 0.75], [0, 1]);
-  const ctaY = useTransform(scrollYProgress, [0.55, 0.75], [30, 0]);
+  // Texto e botão aparecem quando a tela termina de abrir e FICAM: só somem se o
+  // visitante voltar a rolar para cima (histerese entre 0.4 e 0.6).
+  const [ctaShown, setCtaShown] = useState(false);
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    if (v > 0.6) setCtaShown(true);
+    else if (v < 0.4) setCtaShown(false);
+  });
 
   return (
     <section
@@ -470,7 +477,7 @@ export function GuiOSSection() {
 
         <motion.div
           style={reduced ? undefined : { scale }}
-          className="mt-8 w-full max-w-[min(78vw,calc((100vh-330px)*1.6))] max-lg:max-w-full"
+          className="mt-8 w-full max-w-[min(74vw,calc((100vh-400px)*1.6))] max-lg:max-w-full"
         >
           <Link
             href="/os"
@@ -484,7 +491,9 @@ export function GuiOSSection() {
         </motion.div>
 
         <motion.div
-          style={reduced ? undefined : { opacity: ctaOpacity, y: ctaY }}
+          initial={false}
+          animate={reduced || ctaShown ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           className="mt-8 flex max-w-3xl flex-col items-center gap-5 text-center md:flex-row md:text-left"
         >
           <p className="text-sm leading-relaxed text-text-lo">{t("landing.os.body")}</p>
@@ -504,10 +513,21 @@ export function GuiOSSection() {
 
 // ————— Ferramentas: faixas que andam com o scroll —————
 
+// Do README do perfil no GitHub + o que uso na Altec. Para incluir uma ferramenta,
+// basta acrescentar o nome na linha certa.
 const STACK_ROWS = [
-  { key: "landing.stack.frontend", items: ["Next.js", "React", "TypeScript", "Tailwind CSS", "React Native"] },
-  { key: "landing.stack.backend", items: ["PHP", "Node.js", "MySQL", "PostgreSQL", "RabbitMQ"] },
-  { key: "landing.stack.tools", items: ["Docker", "Git", "Supabase", "Vitest", "Playwright"] },
+  {
+    key: "landing.stack.frontend",
+    items: ["Next.js", "React", "TypeScript", "JavaScript", "Tailwind CSS", "Vue.js", "Flutter", "Motion", "Zustand"],
+  },
+  {
+    key: "landing.stack.backend",
+    items: ["PHP", "Node.js", "NestJS", "C#", "MySQL", "PostgreSQL", "Supabase", "Prisma", "Redis", "RabbitMQ", "Socket.IO"],
+  },
+  {
+    key: "landing.stack.tools",
+    items: ["Docker", "Nginx", "Vercel", "GitHub Actions", "Git", "Vitest", "Playwright", "PHPUnit", "PHPStan", "Figma"],
+  },
 ];
 
 export function StackSection() {
@@ -530,52 +550,68 @@ export function StackSection() {
 
 export function ExperienceSection() {
   const { lang, t } = useI18n();
-  const cards = [
-    ...career.map((c) => (
-      <div key={c.id} className="grid min-h-[min(56vh,460px)] gap-6 p-8 md:grid-cols-[1fr_1.4fr] md:p-12">
-        <div className="flex flex-col justify-between gap-6">
+  const job = career.find((c) => c.kind === "job");
+  const personal = career.find((c) => c.kind === "personal");
+
+  const entryCard = (c: (typeof career)[number], soft = false) => (
+    <div className="grid min-h-[min(56vh,460px)] gap-6 p-8 md:grid-cols-[1fr_1.4fr] md:p-12">
+      <div className="flex flex-col justify-between gap-6">
+        <div className="flex flex-wrap items-center gap-3">
           <p className="font-mono text-sm text-fx-ink">
             {c.start} — {c.end ?? t("landing.exp.now")}
           </p>
-          <div>
-            <h3 className="font-display text-4xl leading-[1.02] font-bold tracking-[-0.03em] md:text-6xl">
-              {c.role[lang]}
-            </h3>
-            <p className="mt-3 text-lg text-text-lo">
-              {c.company} <span className="font-mono text-xs">· {c.location}</span>
+          {soft && (
+            <span className="rounded-full border border-line px-2.5 py-0.5 font-mono text-[11px] text-text-lo">
+              {t("landing.exp.personalTag")}
+            </span>
+          )}
+        </div>
+        <div>
+          <h3 className="font-display text-4xl leading-[1.02] font-bold tracking-[-0.03em] md:text-6xl">{c.role[lang]}</h3>
+          <p className="mt-3 text-lg text-text-lo">
+            {c.company} <span className="font-mono text-xs">· {c.location}</span>
+          </p>
+        </div>
+      </div>
+      <div className="flex flex-col justify-end gap-6">
+        <p className="text-base leading-relaxed text-text-lo md:text-lg">{c.summary[lang]}</p>
+        <div className="flex flex-wrap gap-1.5">
+          {c.stack.map((s) => (
+            <Chip key={s}>{s}</Chip>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  const cards = [
+    ...(job ? [{ key: job.id, node: entryCard(job) }] : []),
+    {
+      key: "edu",
+      node: (
+        <div className="grid min-h-[min(56vh,460px)] gap-6 p-8 md:grid-cols-[1fr_1.4fr] md:p-12">
+          <div className="flex flex-col justify-between gap-6">
+            <p className="font-mono text-sm text-fx-ink">
+              {education.start} — {education.end}
+            </p>
+            <div>
+              <p className="font-mono text-xs text-text-lo">
+                <span className="text-fx-ink">tag</span> {t("landing.sec.edu").toLowerCase()}
+              </p>
+              <h3 className="mt-2 font-display text-4xl leading-[1.02] font-bold tracking-[-0.03em] md:text-6xl">
+                {education.institution}
+              </h3>
+            </div>
+          </div>
+          <div className="flex flex-col justify-end">
+            <p className="font-display text-2xl leading-snug font-semibold text-text-lo md:text-3xl">
+              {education.degree[lang]}
             </p>
           </div>
         </div>
-        <div className="flex flex-col justify-end gap-6">
-          <p className="text-base leading-relaxed text-text-lo md:text-lg">{c.summary[lang]}</p>
-          <div className="flex flex-wrap gap-1.5">
-            {c.stack.map((s) => (
-              <Chip key={s}>{s}</Chip>
-            ))}
-          </div>
-        </div>
-      </div>
-    )),
-    <div key="edu" className="grid min-h-[min(56vh,460px)] gap-6 p-8 md:grid-cols-[1fr_1.4fr] md:p-12">
-      <div className="flex flex-col justify-between gap-6">
-        <p className="font-mono text-sm text-fx-ink">
-          {education.start} — {education.end}
-        </p>
-        <div>
-          <p className="font-mono text-xs text-text-lo">
-            <span className="text-fx-ink">tag</span> {t("landing.sec.edu").toLowerCase()}
-          </p>
-          <h3 className="mt-2 font-display text-4xl leading-[1.02] font-bold tracking-[-0.03em] md:text-6xl">
-            {education.institution}
-          </h3>
-        </div>
-      </div>
-      <div className="flex flex-col justify-end">
-        <p className="font-display text-2xl leading-snug font-semibold text-text-lo md:text-3xl">
-          {education.degree[lang]}
-        </p>
-      </div>
-    </div>,
+      ),
+    },
+    ...(personal ? [{ key: personal.id, node: entryCard(personal, true), tone: "soft" as const }] : []),
   ];
 
   return (
@@ -586,7 +622,7 @@ export function ExperienceSection() {
           title={t("landing.sec.exp")}
           aside={t("landing.sec.expAside")}
         />
-        <StackCards>{cards}</StackCards>
+        <StackCards cards={cards} />
       </Container>
     </section>
   );

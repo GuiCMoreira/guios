@@ -1,5 +1,5 @@
 import type { AppId, Lang } from "@/lib/types";
-import { projects, getProject, GITHUB_URL, LINKEDIN_URL, EMAIL } from "@/data/projects";
+import { projects, getProject, GITHUB_URL, LINKEDIN_URL, INSTAGRAM_URL, EMAIL } from "@/data/projects";
 import { career, mainStack } from "@/data/career";
 
 export interface CommandContext {
@@ -181,7 +181,7 @@ export function runCommand(input: string, ctx: CommandContext): string[] | "CLEA
 
     case "contact":
     case "contato":
-      return [`GitHub:   ${GITHUB_URL}`, `LinkedIn: ${LINKEDIN_URL}`, `E-mail:   ${EMAIL}`];
+      return [`LinkedIn:  ${LINKEDIN_URL}`, `Instagram: ${INSTAGRAM_URL}`, `GitHub:    ${GITHUB_URL}`, `E-mail:    ${EMAIL}`];
 
     case "clear":
       return "CLEAR";

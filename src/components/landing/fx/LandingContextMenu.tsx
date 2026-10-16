@@ -6,7 +6,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ArrowUpRight, Check, Copy, Languages, Moon, Sun, TerminalSquare } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { useTheme } from "@/lib/theme";
-import { EMAIL, GITHUB_URL, LINKEDIN_URL } from "@/data/projects";
+import { EMAIL, GITHUB_URL, INSTAGRAM_URL, LINKEDIN_URL } from "@/data/projects";
 
 type MenuState = { x: number; y: number } | null;
 
@@ -32,7 +32,7 @@ function Item({
 }
 
 const MENU_W = 240;
-const MENU_H = 272;
+const MENU_H = 308;
 
 /**
  * Botão direito da landing: em vez do menu do Chrome, o menu do sistema.
@@ -120,10 +120,22 @@ export function LandingContextMenu() {
               {t("landing.nav.os")}
             </Item>
             <Item
-              icon={copied ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}
-              onClick={copyEmail}
+              icon={<ArrowUpRight className="h-4 w-4" />}
+              onClick={() => {
+                setMenu(null);
+                window.open(LINKEDIN_URL, "_blank", "noreferrer");
+              }}
             >
-              {copied ? t("landing.ctx.copied") : t("landing.ctx.copyEmail")}
+              LinkedIn
+            </Item>
+            <Item
+              icon={<ArrowUpRight className="h-4 w-4" />}
+              onClick={() => {
+                setMenu(null);
+                window.open(INSTAGRAM_URL, "_blank", "noreferrer");
+              }}
+            >
+              Instagram
             </Item>
             <div className="mx-2 my-1 h-px bg-line" aria-hidden />
             <Item
@@ -146,13 +158,10 @@ export function LandingContextMenu() {
               GitHub
             </Item>
             <Item
-              icon={<ArrowUpRight className="h-4 w-4" />}
-              onClick={() => {
-                setMenu(null);
-                window.open(LINKEDIN_URL, "_blank", "noreferrer");
-              }}
+              icon={copied ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}
+              onClick={copyEmail}
             >
-              LinkedIn
+              {copied ? t("landing.ctx.copied") : t("landing.ctx.copyEmail")}
             </Item>
           </motion.div>
         </>

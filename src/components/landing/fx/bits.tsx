@@ -3,10 +3,13 @@
 import { useRef, useState, type ReactNode, type PointerEvent as ReactPointerEvent } from "react";
 import {
   motion,
+  useAnimationFrame,
   useMotionValue,
   useReducedMotion,
   useScroll,
   useSpring,
+  useTransform,
+  useVelocity,
 } from "motion/react";
 
 /** Barra de progresso de leitura — fio azul colado no topo. */
@@ -66,6 +69,50 @@ export function SplitWords({ text, className }: { text: string; className?: stri
         </span>
       ))}
     </motion.span>
+  );
+}
+
+/**
+ * Faixa de texto que anda sozinha e acelera/inverte com a velocidade do
+ * scroll (ScrollVelocity). Conteúdo repetido 4x para nunca abrir buraco.
+ * baseSpeed é em % da faixa por SEGUNDO (1% ≈ um quarto de uma cópia do conteúdo).
+ */
+export function VelocityMarquee({ children, baseSpeed = 0.5 }: { children: ReactNode; baseSpeed?: number }) {
+  const reduced = useReducedMotion();
+  const baseX = useMotionValue(0);
+  const { scrollY } = useScroll();
+  const velocity = useVelocity(scrollY);
+  const smooth = useSpring(velocity, { damping: 50, stiffness: 400 });
+  // scroll acelera no máximo 3x: dá a sensação de resposta sem perder a leitura
+  const factor = useTransform(smooth, [-1500, 0, 1500], [-3, 1, 3]);
+  const dir = useRef(1);
+
+  useAnimationFrame((_, delta) => {
+    if (reduced) return;
+    const f = factor.get();
+    if (f < 0) dir.current = -1;
+    else if (f > 0) dir.current = 1;
+    const move = dir.current * baseSpeed * (delta / 1000) * Math.max(1, Math.abs(f));
+    let next = baseX.get() - move;
+    // wrap em 25% (conteúdo 4x)
+    const wrap = -25;
+    if (next <= wrap) next -= wrap;
+    if (next > 0) next += wrap;
+    baseX.set(next);
+  });
+
+  const x = useTransform(baseX, (v) => `${v}%`);
+
+  return (
+    <div className="overflow-hidden whitespace-nowrap">
+      <motion.div style={reduced ? undefined : { x }} className="flex w-max">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div key={i} aria-hidden={i > 0} className="flex shrink-0 items-center">
+            {children}
+          </div>
+        ))}
+      </motion.div>
+    </div>
   );
 }
 

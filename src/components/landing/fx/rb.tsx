@@ -17,7 +17,6 @@ const DotGrid = dynamic(() => import("@/components/rb/DotGrid"), { ssr: false })
 const TechText = dynamic(() => import("@/components/rb/TechText"), { ssr: false });
 const DecryptedText = dynamic(() => import("@/components/rb/DecryptedText"), { ssr: false });
 const RotatingText = dynamic(() => import("@/components/rb/RotatingText"), { ssr: false });
-const SplitFlapText = dynamic(() => import("@/components/rb/SplitFlapText"), { ssr: false });
 const TargetCursor = dynamic(() => import("@/components/rb/TargetCursor"), { ssr: false });
 const Crosshair = dynamic(() => import("@/components/rb/Crosshair"), { ssr: false });
 const ClickSpark = dynamic(() => import("@/components/rb/ClickSpark"), {
@@ -26,7 +25,6 @@ const ClickSpark = dynamic(() => import("@/components/rb/ClickSpark"), {
 });
 const StarBorder = dynamic(() => import("@/components/rb/StarBorder"), { ssr: false });
 const GlareHover = dynamic(() => import("@/components/rb/GlareHover"), { ssr: false });
-const LogoLoop = dynamic(() => import("@/components/rb/LogoLoop"), { ssr: false });
 const Threads = dynamic(() => import("@/components/rb/Threads"), { ssr: false });
 const ShinyText = dynamic(() => import("@/components/rb/ShinyText"), { ssr: false });
 const GradientText = dynamic(() => import("@/components/rb/GradientText"), { ssr: false });
@@ -152,27 +150,6 @@ export function RoleRotator({ prefix, roles }: { prefix: string; roles: string[]
   );
 }
 
-/** #07 — selo de disponibilidade em painel de aeroporto. */
-export function AvailabilityFlap({ words }: { words: string[] }) {
-  return (
-    <span className="flex items-center gap-3">
-      <span className="relative flex h-2 w-2 shrink-0">
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60 motion-reduce:animate-none" />
-        <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-      </span>
-      <SplitFlapText
-        words={words}
-        charset="ABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚÇÃÕ0123456789 +"
-        fontSize={19}
-        padTo={0}
-        textColor={SKY}
-        loop
-        cycleDelay={2600}
-      />
-    </span>
-  );
-}
-
 // ————— Prompts e textos —————
 
 /** #05 — comando do prompt se descriptografa ao entrar na tela. */
@@ -191,12 +168,14 @@ export function PromptCommand({ text }: { text: string }) {
 
 /** #23 — reflexo que passa pelo texto de tempos em tempos (dicas discretas). */
 export function Shiny({ text, className }: { text: string; className?: string }) {
+  // o ShinyText converte a cor para RGB sozinho e não entende var(): cores literais por tema
+  const dark = useDark();
   return (
     <ShinyText
       text={text}
       className={className}
-      color="var(--text-lo)"
-      shineColor="var(--fx-ink)"
+      color={dark ? "#9ba3b5" : "#636368"}
+      shineColor={dark ? SKY : "#0369a1"}
       speed={3}
       delay={2}
     />
@@ -292,28 +271,6 @@ export function GlareImage({ children, className }: { children: ReactNode; class
     >
       {children}
     </GlareHover>
-  );
-}
-
-/** #17 — stack em arco (substitui o marquee de texto). */
-export function StackLoop({ items }: { items: string[] }) {
-  return (
-    <LogoLoop
-      logos={items.map((s) => ({
-        node: <span className="font-display text-3xl font-bold whitespace-nowrap md:text-5xl">{s}</span>,
-        title: s,
-      }))}
-      speed={45}
-      gap={64}
-      logoHeight={56}
-      layout="arc"
-      magnify={1.35}
-      pauseOnHover
-      draggable
-      fadeOut
-      scrollBoost={0.6}
-      ariaLabel="Stack"
-    />
   );
 }
 

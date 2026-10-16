@@ -6,7 +6,7 @@ export const INSTAGRAM_URL = "https://www.instagram.com/_guic_m/";
 export const AVATAR_URL = "https://avatars.githubusercontent.com/u/142915547?v=4";
 export const EMAIL = "gui0307carvalho@gmail.com";
 
-export const projects: Project[] = [
+const allProjects: Project[] = [
   {
     id: "restaurant-digital",
     name: "restaurant-digital",
@@ -172,34 +172,43 @@ export const projects: Project[] = [
     name: "NavalhaGo",
     year: 2026,
     category: "web",
-    featured: false,
+    featured: true,
     status: "wip",
-    stack: ["Next.js", "Supabase", "PostgreSQL", "Turborepo", "pgTAP", "Playwright"],
-    image: "/projects/navalhago.svg",
+    stack: ["Next.js 16", "React 19", "TypeScript", "Supabase", "PostgreSQL", "Tailwind 4", "PWA", "Turborepo", "Vitest", "pgTAP", "Playwright"],
+    image: "/projects/navalhago.webp",
     tagline: {
-      pt: "SaaS multi-tenant de agenda e gestão para barbearias",
-      en: "Multi-tenant SaaS for barbershop scheduling and management",
+      pt: "Agenda e gestão para barbearias, do horário marcado pelo link ao caixa fechado",
+      en: "Barbershop scheduling and management, from the booking link to the closed register",
     },
     description: {
-      pt: "Reescrita do zero de um app abandonado, agora com fundação de produto: agenda por barbeiro, link público de agendamento para o cliente, caixa e assinatura. Monorepo Turborepo com pacotes de domínio puros, RLS do Postgres testada com pgTAP e E2E com Playwright. Em desenvolvimento ativo — repositório privado por enquanto.",
-      en: "A ground-up rewrite of an abandoned app, now with product-grade foundations: per-barber schedule, public booking link for customers, cash register and subscriptions. Turborepo monorepo with pure domain packages, Postgres RLS tested with pgTAP and Playwright E2E. Under active development — private repository for now.",
+      pt: "SaaS multi-tenant para barbearias: cada cadeira tem a sua agenda, o cliente marca sozinho pelo link da barbearia e confirma pelo WhatsApp, e a comanda já sai com a comissão de cada barbeiro calculada. Tem Pix no agendamento, clube de assinatura, fidelidade, campanhas para clientes sumidos, relatórios e app instalável. Em desenvolvimento ativo — repositório privado por enquanto.",
+      en: "Multi-tenant SaaS for barbershops: each chair has its own schedule, customers book on their own through the shop's link and confirm on WhatsApp, and the bill comes out with each barber's commission already calculated. It has Pix at booking, a subscription club, loyalty, win-back campaigns, reports and an installable app. Under active development — private repository for now.",
     },
     highlights: [
       {
-        pt: "Horários sobrepostos são impossíveis por constraint EXCLUDE no Postgres, não por if no código",
-        en: "Overlapping bookings are impossible via a Postgres EXCLUDE constraint, not an if statement",
+        pt: "Mais de 650 testes: 168 de regras (Vitest), 423 asserções no banco (pgTAP) e 34 fluxos ponta a ponta por tamanho de tela (Playwright)",
+        en: "650+ tests: 168 rule tests (Vitest), 423 database assertions (pgTAP) and 34 end-to-end flows per screen size (Playwright)",
       },
       {
-        pt: "Testes em três camadas: unidade (Vitest), banco (pgTAP) e ponta a ponta (Playwright)",
-        en: "Three test layers: unit (Vitest), database (pgTAP) and end-to-end (Playwright)",
+        pt: "Isolamento entre barbearias garantido no banco, com RLS do Postgres testada",
+        en: "Isolation between barbershops enforced in the database, with tested Postgres RLS",
       },
       {
-        pt: "Migrations reproduzíveis: o schema inteiro nasce de supabase db reset, validado no CI",
-        en: "Reproducible migrations: the whole schema comes from supabase db reset, validated in CI",
+        pt: "Horário sobreposto é impossível por constraint EXCLUDE no Postgres, não por um if no código",
+        en: "Overlapping bookings are impossible thanks to a Postgres EXCLUDE constraint, not an if statement",
       },
     ],
   },
 ];
+
+// Ordem da vitrine (landing, GuiOS e Safari usam a mesma).
+const ORDER = ["eliteh-protect", "valorant-strathub", "guios", "restaurant-digital", "navalhago", "financemy"];
+
+export const projects: Project[] = [...allProjects].sort((a, b) => {
+  const ia = ORDER.indexOf(a.id);
+  const ib = ORDER.indexOf(b.id);
+  return (ia === -1 ? ORDER.length : ia) - (ib === -1 ? ORDER.length : ib);
+});
 
 export function getProject(id: string): Project | undefined {
   return projects.find((p) => p.id === id);
