@@ -120,12 +120,15 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
     };
   }, [onClose]);
 
+  // Telas baixas (notebook 768px de altura): texto um degrau menor para tudo caber sem rolar.
+  const short = "[@media(max-height:820px)]";
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm md:p-8"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 p-4 backdrop-blur-sm md:p-8"
       onClick={onClose}
     >
       <motion.div
@@ -136,44 +139,53 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={reduced ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.98 }}
         transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-        className="max-h-full w-full max-w-3xl overflow-y-auto rounded-3xl border border-line bg-(--landing-card) shadow-2xl shadow-black/30"
+        // lg+: imagem à esquerda, informações à direita, sem rolagem; no celular empilha
+        className="relative max-h-full w-full max-w-3xl overflow-y-auto rounded-3xl border border-line bg-(--landing-card) shadow-2xl shadow-black/30 lg:grid lg:max-h-[92dvh] lg:w-[min(1360px,96vw)] lg:max-w-none lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:overflow-hidden xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] 2xl:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)]"
         onClick={(e) => e.stopPropagation()}
       >
+        <button
+          type="button"
+          onClick={onClose}
+          data-cursor="hover"
+          aria-label={t("landing.projects.close")}
+          className="absolute top-3 right-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur transition-transform hover:scale-105"
+        >
+          <X className="h-4.5 w-4.5" />
+        </button>
+
         {project.image && (
-          <div className="relative aspect-video w-full overflow-hidden border-b border-line bg-fill-1">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={project.image}
-              alt={`${project.name} — ${project.tagline[lang]}`}
-              className="h-full w-full object-contain"
-            />
-            <button
-              type="button"
-              onClick={onClose}
-              data-cursor="hover"
-              aria-label={t("landing.projects.close")}
-              className="absolute top-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur transition-transform hover:scale-105"
-            >
-              <X className="h-4.5 w-4.5" />
-            </button>
+          <div className="flex items-center justify-center border-b border-line bg-[#0b0c10] lg:border-r lg:border-b-0 lg:p-5 xl:p-8">
+            <div className="relative aspect-video w-full overflow-hidden lg:rounded-xl lg:shadow-2xl lg:shadow-black/50">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={project.image}
+                alt={`${project.name} — ${project.tagline[lang]}`}
+                className="absolute inset-0 h-full w-full object-contain"
+              />
+            </div>
           </div>
         )}
-        <div className="p-6 md:p-8">
+
+        <div className={`flex flex-col p-6 md:p-8 lg:min-h-0 lg:px-7 lg:py-8 lg:pr-12 xl:py-9 ${short}:lg:py-5`}>
           <div className="flex flex-wrap items-center gap-3 font-mono text-[11px] tracking-[0.15em] text-text-lo uppercase">
             <span>
               {project.year} · {project.category === "web" ? "Web" : "Mobile"}
             </span>
             {project.status === "wip" && <WipBadge />}
           </div>
-          <h3 className="mt-3 font-display text-3xl font-semibold tracking-tight">{project.name}</h3>
+          <h3 className={`mt-3 font-display text-3xl font-semibold tracking-tight lg:text-4xl ${short}:lg:text-3xl`}>
+            {project.name}
+          </h3>
           <p className="mt-1 text-sm text-text-lo">{project.tagline[lang]}</p>
 
-          <p className="mt-5 leading-relaxed text-text-lo">{project.description[lang]}</p>
+          <p className={`mt-5 leading-relaxed text-text-lo lg:text-[15px] ${short}:lg:mt-3 ${short}:lg:text-sm ${short}:lg:leading-normal`}>
+            {project.description[lang]}
+          </p>
 
           {project.highlights && (
-            <ul className="mt-6 space-y-2.5">
+            <ul className={`mt-5 space-y-2 ${short}:lg:mt-3 ${short}:lg:space-y-1`}>
               {project.highlights.map((h, i) => (
-                <li key={i} className="flex gap-2.5 text-sm leading-relaxed text-text-lo">
+                <li key={i} className={`flex gap-2.5 text-sm leading-relaxed text-text-lo ${short}:lg:text-[13px] ${short}:lg:leading-snug`}>
                   <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-fx" aria-hidden />
                   <span>{h[lang]}</span>
                 </li>
@@ -181,13 +193,13 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
             </ul>
           )}
 
-          <div className="mt-6 flex flex-wrap gap-1.5">
+          <div className={`mt-5 flex flex-wrap gap-1.5 ${short}:lg:mt-3`}>
             {project.stack.map((s) => (
               <Chip key={s}>{s}</Chip>
             ))}
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center gap-4 border-t border-line pt-6">
+          <div className={`mt-6 flex flex-wrap items-center gap-4 border-t border-line pt-5 lg:mt-auto ${short}:lg:pt-3`}>
             {project.demo && (
               <a
                 href={project.demo}

@@ -95,3 +95,6 @@ em tema escuro, claro e 390px; sem scroll lateral; zero erros de console.
 - Eliteh Protect recapturada sem a caixa de cookies (cookies recusados antes do print).
 - Fotos originais em alta: 3x4 no topo e 9:16 (original inteira) em "Além do código", regravadas em webp sem metadados (as originais não tinham GPS).
 - Capturas refeitas em Full HD (1920×1080, escala 1): em 1280×800 os sites usavam o layout de tela menor e os elementos saíam grandes demais. Barra de rolagem dos sites escondida antes do print; GuiOS capturado em português. Molduras voltaram para 16:9. NavalhaGo e FinanceMy não estão publicados, então seguem com as capturas oficiais dos READMEs (aparecem inteiras, com faixas finas nas laterais).
+- Cards de projeto com a mesma altura (frase reservando 2 linhas, linha do ano com altura fixa).
+- NavalhaGo e FinanceMy recortados em 16:9 a partir do topo (pedido: preencher o card; cortar embaixo pode).
+- Modal do projeto em duas colunas (imagem à esquerda, informações à direita) a partir de 1024px; verificado sem rolagem para os 6 projetos em 1920×1080, 1536×864, 1440×900, 1366×768, 1280×720 e 1024×768. No celular continua empilhado (sem largura para duas colunas).

@@ -84,7 +84,7 @@ const allProjects: Project[] = [
     featured: true,
     stack: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Vitest", "Docker"],
     github: "https://github.com/GuiCMoreira/financemy",
-    image: "/projects/financemy.png",
+    image: "/projects/financemy.webp",
     status: "wip",
     tagline: {
       pt: "Controle financeiro self-hosted que mostra em que dia o saldo fica negativo",
