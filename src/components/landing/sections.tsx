@@ -1,22 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import {
   AnimatePresence,
   motion,
+  useMotionValueEvent,
   useReducedMotion,
   useScroll,
   useTransform,
-  type MotionValue,
 } from "motion/react";
 import { ArrowRight, ArrowUpRight, X } from "lucide-react";
 import type { Project } from "@/lib/types";
 import { useI18n } from "@/lib/i18n";
 import { career, education } from "@/data/career";
-import { projects, AVATAR_URL, GITHUB_URL } from "@/data/projects";
+import { projects, PHOTO_9X16, GITHUB_URL } from "@/data/projects";
 import { GuiOSShowcase } from "./GuiOSShowcase";
 import { Magnetic, SplitWords } from "./fx/bits";
+import { GlareImage, Gradient, PromptCommand, SectionCrosshair, StarButton } from "./fx/rb";
 import {
   PinnedHorizontal,
   ScrollRows,
@@ -73,7 +74,7 @@ function PromptHeading({
       <div className="flex items-end justify-between gap-4 border-b border-line pb-5">
         <div>
           <p className="font-mono text-xs text-text-lo md:text-sm">
-            <span className="text-fx-ink">gui@os</span>:{command}
+            <span className="text-fx-ink">gui@os</span>:<PromptCommand text={command} />
           </p>
           <h2 className="mt-3 font-display text-4xl font-bold tracking-[-0.03em] md:text-6xl">
             <SplitWords text={title} />
@@ -91,15 +92,6 @@ function Chip({ children }: { children: ReactNode }) {
       {children}
     </span>
   );
-}
-
-/** Acende o holofote do .spotlight-card seguindo o mouse — direto no style, sem re-render. */
-function moveSpot(e: ReactPointerEvent<HTMLElement>) {
-  if (e.pointerType !== "mouse") return;
-  const el = e.currentTarget;
-  const r = el.getBoundingClientRect();
-  el.style.setProperty("--spot-x", `${e.clientX - r.left}px`);
-  el.style.setProperty("--spot-y", `${e.clientY - r.top}px`);
 }
 
 // ————— Projetos —————
@@ -128,12 +120,15 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
     };
   }, [onClose]);
 
+  // Telas baixas (notebook 768px de altura): texto um degrau menor para tudo caber sem rolar.
+  const short = "[@media(max-height:820px)]";
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm md:p-8"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 p-4 backdrop-blur-sm md:p-8"
       onClick={onClose}
     >
       <motion.div
@@ -144,44 +139,53 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={reduced ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.98 }}
         transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-        className="max-h-full w-full max-w-3xl overflow-y-auto rounded-3xl border border-line bg-(--landing-card) shadow-2xl shadow-black/30"
+        // lg+: imagem à esquerda, informações à direita, sem rolagem; no celular empilha
+        className="relative max-h-full w-full max-w-3xl overflow-y-auto rounded-3xl border border-line bg-(--landing-card) shadow-2xl shadow-black/30 lg:grid lg:max-h-[92dvh] lg:w-[min(1360px,96vw)] lg:max-w-none lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:overflow-hidden xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] 2xl:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)]"
         onClick={(e) => e.stopPropagation()}
       >
+        <button
+          type="button"
+          onClick={onClose}
+          data-cursor="hover"
+          aria-label={t("landing.projects.close")}
+          className="absolute top-3 right-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur transition-transform hover:scale-105"
+        >
+          <X className="h-4.5 w-4.5" />
+        </button>
+
         {project.image && (
-          <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-line bg-fill-1">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={project.image}
-              alt={`${project.name} — ${project.tagline[lang]}`}
-              className="h-full w-full object-cover object-top"
-            />
-            <button
-              type="button"
-              onClick={onClose}
-              data-cursor="hover"
-              aria-label={t("landing.projects.close")}
-              className="absolute top-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur transition-transform hover:scale-105"
-            >
-              <X className="h-4.5 w-4.5" />
-            </button>
+          <div className="flex items-center justify-center border-b border-line bg-[#0b0c10] lg:border-r lg:border-b-0 lg:p-5 xl:p-8">
+            <div className="relative aspect-video w-full overflow-hidden lg:rounded-xl lg:shadow-2xl lg:shadow-black/50">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={project.image}
+                alt={`${project.name} — ${project.tagline[lang]}`}
+                className="absolute inset-0 h-full w-full object-contain"
+              />
+            </div>
           </div>
         )}
-        <div className="p-6 md:p-8">
+
+        <div className={`flex flex-col p-6 md:p-8 lg:min-h-0 lg:px-7 lg:py-8 lg:pr-12 xl:py-9 ${short}:lg:py-5`}>
           <div className="flex flex-wrap items-center gap-3 font-mono text-[11px] tracking-[0.15em] text-text-lo uppercase">
             <span>
               {project.year} · {project.category === "web" ? "Web" : "Mobile"}
             </span>
             {project.status === "wip" && <WipBadge />}
           </div>
-          <h3 className="mt-3 font-display text-3xl font-semibold tracking-tight">{project.name}</h3>
+          <h3 className={`mt-3 font-display text-3xl font-semibold tracking-tight lg:text-4xl ${short}:lg:text-3xl`}>
+            {project.name}
+          </h3>
           <p className="mt-1 text-sm text-text-lo">{project.tagline[lang]}</p>
 
-          <p className="mt-5 leading-relaxed text-text-lo">{project.description[lang]}</p>
+          <p className={`mt-5 leading-relaxed text-text-lo lg:text-[15px] ${short}:lg:mt-3 ${short}:lg:text-sm ${short}:lg:leading-normal`}>
+            {project.description[lang]}
+          </p>
 
           {project.highlights && (
-            <ul className="mt-6 space-y-2.5">
+            <ul className={`mt-5 space-y-2 ${short}:lg:mt-3 ${short}:lg:space-y-1`}>
               {project.highlights.map((h, i) => (
-                <li key={i} className="flex gap-2.5 text-sm leading-relaxed text-text-lo">
+                <li key={i} className={`flex gap-2.5 text-sm leading-relaxed text-text-lo ${short}:lg:text-[13px] ${short}:lg:leading-snug`}>
                   <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-fx" aria-hidden />
                   <span>{h[lang]}</span>
                 </li>
@@ -189,13 +193,13 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
             </ul>
           )}
 
-          <div className="mt-6 flex flex-wrap gap-1.5">
+          <div className={`mt-5 flex flex-wrap gap-1.5 ${short}:lg:mt-3`}>
             {project.stack.map((s) => (
               <Chip key={s}>{s}</Chip>
             ))}
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center gap-4 border-t border-line pt-6">
+          <div className={`mt-6 flex flex-wrap items-center gap-4 border-t border-line pt-5 lg:mt-auto ${short}:lg:pt-3`}>
             {project.demo && (
               <a
                 href={project.demo}
@@ -236,24 +240,25 @@ function ProjectCard({ p, onOpen }: { p: Project; onOpen: () => void }) {
     <button
       type="button"
       onClick={onOpen}
-      onPointerMove={moveSpot}
       data-cursor="hover"
       data-cursor-label={t("landing.cursor.open")}
-      className="spotlight-card group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-line bg-(--landing-card) text-left transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-xl hover:shadow-black/5"
+      className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-line bg-(--landing-card) text-left transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-xl hover:shadow-black/5"
     >
       {p.image && (
-        <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-line bg-fill-1">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={p.image}
-            alt=""
-            loading="lazy"
-            className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
-          />
+        <div className="relative aspect-video w-full overflow-hidden border-b border-line bg-fill-1">
+          <GlareImage className="absolute inset-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={p.image}
+              alt=""
+              loading="lazy"
+              className="absolute inset-0 h-full w-full object-contain"
+            />
+          </GlareImage>
         </div>
       )}
       <div className="flex flex-1 flex-col p-6">
-        <div className="flex items-center justify-between gap-3 font-mono text-[11px] tracking-[0.15em] text-text-lo uppercase">
+        <div className="flex h-5 items-center justify-between gap-3 font-mono text-[11px] tracking-[0.15em] text-text-lo uppercase">
           <span className="flex items-center gap-2">
             {p.year} · {p.category === "web" ? "Web" : "Mobile"}
             {p.status === "wip" && <WipBadge />}
@@ -281,37 +286,28 @@ function ProjectCard({ p, onOpen }: { p: Project; onOpen: () => void }) {
 function ProjectSlide({
   p,
   index,
-  total,
-  progress,
   onOpen,
 }: {
   p: Project;
   index: number;
-  total: number;
-  progress: MotionValue<number>;
   onOpen: () => void;
 }) {
   const { lang, t } = useI18n();
-  const center = (index + 1) / (total + 1);
-  const imgX = useTransform(progress, [center - 0.35, center + 0.35], ["7%", "-7%"]);
   return (
     <button
       type="button"
       onClick={onOpen}
-      onPointerMove={moveSpot}
       data-cursor="hover"
       data-cursor-label={t("landing.cursor.open")}
-      className="spotlight-card group flex w-[min(58vw,980px)] shrink-0 flex-col overflow-hidden rounded-[28px] border border-line bg-(--landing-card) text-left transition-[border-color,box-shadow] duration-300 hover:border-line-strong hover:shadow-2xl hover:shadow-black/10"
+      className="group flex w-[min(58vw,1040px,calc(52vh*16/9))] shrink-0 flex-col overflow-hidden rounded-[28px] border border-line bg-(--landing-card) text-left transition-[border-color,box-shadow] duration-300 hover:border-line-strong hover:shadow-2xl hover:shadow-black/10"
     >
-      <div className="relative aspect-[16/9] max-h-[52vh] w-full overflow-hidden border-b border-line bg-fill-1">
+      {/* capturas em Full HD (16:9): moldura na mesma proporção, imagem sempre inteira */}
+      <div className="relative aspect-video w-full overflow-hidden border-b border-line bg-fill-1">
         {p.image && (
-          <motion.img
-            src={p.image}
-            alt=""
-            loading="lazy"
-            style={{ x: imgX }}
-            className="absolute inset-y-0 -left-[8%] h-full w-[116%] max-w-none object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
-          />
+          <GlareImage className="absolute inset-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={p.image} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-contain" />
+          </GlareImage>
         )}
         <span className="absolute top-4 left-4 rounded-full bg-black/55 px-3 py-1 font-mono text-[11px] text-white backdrop-blur">
           {String(index + 1).padStart(2, "0")}
@@ -319,13 +315,13 @@ function ProjectSlide({
       </div>
       <div className="flex items-end justify-between gap-6 p-6 md:p-7">
         <div className="min-w-0">
-          <div className="flex items-center gap-2 font-mono text-[11px] tracking-[0.15em] text-text-lo uppercase">
+          <div className="flex h-5 items-center gap-2 font-mono text-[11px] tracking-[0.15em] text-text-lo uppercase">
             {p.year} · {p.category === "web" ? "Web" : "Mobile"}
             {p.status === "wip" && <WipBadge />}
           </div>
           <h3 className="mt-2 font-display text-3xl font-bold tracking-tight md:text-4xl">{p.name}</h3>
           <span className="sr-only">— {t("landing.projects.details")}</span>
-          <p className="mt-2 max-w-xl text-sm leading-relaxed text-text-lo md:text-base">{p.tagline[lang]}</p>
+          <p className="mt-2 line-clamp-2 min-h-[2lh] max-w-xl text-sm leading-relaxed text-text-lo md:text-base">{p.tagline[lang]}</p>
         </div>
         <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-line transition-all duration-300 group-hover:border-fx group-hover:bg-fx group-hover:text-black">
           <ArrowUpRight className="h-5 w-5" />
@@ -352,11 +348,11 @@ function HorizontalProjects({ onOpen }: { onOpen: (id: string) => void }) {
         </div>
       )}
     >
-      {(progress) => (
+      {() => (
         <>
           <div className="flex w-[min(34vw,560px)] shrink-0 flex-col justify-center pr-6">
             <p className="font-mono text-sm text-text-lo">
-              <span className="text-fx-ink">gui@os</span>:~/projetos$ ls --destaques
+              <span className="text-fx-ink">gui@os</span>:<PromptCommand text="~/projetos$ ls --destaques" />
             </p>
             <h2 className="mt-4 font-display text-6xl leading-[0.95] font-bold tracking-[-0.04em] xl:text-8xl">
               <SplitWords text={t("landing.sec.projects")} />
@@ -368,8 +364,6 @@ function HorizontalProjects({ onOpen }: { onOpen: (id: string) => void }) {
               key={p.id}
               p={p}
               index={i}
-              total={projects.length}
-              progress={progress}
               onOpen={() => onOpen(p.id)}
             />
           ))}
@@ -446,11 +440,18 @@ export function GuiOSSection() {
   const { t } = useI18n();
   const reduced = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
+  const stage = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const tilt = useTransform(scrollYProgress, [0, 0.6], [62, 0]);
+  // -88° = tampa deitada sobre o teclado; 0° = aberta, de pé
+  const tilt = useTransform(scrollYProgress, [0.04, 0.6], [-88, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.6], [0.78, 1]);
-  const ctaOpacity = useTransform(scrollYProgress, [0.55, 0.75], [0, 1]);
-  const ctaY = useTransform(scrollYProgress, [0.55, 0.75], [30, 0]);
+  // Texto e botão aparecem quando a tela termina de abrir e FICAM: só somem se o
+  // visitante voltar a rolar para cima (histerese entre 0.4 e 0.6).
+  const [ctaShown, setCtaShown] = useState(false);
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    if (v > 0.6) setCtaShown(true);
+    else if (v < 0.4) setCtaShown(false);
+  });
 
   return (
     <section
@@ -458,20 +459,24 @@ export function GuiOSSection() {
       id="guios"
       className="relative scroll-mt-0 border-y border-line bg-fill-1 lg:h-[260vh]"
     >
-      <div className="flex flex-col items-center px-[clamp(20px,5vw,96px)] py-20 lg:sticky lg:top-0 lg:h-screen lg:justify-center lg:overflow-hidden lg:pt-20 lg:pb-8">
+      <div
+        ref={stage}
+        className="relative flex flex-col items-center px-[clamp(20px,5vw,96px)] py-20 lg:sticky lg:top-0 lg:h-screen lg:justify-center lg:overflow-hidden lg:pt-20 lg:pb-8"
+      >
+        <SectionCrosshair container={stage} />
         <div className="text-center">
           <p className="font-mono text-xs text-text-lo md:text-sm">
-            <span className="text-fx-ink">gui@os</span>:~/guios$ ./boot --preview
+            <span className="text-fx-ink">gui@os</span>:<PromptCommand text="~/guios$ ./boot --preview" />
           </p>
           <h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.03em] text-balance md:text-5xl">
             {t("landing.os.title.before")}
-            <span className="mark">{t("landing.os.title.mark")}</span>
+            <Gradient>{t("landing.os.title.mark")}</Gradient>
           </h2>
         </div>
 
         <motion.div
           style={reduced ? undefined : { scale }}
-          className="mt-8 w-full max-w-[min(78vw,calc((100vh-330px)*1.6))] max-lg:max-w-full"
+          className="mt-8 w-full max-w-[min(74vw,calc((100vh-400px)*1.6))] max-lg:max-w-full"
         >
           <Link
             href="/os"
@@ -485,19 +490,19 @@ export function GuiOSSection() {
         </motion.div>
 
         <motion.div
-          style={reduced ? undefined : { opacity: ctaOpacity, y: ctaY }}
+          initial={false}
+          animate={reduced || ctaShown ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           className="mt-8 flex max-w-3xl flex-col items-center gap-5 text-center md:flex-row md:text-left"
         >
           <p className="text-sm leading-relaxed text-text-lo">{t("landing.os.body")}</p>
           <Magnetic strength={0.25} className="shrink-0">
-            <Link
-              href="/os"
-              data-cursor="hover"
-              className="inline-flex items-center gap-2 rounded-full bg-text-hi px-7 py-3.5 text-sm font-semibold whitespace-nowrap text-(--landing-bg)"
-            >
-              {t("landing.os.cta")}
-              <ArrowUpRight className="h-4 w-4" />
-            </Link>
+            <StarButton as={Link} href="/os" data-cursor="hover">
+              <span className="inline-flex items-center gap-2 text-sm font-semibold whitespace-nowrap">
+                {t("landing.os.cta")}
+                <ArrowUpRight className="h-4 w-4" />
+              </span>
+            </StarButton>
           </Magnetic>
         </motion.div>
       </div>
@@ -507,10 +512,21 @@ export function GuiOSSection() {
 
 // ————— Ferramentas: faixas que andam com o scroll —————
 
+// Do README do perfil no GitHub + o que uso na Altec. Para incluir uma ferramenta,
+// basta acrescentar o nome na linha certa.
 const STACK_ROWS = [
-  { key: "landing.stack.frontend", items: ["Next.js", "React", "TypeScript", "Tailwind CSS", "React Native"] },
-  { key: "landing.stack.backend", items: ["PHP", "Node.js", "MySQL", "PostgreSQL", "RabbitMQ"] },
-  { key: "landing.stack.tools", items: ["Docker", "Git", "Supabase", "Vitest", "Playwright"] },
+  {
+    key: "landing.stack.frontend",
+    items: ["Next.js", "React", "TypeScript", "JavaScript", "Tailwind CSS", "Vue.js", "Flutter", "Motion", "Zustand"],
+  },
+  {
+    key: "landing.stack.backend",
+    items: ["PHP", "Node.js", "NestJS", "C#", "MySQL", "PostgreSQL", "Supabase", "Prisma", "Redis", "RabbitMQ", "Socket.IO"],
+  },
+  {
+    key: "landing.stack.tools",
+    items: ["Docker", "Nginx", "Vercel", "GitHub Actions", "Git", "Vitest", "Playwright", "PHPUnit", "PHPStan", "Figma"],
+  },
 ];
 
 export function StackSection() {
@@ -533,52 +549,68 @@ export function StackSection() {
 
 export function ExperienceSection() {
   const { lang, t } = useI18n();
-  const cards = [
-    ...career.map((c) => (
-      <div key={c.id} className="grid min-h-[min(56vh,460px)] gap-6 p-8 md:grid-cols-[1fr_1.4fr] md:p-12">
-        <div className="flex flex-col justify-between gap-6">
+  const job = career.find((c) => c.kind === "job");
+  const personal = career.find((c) => c.kind === "personal");
+
+  const entryCard = (c: (typeof career)[number], soft = false) => (
+    <div className="grid min-h-[min(56vh,460px)] gap-6 p-8 md:grid-cols-[1fr_1.4fr] md:p-12">
+      <div className="flex flex-col justify-between gap-6">
+        <div className="flex flex-wrap items-center gap-3">
           <p className="font-mono text-sm text-fx-ink">
             {c.start} — {c.end ?? t("landing.exp.now")}
           </p>
-          <div>
-            <h3 className="font-display text-4xl leading-[1.02] font-bold tracking-[-0.03em] md:text-6xl">
-              {c.role[lang]}
-            </h3>
-            <p className="mt-3 text-lg text-text-lo">
-              {c.company} <span className="font-mono text-xs">· {c.location}</span>
+          {soft && (
+            <span className="rounded-full border border-line px-2.5 py-0.5 font-mono text-[11px] text-text-lo">
+              {t("landing.exp.personalTag")}
+            </span>
+          )}
+        </div>
+        <div>
+          <h3 className="font-display text-4xl leading-[1.02] font-bold tracking-[-0.03em] md:text-6xl">{c.role[lang]}</h3>
+          <p className="mt-3 text-lg text-text-lo">
+            {c.company} <span className="font-mono text-xs">· {c.location}</span>
+          </p>
+        </div>
+      </div>
+      <div className="flex flex-col justify-end gap-6">
+        <p className="text-base leading-relaxed text-text-lo md:text-lg">{c.summary[lang]}</p>
+        <div className="flex flex-wrap gap-1.5">
+          {c.stack.map((s) => (
+            <Chip key={s}>{s}</Chip>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  const cards = [
+    ...(job ? [{ key: job.id, node: entryCard(job) }] : []),
+    {
+      key: "edu",
+      node: (
+        <div className="grid min-h-[min(56vh,460px)] gap-6 p-8 md:grid-cols-[1fr_1.4fr] md:p-12">
+          <div className="flex flex-col justify-between gap-6">
+            <p className="font-mono text-sm text-fx-ink">
+              {education.start} — {education.end}
+            </p>
+            <div>
+              <p className="font-mono text-xs text-text-lo">
+                <span className="text-fx-ink">tag</span> {t("landing.sec.edu").toLowerCase()}
+              </p>
+              <h3 className="mt-2 font-display text-4xl leading-[1.02] font-bold tracking-[-0.03em] md:text-6xl">
+                {education.institution}
+              </h3>
+            </div>
+          </div>
+          <div className="flex flex-col justify-end">
+            <p className="font-display text-2xl leading-snug font-semibold text-text-lo md:text-3xl">
+              {education.degree[lang]}
             </p>
           </div>
         </div>
-        <div className="flex flex-col justify-end gap-6">
-          <p className="text-base leading-relaxed text-text-lo md:text-lg">{c.summary[lang]}</p>
-          <div className="flex flex-wrap gap-1.5">
-            {c.stack.map((s) => (
-              <Chip key={s}>{s}</Chip>
-            ))}
-          </div>
-        </div>
-      </div>
-    )),
-    <div key="edu" className="grid min-h-[min(56vh,460px)] gap-6 p-8 md:grid-cols-[1fr_1.4fr] md:p-12">
-      <div className="flex flex-col justify-between gap-6">
-        <p className="font-mono text-sm text-fx-ink">
-          {education.start} — {education.end}
-        </p>
-        <div>
-          <p className="font-mono text-xs text-text-lo">
-            <span className="text-fx-ink">tag</span> {t("landing.sec.edu").toLowerCase()}
-          </p>
-          <h3 className="mt-2 font-display text-4xl leading-[1.02] font-bold tracking-[-0.03em] md:text-6xl">
-            {education.institution}
-          </h3>
-        </div>
-      </div>
-      <div className="flex flex-col justify-end">
-        <p className="font-display text-2xl leading-snug font-semibold text-text-lo md:text-3xl">
-          {education.degree[lang]}
-        </p>
-      </div>
-    </div>,
+      ),
+    },
+    ...(personal ? [{ key: personal.id, node: entryCard(personal, true), tone: "soft" as const }] : []),
   ];
 
   return (
@@ -589,7 +621,7 @@ export function ExperienceSection() {
           title={t("landing.sec.exp")}
           aside={t("landing.sec.expAside")}
         />
-        <StackCards>{cards}</StackCards>
+        <StackCards cards={cards} />
       </Container>
     </section>
   );
@@ -603,16 +635,16 @@ export function AboutSection() {
     <section id="sobre" className="scroll-mt-24 py-20 md:py-32">
       <Container>
         <PromptHeading command="~/sobre$ cat bio.md" title={t("landing.sec.about")} />
-        <div className="grid items-start gap-10 lg:grid-cols-[280px_1fr] lg:gap-20">
+        <div className="grid items-start gap-10 lg:grid-cols-[300px_1fr] lg:gap-20">
           <div className="lg:sticky lg:top-28">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={AVATAR_URL}
+              src={PHOTO_9X16}
               alt="Guilherme Carvalho"
-              width={280}
-              height={280}
+              width={720}
+              height={1280}
               loading="lazy"
-              className="aspect-square w-44 rounded-3xl border border-line object-cover lg:w-full"
+              className="aspect-[9/16] w-48 rounded-3xl border border-line object-cover lg:w-full"
             />
           </div>
           <div className="max-w-5xl space-y-10">

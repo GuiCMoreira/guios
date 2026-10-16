@@ -122,18 +122,18 @@ function ScrollRow({
   // repete para a faixa nunca acabar dentro da tela
   const items = [...row.items, ...row.items, ...row.items];
   return (
-    <motion.div style={still ? undefined : { x }} className="flex w-max items-center gap-6 whitespace-nowrap md:gap-10">
+    <motion.div style={still ? undefined : { x }} className="flex w-max items-center gap-5 whitespace-nowrap md:gap-8">
       <span className="font-mono text-xs text-fx-ink md:text-sm">{row.label}/</span>
       {items.map((it, k) => (
-        <span key={k} className="flex items-center gap-6 md:gap-10">
+        <span key={k} className="flex items-center gap-5 md:gap-8">
           <span
-            className={`font-display text-5xl font-bold tracking-[-0.03em] md:text-8xl ${
+            className={`font-display text-3xl font-bold tracking-[-0.03em] md:text-5xl ${
               k % 2 === 1 ? "text-outline" : "text-text-hi"
             }`}
           >
             {it}
           </span>
-          <span className="text-2xl text-fx md:text-4xl" aria-hidden>
+          <span className="text-sm text-fx md:text-lg" aria-hidden>
             ✦
           </span>
         </span>
@@ -147,15 +147,17 @@ function ScrollRow({
  * um pouco abaixo do anterior e os de trás encolhem/escurecem enquanto os
  * novos chegam por cima.
  */
-export function StackCards({ children }: { children: ReactNode[] }) {
+export type StackCardItem = { key: string; node: ReactNode; tone?: "soft" };
+
+export function StackCards({ cards }: { cards: StackCardItem[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const n = children.length;
+  const n = cards.length;
   return (
     <div ref={ref} className="relative">
-      {children.map((child, i) => (
-        <StackCard key={i} index={i} total={n} progress={scrollYProgress}>
-          {child}
+      {cards.map((c, i) => (
+        <StackCard key={c.key} index={i} total={n} progress={scrollYProgress} tone={c.tone}>
+          {c.node}
         </StackCard>
       ))}
     </div>
@@ -167,11 +169,13 @@ function StackCard({
   index,
   total,
   progress,
+  tone,
 }: {
   children: ReactNode;
   index: number;
   total: number;
   progress: MotionValue<number>;
+  tone?: "soft";
 }) {
   const reduced = useReducedMotion();
   const start = index / total;
@@ -185,7 +189,12 @@ function StackCard({
     >
       <motion.div
         style={reduced ? undefined : { scale }}
-        className="relative origin-top overflow-hidden rounded-[28px] border border-line bg-(--landing-card) shadow-2xl shadow-black/10"
+        className={`relative origin-top overflow-hidden rounded-[28px] shadow-2xl shadow-black/10 ${
+          // "soft": cartão mais leve, tracejado — projetos pessoais não são vínculo de trabalho
+          tone === "soft"
+            ? "border border-dashed border-fx/40 bg-[color-mix(in_oklab,var(--landing-card)_90%,var(--fx))]"
+            : "border border-line bg-(--landing-card)"
+        }`}
       >
         {children}
         <motion.span

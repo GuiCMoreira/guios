@@ -44,33 +44,42 @@ export function GuiOSShowcase({ label, tilt }: { label: string; tilt?: MotionVal
   }, []);
 
   return (
-    <div aria-hidden className="select-none [perspective:1400px]">
-      {/* Tampa: moldura de alumínio + bezel preto. Com `tilt`, gira a partir da
-          dobradiça (borda de baixo) — a tela "se levanta" conforme o scroll. */}
+    // perspectiva vista de cima: com a tampa fechada sobre o teclado, aparece o lado de fora dela
+    <div aria-hidden className="select-none" style={{ perspective: 1800, perspectiveOrigin: "50% -20%" }}>
+      {/* Tampa com duas faces. Com `tilt`, gira na dobradiça (borda de baixo):
+          começa deitada sobre o teclado e abre até ficar de pé. */}
       <motion.div
-        style={tilt ? { rotateX: tilt, transformOrigin: "50% 100%" } : undefined}
-        className="rounded-[18px] bg-gradient-to-b from-zinc-300 to-zinc-400 p-[3px] shadow-2xl shadow-black/30 md:rounded-[22px] dark:from-zinc-600 dark:to-zinc-800">
-        <div className="rounded-[15px] bg-[#0a0a0c] p-2 md:rounded-[19px] md:p-2.5">
-          <div
-            ref={screenRef}
-            className="relative aspect-[16/10] overflow-hidden rounded-[8px] bg-ink md:rounded-[10px]"
-          >
-            {mounted && scale > 0 && (
-              <iframe
-                src="/os?preview=1"
-                title={label}
-                tabIndex={-1}
-                loading="lazy"
-                className="pointer-events-none absolute top-0 left-0 origin-top-left border-0"
-                style={{ width: PREVIEW_W, height: PREVIEW_H, transform: `scale(${scale})` }}
-              />
-            )}
+        style={tilt ? { rotateX: tilt, transformOrigin: "50% 100%", transformStyle: "preserve-3d" } : undefined}
+        className="relative"
+      >
+        <div className="rounded-[18px] bg-gradient-to-b from-zinc-300 to-zinc-400 p-[3px] shadow-2xl shadow-black/30 [backface-visibility:hidden] md:rounded-[22px] dark:from-zinc-600 dark:to-zinc-800">
+          <div className="rounded-[15px] bg-[#0a0a0c] p-2 md:rounded-[19px] md:p-2.5">
+            <div
+              ref={screenRef}
+              className="relative aspect-[16/10] overflow-hidden rounded-[8px] bg-ink md:rounded-[10px]"
+            >
+              {mounted && scale > 0 && (
+                <iframe
+                  src="/os?preview=1"
+                  title={label}
+                  tabIndex={-1}
+                  loading="lazy"
+                  className="pointer-events-none absolute top-0 left-0 origin-top-left border-0"
+                  style={{ width: PREVIEW_W, height: PREVIEW_H, transform: `scale(${scale})` }}
+                />
+              )}
+            </div>
           </div>
         </div>
+        {/* Lado de fora da tampa (alumínio + logo), visível enquanto está fechada */}
+        <div className="absolute inset-0 flex items-center justify-center rounded-[18px] bg-gradient-to-b from-zinc-200 to-zinc-400 [backface-visibility:hidden] [transform:rotateX(180deg)] md:rounded-[22px] dark:from-zinc-500 dark:to-zinc-700">
+          <span className="font-display text-5xl font-bold text-white/70 md:text-7xl dark:text-zinc-300/60">G</span>
+        </div>
       </motion.div>
-      {/* Base do MacBook */}
-      <div className="mx-auto h-[7px] w-[96%] rounded-b-[10px] bg-gradient-to-b from-zinc-300 to-zinc-500 shadow-lg shadow-black/20 md:h-2 dark:from-zinc-500 dark:to-zinc-800" />
-      <div className="mx-auto h-1 w-[14%] rounded-b-full bg-zinc-400/80 dark:bg-zinc-700" />
+      {/* Base: mesma largura da tela, reta — só a tampa se move */}
+      <div className="relative h-3 w-full rounded-b-[16px] bg-gradient-to-b from-zinc-200 to-zinc-400 shadow-xl shadow-black/25 md:h-4 dark:from-zinc-500 dark:to-zinc-800">
+        <span className="absolute top-0 left-1/2 h-1.5 w-[14%] -translate-x-1/2 rounded-b-lg bg-zinc-400/80 dark:bg-zinc-700" />
+      </div>
     </div>
   );
 }

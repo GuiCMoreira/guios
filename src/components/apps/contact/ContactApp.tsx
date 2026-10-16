@@ -15,15 +15,6 @@ export function ContactApp() {
 
   const channels = [
     {
-      id: "github",
-      icon: GitHubIcon,
-      name: "GitHub",
-      handle: "@GuiCMoreira",
-      href: GITHUB_URL,
-      action: t("contact.openLink"),
-      gradient: "from-zinc-600 to-zinc-800",
-    },
-    {
       id: "linkedin",
       icon: LinkedInIcon,
       name: "LinkedIn",
@@ -40,6 +31,15 @@ export function ContactApp() {
       href: INSTAGRAM_URL,
       action: t("contact.openLink"),
       gradient: "",
+    },
+    {
+      id: "github",
+      icon: GitHubIcon,
+      name: "GitHub",
+      handle: "@GuiCMoreira",
+      href: GITHUB_URL,
+      action: t("contact.openLink"),
+      gradient: "from-zinc-600 to-zinc-800",
     },
     {
       id: "email",

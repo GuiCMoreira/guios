@@ -12,7 +12,7 @@ import {
   useVelocity,
 } from "motion/react";
 
-/** Barra de progresso de leitura — fio amarelo colado no topo. */
+/** Barra de progresso de leitura — fio azul colado no topo. */
 export function ScrollProgress() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 140, damping: 28, restDelta: 0.001 });

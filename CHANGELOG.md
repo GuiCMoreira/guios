@@ -38,24 +38,44 @@
 - Preparado para rodar demos dos projetos embutidas quando forem hospedadas.
 - Ícone de bússola estilo macOS; no mobile o Safari entra na grade da home.
 
-## [4.1.0] — 2026-10-15
+## [2.2.0] — 2026-08-20
 
-### Scroll coreografado e laboratório 🧪
+### Guigle, vida no sistema e prontidão para o mundo
 
-- **Cada seção rola de um jeito**: o hero se afasta (encolhe, desfoca e some), os
-  **projetos travam a tela e passam na horizontal** (contador e barra de progresso),
-  a **tela do MacBook se levanta** até mostrar o GuiOS de frente, as ferramentas viram
-  faixas gigantes que deslizam em sentidos opostos, a experiência vira **cartões que
-  empilham**, o texto do "Sobre" **acende palavra por palavra** e o título do contato
-  cresce até ocupar a tela.
-- **Acento azul claro** no lugar do amarelo (com versão escura para texto no tema claro,
-  mantendo contraste AA).
-- **Cursor centralizado**: o anel recebia o deslocamento de −50% três vezes (classe do
-  Tailwind no wrapper, classe no anel e `style` do motion).
-- **Carrossel da stack legível**: a velocidade era em % por frame; agora é em % por
-  segundo, com aceleração do scroll limitada a 3x.
-- **/lab**: 24 protótipos do React Bits rodando com o conteúdo e as cores do portfólio,
-  com botão de aprovar e "copiar lista" para escolher o que entra no site.
+- **Guigle™**: buscador paródia no Safari — pesquisas recentes na start page, animação de busca e resultados que apontam todos para o Guilherme.
+- **Lixeira no dock**: os bugs reais deletados durante o desenvolvimento deste site, com direito a lápides. 🪦
+- **Terminal**: novos comandos `matrix` (chuva de caracteres), `coffee` e `guigle <termo>`.
+- **Widget de clima real** de Bragança Paulista (Open-Meteo) no desktop.
+- **Notificação estilo macOS** convidando para contato após 45s de exploração (1x por sessão).
+- **Menu de contexto** no botão direito do desktop (wallpaper, Ajustes, Terminal, Sobre).
+- **Seletor de wallpaper** nos Ajustes: água-viva, montanhas, ponte à noite ou gradiente.
+- **Pronto para o mundo**: OG image (preview bonito ao compartilhar o link), 404 kernel panic, PWA instalável (manifest + ícones), robots.txt e sitemap.
+
+## [3.0.0] — 2026-10-15
+
+### Landing híbrida 🏠
+
+- **Nova home clássica em `/`**: landing editorial (claro/escuro, PT/EN) com hero
+  "open to work", projetos selecionados, stack agrupada, timeline de experiência,
+  sobre e contato — pensada para recrutadores e visitantes fora da área.
+- **GuiOS movido para `/os`**, com seção na landing exibindo o sistema REAL rodando
+  em miniatura dentro de um mockup de MacBook (iframe lazy `?preview=1`, escalado e
+  não interativo) e CTA "Entrar no GuiOS".
+- **Onboarding no GuiOS**: no primeiro boot da sessão (desktop), o app Sobre abre
+  sozinho — ninguém mais cai numa mesa vazia sem saber onde clicar.
+- Sitemap com as duas rotas; metadata raiz atualizada para o formato híbrido.
+
+## [3.1.0] — 2026-10-15
+
+### Vitrine com imagens e detalhe por projeto 🖼️
+
+- **Cards com captura real** na landing: screenshot da página inicial de cada projeto
+  (sites em produção, captura oficial do FinanceMy com dados fictícios, capa própria do NavalhaGo).
+- **Modal de detalhe** ao clicar no card: imagem grande, descrição estendida, destaques técnicos,
+  stack completa e ações (demo/GitHub, ou nota de repositório privado). Esc/backdrop fecham.
+- **GuiOS entrou na vitrine como projeto** (com botão "Entrar no GuiOS") e **NavalhaGo** estreia
+  com selo "em desenvolvimento".
+- Selo WIP para projetos em desenvolvimento ativo (FinanceMy, NavalhaGo).
 
 ## [4.0.0] — 2026-10-15
 
@@ -76,41 +96,47 @@
 - Grid de projetos assimétrico (7/5 · 5/7 · 6/6). Tudo degradando com elegância no touch
   e com reduced-motion. Inspiração: react-bits, implementado em casa só com motion.
 
-## [3.1.0] — 2026-10-15
+## [4.1.0] — 2026-10-15
 
-### Vitrine com imagens e detalhe por projeto 🖼️
+### Scroll coreografado e laboratório 🧪
 
-- **Cards com captura real** na landing: screenshot da página inicial de cada projeto
-  (sites em produção, captura oficial do FinanceMy com dados fictícios, capa própria do NavalhaGo).
-- **Modal de detalhe** ao clicar no card: imagem grande, descrição estendida, destaques técnicos,
-  stack completa e ações (demo/GitHub, ou nota de repositório privado). Esc/backdrop fecham.
-- **GuiOS entrou na vitrine como projeto** (com botão "Entrar no GuiOS") e **NavalhaGo** estreia
-  com selo "em desenvolvimento".
-- Selo WIP para projetos em desenvolvimento ativo (FinanceMy, NavalhaGo).
+- **Cada seção rola de um jeito**: o hero se afasta (encolhe, desfoca e some), os
+  **projetos travam a tela e passam na horizontal** (contador e barra de progresso),
+  a **tela do MacBook se levanta** até mostrar o GuiOS de frente, as ferramentas viram
+  faixas gigantes que deslizam em sentidos opostos, a experiência vira **cartões que
+  empilham**, o texto do "Sobre" **acende palavra por palavra** e o título do contato
+  cresce até ocupar a tela.
+- **Acento azul claro** no lugar do amarelo (com versão escura para texto no tema claro,
+  mantendo contraste AA).
+- **Cursor centralizado**: o anel recebia o deslocamento de −50% três vezes (classe do
+  Tailwind no wrapper, classe no anel e `style` do motion).
+- **Carrossel da stack legível**: a velocidade era em % por frame; agora é em % por
+  segundo, com aceleração do scroll limitada a 3x.
+- **/lab**: 24 protótipos do React Bits rodando com o conteúdo e as cores do portfólio,
+  com botão de aprovar e "copiar lista" para escolher o que entra no site.
 
-## [3.0.0] — 2026-10-15
+## [5.0.0] — 2026-10-16
 
-### Landing híbrida 🏠
+### Landing v5: efeitos aprovados no /lab, contato de verdade e vitrine refeita
 
-- **Nova home clássica em `/`**: landing editorial (claro/escuro, PT/EN) com hero
-  "open to work", projetos selecionados, stack agrupada, timeline de experiência,
-  sobre e contato — pensada para recrutadores e visitantes fora da área.
-- **GuiOS movido para `/os`**, com seção na landing exibindo o sistema REAL rodando
-  em miniatura dentro de um mockup de MacBook (iframe lazy `?preview=1`, escalado e
-  não interativo) e CTA "Entrar no GuiOS".
-- **Onboarding no GuiOS**: no primeiro boot da sessão (desktop), o app Sobre abre
-  sozinho — ninguém mais cai numa mesa vazia sem saber onde clicar.
-- Sitemap com as duas rotas; metadata raiz atualizada para o formato híbrido.
-
-## [2.2.0] — 2026-08-20
-
-### Guigle, vida no sistema e prontidão para o mundo
-
-- **Guigle™**: buscador paródia no Safari — pesquisas recentes na start page, animação de busca e resultados que apontam todos para o Guilherme.
-- **Lixeira no dock**: os bugs reais deletados durante o desenvolvimento deste site, com direito a lápides. 🪦
-- **Terminal**: novos comandos `matrix` (chuva de caracteres), `coffee` e `guigle <termo>`.
-- **Widget de clima real** de Bragança Paulista (Open-Meteo) no desktop.
-- **Notificação estilo macOS** convidando para contato após 45s de exploração (1x por sessão).
-- **Menu de contexto** no botão direito do desktop (wallpaper, Ajustes, Terminal, Sobre).
-- **Seletor de wallpaper** nos Ajustes: água-viva, montanhas, ponte à noite ou gradiente.
-- **Pronto para o mundo**: OG image (preview bonito ao compartilhar o link), 404 kernel panic, PWA instalável (manifest + ícones), robots.txt e sitemap.
+- **Efeitos do React Bits aprovados no laboratório**, combinados sem conflito: grade de pontos viva
+  no hero, nome em TechText, prompts que se descriptografam, cargo que alterna, mira que trava nos
+  alvos (com "abrir ↗"), mira com coordenadas na seção do GuiOS, faíscas de clique, estrelas na
+  borda dos botões principais, reflexo nas capas, fios atrás do contato, brilho e gradiente nos
+  destaques e "404" com interferência.
+- **Formulário de contato**: assunto, nome, canais de resposta (WhatsApp, LinkedIn, e-mail,
+  ligação) que abrem o campo de cada um, melhor horário e mensagem; validação no navegador e no
+  servidor, campo-armadilha contra robôs e limite de envios. Entrega por e-mail via FormSubmit
+  (ou Resend, com `RESEND_API_KEY`).
+- **LinkedIn e Instagram como canais principais** na landing, no GuiOS e no menu do botão direito;
+  e-mail virou opção secundária.
+- **MacBook abrindo de verdade**: tampa com duas faces que levanta de fechada até ficar de pé,
+  base reta com a largura da tela; texto e botão do GuiOS ficam visíveis depois de aparecer.
+- **Vitrine**: nova ordem (Eliteh Protect, valorant-strathub, GuiOS, restaurant-digital, NavalhaGo,
+  FinanceMy), capturas em Full HD sem cortes, NavalhaGo com captura real do README, cards com a
+  mesma altura e modal em duas colunas (imagem e informações) que não rola.
+- **Experiência**: Altec com a stack real (levantada dos repositórios com commits do Guilherme),
+  FATEC como formação e um cartão mais claro para projetos pessoais e estudos.
+- **Ferramentas**: 30 itens em fonte menor; carrossel reto da stack mantido com losango menor.
+- **Topo**: `GuiCMoreira` no header e fotos originais em alta (3x4 no topo, 9:16 no "Sobre"),
+  regravadas sem metadados.
