@@ -26,6 +26,8 @@ export interface ClickSparkProps {
   ring?: boolean;
   layer?: 'front' | 'back';
   disabled?: boolean;
+  /** Portfólio: escuta a janela inteira (o root vira uma camada fixa, sem envolver conteúdo). */
+  global?: boolean;
   className?: string;
   style?: CSSProperties;
   children?: ReactNode;
@@ -155,6 +157,7 @@ const ClickSpark = forwardRef<ClickSparkHandle, ClickSparkProps>(
       ring = false,
       layer = 'front',
       disabled = false,
+      global = false,
       className = '',
       style,
       children
@@ -440,8 +443,9 @@ const ClickSpark = forwardRef<ClickSparkHandle, ClickSparkProps>(
         if (!recent) spawn(event.clientX, event.clientY);
       };
 
-      root.addEventListener('pointerdown', onPointerDown);
-      root.addEventListener('click', onClick);
+      const source: Window | HTMLElement = global ? window : root;
+      source.addEventListener('pointerdown', onPointerDown as EventListener);
+      source.addEventListener('click', onClick as EventListener);
 
       engineRef.current = {
         spark: (x?: number, y?: number) => {
@@ -452,12 +456,12 @@ const ClickSpark = forwardRef<ClickSparkHandle, ClickSparkProps>(
 
       return () => {
         cancelAnimationFrame(raf);
-        root.removeEventListener('pointerdown', onPointerDown);
-        root.removeEventListener('click', onClick);
+        source.removeEventListener('pointerdown', onPointerDown as EventListener);
+        source.removeEventListener('click', onClick as EventListener);
         for (const burst of [...bursts]) remove(burst);
         engineRef.current = null;
       };
-    }, []);
+    }, [global]);
 
     useImperativeHandle(
       ref,
