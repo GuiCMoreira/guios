@@ -1,8 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState, type ComponentProps, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ComponentProps,
+  type ReactNode,
+} from "react";
+import { useReducedMotionSafe } from "./useReducedMotionSafe";
 import dynamic from "next/dynamic";
-import { useReducedMotion } from "motion/react";
 import { useTheme } from "@/lib/theme";
 import { useMediaQuery } from "./scroll";
 
@@ -13,22 +19,43 @@ import { useMediaQuery } from "./scroll";
  * o conteúdo continua lá.
  */
 
-const DotGrid = dynamic(() => import("@/components/rb/DotGrid"), { ssr: false });
-const TechText = dynamic(() => import("@/components/rb/TechText"), { ssr: false });
-const DecryptedText = dynamic(() => import("@/components/rb/DecryptedText"), { ssr: false });
-const RotatingText = dynamic(() => import("@/components/rb/RotatingText"), { ssr: false });
-const TargetCursor = dynamic(() => import("@/components/rb/TargetCursor"), { ssr: false });
-const Crosshair = dynamic(() => import("@/components/rb/Crosshair"), { ssr: false });
+const DotGrid = dynamic(() => import("@/components/rb/DotGrid"), {
+  ssr: false,
+});
+const TechText = dynamic(() => import("@/components/rb/TechText"), {
+  ssr: false,
+});
+const DecryptedText = dynamic(() => import("@/components/rb/DecryptedText"), {
+  ssr: false,
+});
+const RotatingText = dynamic(() => import("@/components/rb/RotatingText"), {
+  ssr: false,
+});
+const TargetCursor = dynamic(() => import("@/components/rb/TargetCursor"), {
+  ssr: false,
+});
+const Crosshair = dynamic(() => import("@/components/rb/Crosshair"), {
+  ssr: false,
+});
 const ClickSpark = dynamic(() => import("@/components/rb/ClickSpark"), {
   ssr: false,
   loading: () => null,
 });
-const StarBorder = dynamic(() => import("@/components/rb/StarBorder"), { ssr: false });
-const GlareHover = dynamic(() => import("@/components/rb/GlareHover"), { ssr: false });
-const Threads = dynamic(() => import("@/components/rb/Threads"), { ssr: false });
-const ShinyText = dynamic(() => import("@/components/rb/ShinyText"), { ssr: false });
-const GradientText = dynamic(() => import("@/components/rb/GradientText"), { ssr: false });
-
+const StarBorder = dynamic(() => import("@/components/rb/StarBorder"), {
+  ssr: false,
+});
+const GlareHover = dynamic(() => import("@/components/rb/GlareHover"), {
+  ssr: false,
+});
+const Threads = dynamic(() => import("@/components/rb/Threads"), {
+  ssr: false,
+});
+const ShinyText = dynamic(() => import("@/components/rb/ShinyText"), {
+  ssr: false,
+});
+const GradientText = dynamic(() => import("@/components/rb/GradientText"), {
+  ssr: false,
+});
 
 /**
  * true quando o chunk do efeito já carregou. Enquanto isso, quem usa renderiza a
@@ -61,13 +88,23 @@ function useDark() {
 }
 
 /** Só monta perto da tela (e desmonta ao sair): WebGL/canvas fora de vista não gastam GPU. */
-export function NearView({ children, className, margin = "300px" }: { children: ReactNode; className?: string; margin?: string }) {
+export function NearView({
+  children,
+  className,
+  margin = "300px",
+}: {
+  children: ReactNode;
+  className?: string;
+  margin?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const [on, setOn] = useState(false);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => setOn(e.isIntersecting), { rootMargin: `${margin} 0px` });
+    const io = new IntersectionObserver(([e]) => setOn(e.isIntersecting), {
+      rootMargin: `${margin} 0px`,
+    });
     io.observe(el);
     return () => io.disconnect();
   }, [margin]);
@@ -135,19 +172,19 @@ export function HeroName({ first, last }: { first: string; last: string }) {
             // para o nome alinhar com o resto da coluna
             <span key={l.text} className="block w-full max-w-[920px]">
               <span className="-ml-[5.55%] block h-[clamp(3.4rem,11.5vw,10.5rem)] w-[111.1%]">
-              <TechText
-                text={l.text}
-                reach={90}
-                reveal={fine ? "letter" : "off"}
-                labels={fine}
-                fontWeight={700}
-                fontSize={170}
-                letterSpacing={-0.04}
-                color={l.color}
-                accentColor={SKY_DEEP}
-                align="left"
-                intro="assemble"
-              />
+                <TechText
+                  text={l.text}
+                  reach={90}
+                  reveal={fine ? "letter" : "off"}
+                  labels={fine}
+                  fontWeight={700}
+                  fontSize={170}
+                  letterSpacing={-0.04}
+                  color={l.color}
+                  accentColor={SKY_DEEP}
+                  align="left"
+                  intro="assemble"
+                />
               </span>
             </span>
           ))}
@@ -158,22 +195,30 @@ export function HeroName({ first, last }: { first: string; last: string }) {
 }
 
 /** #06 — cargo que alterna. */
-export function RoleRotator({ prefix, roles }: { prefix: string; roles: string[] }) {
-  const reduced = useReducedMotion();
+export function RoleRotator({
+  prefix,
+  roles,
+}: {
+  prefix: string;
+  roles: string[];
+}) {
+  const reduced = useReducedMotionSafe();
   const ready = useReady(loadRotating);
   return (
     <span className="inline-flex items-center gap-2 font-mono text-sm text-text-lo md:text-base">
       {prefix}
       {!ready ? (
-        <span className="rounded-md bg-fx px-2 py-0.5 text-black">{roles[0]}</span>
+        <span className="rounded-md bg-fx px-2 py-0.5 text-black">
+          {roles[0]}
+        </span>
       ) : (
-      <RotatingText
-        texts={roles}
-        auto={!reduced}
-        rotationInterval={2400}
-        staggerDuration={0.02}
-        mainClassName="overflow-hidden rounded-md bg-fx px-2 py-0.5 text-black"
-      />
+        <RotatingText
+          texts={roles}
+          auto={!reduced}
+          rotationInterval={2400}
+          staggerDuration={0.02}
+          mainClassName="overflow-hidden rounded-md bg-fx px-2 py-0.5 text-black"
+        />
       )}
     </span>
   );
@@ -198,11 +243,18 @@ export function PromptCommand({ text }: { text: string }) {
 }
 
 /** #23 — reflexo que passa pelo texto de tempos em tempos (dicas discretas). */
-export function Shiny({ text, className }: { text: string; className?: string }) {
+export function Shiny({
+  text,
+  className,
+}: {
+  text: string;
+  className?: string;
+}) {
   // o ShinyText converte a cor para RGB sozinho e não entende var(): cores literais por tema
   const dark = useDark();
   const ready = useReady(loadShiny);
-  if (!ready) return <span className={`text-text-lo ${className ?? ""}`}>{text}</span>;
+  if (!ready)
+    return <span className={`text-text-lo ${className ?? ""}`}>{text}</span>;
   return (
     <ShinyText
       text={text}
@@ -216,11 +268,22 @@ export function Shiny({ text, className }: { text: string; className?: string })
 }
 
 /** #23 — gradiente azul animado nas frases de destaque (no lugar do marca-texto). */
-export function Gradient({ children, className }: { children: ReactNode; className?: string }) {
+export function Gradient({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   const ready = useReady(loadGradient);
-  if (!ready) return <span className={`text-fx-ink ${className ?? ""}`}>{children}</span>;
+  if (!ready)
+    return <span className={`text-fx-ink ${className ?? ""}`}>{children}</span>;
   return (
-    <GradientText colors={[SKY_DEEP, SKY, "#a5b4fc", SKY_DEEP]} animationSpeed={6} className={className}>
+    <GradientText
+      colors={[SKY_DEEP, SKY, "#a5b4fc", SKY_DEEP]}
+      animationSpeed={6}
+      className={className}
+    >
       {children}
     </GradientText>
   );
@@ -235,7 +298,7 @@ export function Gradient({ children, className }: { children: ReactNode; classNa
  */
 export function CursorLayer({ children }: { children: ReactNode }) {
   const dark = useDark();
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   // As faíscas ficam numa camada fixa por cima, sem envolver a página: o conteúdo
   // continua vindo pronto do servidor (antes, envolvido por um componente só-client,
   // a página inteira só aparecia depois do JavaScript carregar).
@@ -263,7 +326,11 @@ export function CursorLayer({ children }: { children: ReactNode }) {
 }
 
 /** #10 — mira com coordenadas, só dentro do container (seção do GuiOS). */
-export function SectionCrosshair({ container }: { container: React.RefObject<HTMLElement | null> }) {
+export function SectionCrosshair({
+  container,
+}: {
+  container: React.RefObject<HTMLElement | null>;
+}) {
   const fine = useMediaQuery("(hover: hover) and (pointer: fine)");
   const dark = useDark();
   if (!fine) return null;
@@ -314,7 +381,13 @@ export function StarButton(props: StarProps) {
 }
 
 /** #14 — reflexo de vidro atravessando a imagem do projeto no hover. */
-export function GlareImage({ children, className }: { children: ReactNode; className?: string }) {
+export function GlareImage({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   const ready = useReady(loadGlare);
   if (!ready) return <div className={className}>{children}</div>;
   return (
@@ -339,7 +412,11 @@ export function ContactThreads() {
   return (
     <NearView className="absolute inset-0" margin="200px">
       <div aria-hidden className="h-full w-full opacity-70">
-        <Threads color={dark ? SKY : SKY_DEEP} amplitude={1.1} enableMouseInteraction />
+        <Threads
+          color={dark ? SKY : SKY_DEEP}
+          amplitude={1.1}
+          enableMouseInteraction
+        />
       </div>
     </NearView>
   );

@@ -1,15 +1,10 @@
 "use client";
 
-import {
-  useRef,
-  useState,
-  useSyncExternalStore,
-  type ReactNode,
-} from "react";
+import { useRef, useState, useSyncExternalStore, type ReactNode } from "react";
+import { useReducedMotionSafe } from "./useReducedMotionSafe";
 import {
   motion,
   useMotionValueEvent,
-  useReducedMotion,
   useScroll,
   useTransform,
   type MotionValue,
@@ -50,9 +45,12 @@ export function PinnedHorizontal({
     const track = trackRef.current;
     if (!track) return;
     // O ResizeObserver dispara uma vez ao observar: é a medição inicial.
-    const ro = new ResizeObserver(() => setDist(Math.max(0, track.offsetWidth - window.innerWidth)));
+    const ro = new ResizeObserver(() =>
+      setDist(Math.max(0, track.offsetWidth - window.innerWidth)),
+    );
     ro.observe(track);
-    const onResize = () => setDist(Math.max(0, track.offsetWidth - window.innerWidth));
+    const onResize = () =>
+      setDist(Math.max(0, track.offsetWidth - window.innerWidth));
     window.addEventListener("resize", onResize);
     return () => {
       ro.disconnect();
@@ -60,13 +58,24 @@ export function PinnedHorizontal({
     };
   }, []);
 
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  });
   const x = useTransform(scrollYProgress, (v) => -v * dist);
 
   return (
-    <div ref={sectionRef} style={{ height: `calc(100vh + ${dist}px)` }} className="relative">
+    <div
+      ref={sectionRef}
+      style={{ height: `calc(100vh + ${dist}px)` }}
+      className="relative"
+    >
       <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden pt-14">
-        <motion.div ref={trackRef} style={{ x }} className="flex w-max items-center gap-8 px-[clamp(20px,5vw,96px)]">
+        <motion.div
+          ref={trackRef}
+          style={{ x }}
+          className="flex w-max items-center gap-8 px-[clamp(20px,5vw,96px)]"
+        >
           {children(scrollYProgress)}
         </motion.div>
         {footer?.(scrollYProgress)}
@@ -76,7 +85,13 @@ export function PinnedHorizontal({
 }
 
 /** Contador "03 / 08" que acompanha o progresso de uma trilha horizontal. */
-export function SlideCounter({ progress, total }: { progress: MotionValue<number>; total: number }) {
+export function SlideCounter({
+  progress,
+  total,
+}: {
+  progress: MotionValue<number>;
+  total: number;
+}) {
   const [i, setI] = useState(1);
   useMotionValueEvent(progress, "change", (v) => {
     setI(Math.min(total, Math.max(1, Math.round(v * (total - 1)) + 1)));
@@ -94,14 +109,27 @@ export function SlideCounter({ progress, total }: { progress: MotionValue<number
  * esquerda, ímpares para a direita. Quem rola controla a velocidade —
  * diferente do marquee automático, aqui dá para parar e ler.
  */
-export function ScrollRows({ rows }: { rows: { label: string; items: string[] }[] }) {
+export function ScrollRows({
+  rows,
+}: {
+  rows: { label: string; items: string[] }[];
+}) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const reduced = useReducedMotionSafe();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
   return (
     <div ref={ref} className="space-y-4 overflow-hidden py-4 md:space-y-6">
       {rows.map((row, i) => (
-        <ScrollRow key={row.label} row={row} progress={scrollYProgress} reverse={i % 2 === 1} still={!!reduced} />
+        <ScrollRow
+          key={row.label}
+          row={row}
+          progress={scrollYProgress}
+          reverse={i % 2 === 1}
+          still={!!reduced}
+        />
       ))}
     </div>
   );
@@ -118,12 +146,21 @@ function ScrollRow({
   reverse: boolean;
   still: boolean;
 }) {
-  const x = useTransform(progress, [0, 1], reverse ? ["-32%", "4%"] : ["4%", "-32%"]);
+  const x = useTransform(
+    progress,
+    [0, 1],
+    reverse ? ["-32%", "4%"] : ["4%", "-32%"],
+  );
   // repete para a faixa nunca acabar dentro da tela
   const items = [...row.items, ...row.items, ...row.items];
   return (
-    <motion.div style={still ? undefined : { x }} className="flex w-max items-center gap-5 whitespace-nowrap md:gap-8">
-      <span className="font-mono text-xs text-fx-ink md:text-sm">{row.label}/</span>
+    <motion.div
+      style={still ? undefined : { x }}
+      className="flex w-max items-center gap-5 whitespace-nowrap md:gap-8"
+    >
+      <span className="font-mono text-xs text-fx-ink md:text-sm">
+        {row.label}/
+      </span>
       {items.map((it, k) => (
         <span key={k} className="flex items-center gap-5 md:gap-8">
           <span
@@ -151,12 +188,21 @@ export type StackCardItem = { key: string; node: ReactNode; tone?: "soft" };
 
 export function StackCards({ cards }: { cards: StackCardItem[] }) {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end end"],
+  });
   const n = cards.length;
   return (
     <div ref={ref} className="relative">
       {cards.map((c, i) => (
-        <StackCard key={c.key} index={i} total={n} progress={scrollYProgress} tone={c.tone}>
+        <StackCard
+          key={c.key}
+          index={i}
+          total={n}
+          progress={scrollYProgress}
+          tone={c.tone}
+        >
           {c.node}
         </StackCard>
       ))}
@@ -177,11 +223,15 @@ function StackCard({
   progress: MotionValue<number>;
   tone?: "soft";
 }) {
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const start = index / total;
   const target = 1 - (total - 1 - index) * 0.05;
   const scale = useTransform(progress, [start, 1], [1, target]);
-  const dim = useTransform(progress, [start, 1], [0, (total - 1 - index) * 0.12]);
+  const dim = useTransform(
+    progress,
+    [start, 1],
+    [0, (total - 1 - index) * 0.12],
+  );
   return (
     <div
       className="sticky mb-[12vh] last:mb-0"
@@ -212,16 +262,31 @@ function StackCard({
  * (ScrollReveal). O texto inteiro está no DOM desde o início: leitor de tela
  * e SEO leem normalmente — só a opacidade é coreografada.
  */
-export function WordReveal({ text, className }: { text: string; className?: string }) {
+export function WordReveal({
+  text,
+  className,
+}: {
+  text: string;
+  className?: string;
+}) {
   const ref = useRef<HTMLParagraphElement>(null);
-  const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.45"] });
-  if (reduced) return <p className={className}>{text}</p>;
+  const reduced = useReducedMotionSafe();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 0.85", "end 0.45"],
+  });
+  // A estrutura (e o ref do scroll) é sempre a mesma; com "reduzir movimento" as
+  // palavras só não variam de opacidade. Trocar de árvore quebrava a hidratação.
   const words = text.split(" ");
   return (
     <p ref={ref} className={className}>
       {words.map((w, i) => (
-        <RevealWord key={i} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]}>
+        <RevealWord
+          key={i}
+          still={!!reduced}
+          progress={scrollYProgress}
+          range={[i / words.length, (i + 1) / words.length]}
+        >
           {w}
         </RevealWord>
       ))}
@@ -233,27 +298,44 @@ function RevealWord({
   children,
   progress,
   range,
+  still,
 }: {
   children: string;
   progress: MotionValue<number>;
   range: [number, number];
+  still: boolean;
 }) {
   // 0.5 é o mínimo que mantém contraste ≥3:1 (texto grande) nos dois temas
   const opacity = useTransform(progress, range, [0.5, 1]);
   return (
     <>
-      <motion.span style={{ opacity }}>{children}</motion.span>{" "}
+      <motion.span style={still ? undefined : { opacity }}>
+        {children}
+      </motion.span>{" "}
     </>
   );
 }
 
 /** Bloco que cresce de longe até o tamanho final enquanto entra na tela. */
-export function ZoomIn({ children, className }: { children: ReactNode; className?: string }) {
+export function ZoomIn({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start 0.3"] });
+  const reduced = useReducedMotionSafe();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "start 0.3"],
+  });
   const scale = useTransform(scrollYProgress, [0, 1], [0.7, 1]);
-  const blur = useTransform(scrollYProgress, [0, 0.7], ["blur(10px)", "blur(0px)"]);
+  const blur = useTransform(
+    scrollYProgress,
+    [0, 0.7],
+    ["blur(10px)", "blur(0px)"],
+  );
   return (
     <motion.div
       ref={ref}

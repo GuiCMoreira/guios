@@ -25,7 +25,8 @@ export function BootScreen({ onDone }: BootScreenProps) {
 
     let raf = 0;
     const tick = (now: number) => {
-      const pct = Math.min(1, (now - started) / total);
+      // o 1º quadro pode ter horário anterior a `started`: sem o max, o índice viraria -1
+      const pct = Math.min(1, Math.max(0, (now - started) / total));
       setProgress(pct);
       setMsgIndex(Math.min(MSG_KEYS.length - 1, Math.floor(pct * MSG_KEYS.length)));
       if (pct >= 1) {

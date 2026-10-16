@@ -34,6 +34,7 @@ export function WeatherWidget() {
       initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.4 }}
+      data-desktop-widget="weather"
       className="glass absolute top-12 right-6 z-10 rounded-2xl px-4 py-3"
       aria-label={t("weather.aria")}
     >

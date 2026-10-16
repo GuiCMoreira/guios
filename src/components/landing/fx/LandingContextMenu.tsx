@@ -1,12 +1,26 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useReducedMotionSafe } from "./useReducedMotionSafe";
 import { useRouter } from "next/navigation";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ArrowUpRight, Check, Copy, Languages, Moon, Sun, TerminalSquare } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import {
+  ArrowUpRight,
+  Check,
+  Copy,
+  Languages,
+  Moon,
+  Sun,
+  TerminalSquare,
+} from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { useTheme } from "@/lib/theme";
-import { EMAIL, GITHUB_URL, INSTAGRAM_URL, LINKEDIN_URL } from "@/data/projects";
+import {
+  EMAIL,
+  GITHUB_URL,
+  INSTAGRAM_URL,
+  LINKEDIN_URL,
+} from "@/data/projects";
 
 type MenuState = { x: number; y: number } | null;
 
@@ -41,7 +55,7 @@ const MENU_H = 308;
 export function LandingContextMenu() {
   const { lang, setLang, t } = useI18n();
   const { theme, toggleTheme } = useTheme();
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const router = useRouter();
   const [menu, setMenu] = useState<MenuState>(null);
   const [copied, setCopied] = useState(false);
@@ -139,12 +153,23 @@ export function LandingContextMenu() {
             </Item>
             <div className="mx-2 my-1 h-px bg-line" aria-hidden />
             <Item
-              icon={theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              icon={
+                theme === "dark" ? (
+                  <Sun className="h-4 w-4" />
+                ) : (
+                  <Moon className="h-4 w-4" />
+                )
+              }
               onClick={() => toggleTheme()}
             >
-              {theme === "dark" ? t("landing.ctx.light") : t("landing.ctx.dark")}
+              {theme === "dark"
+                ? t("landing.ctx.light")
+                : t("landing.ctx.dark")}
             </Item>
-            <Item icon={<Languages className="h-4 w-4" />} onClick={() => setLang(lang === "pt" ? "en" : "pt")}>
+            <Item
+              icon={<Languages className="h-4 w-4" />}
+              onClick={() => setLang(lang === "pt" ? "en" : "pt")}
+            >
               {lang === "pt" ? "English" : "Português"}
             </Item>
             <div className="mx-2 my-1 h-px bg-line" aria-hidden />
@@ -158,7 +183,13 @@ export function LandingContextMenu() {
               GitHub
             </Item>
             <Item
-              icon={copied ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}
+              icon={
+                copied ? (
+                  <Check className="h-4 w-4 text-emerald-500" />
+                ) : (
+                  <Copy className="h-4 w-4" />
+                )
+              }
               onClick={copyEmail}
             >
               {copied ? t("landing.ctx.copied") : t("landing.ctx.copyEmail")}

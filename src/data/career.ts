@@ -1,4 +1,4 @@
-import type { CareerEntry } from "@/lib/types";
+import type { CareerEntry, LocalizedText } from "@/lib/types";
 
 // Datas confirmadas pelo Guilherme em 15/10/2026.
 export const career: CareerEntry[] = [
@@ -37,7 +37,10 @@ export const career: CareerEntry[] = [
   {
     id: "pessoal",
     kind: "personal",
-    role: { pt: "Projetos pessoais e estudos", en: "Personal projects & study" },
+    role: {
+      pt: "Projetos pessoais e estudos",
+      en: "Personal projects & study",
+    },
     company: "GitHub · GuiCMoreira",
     location: "Remoto",
     start: "2022",
@@ -90,4 +93,62 @@ export const mainStack = [
   "Docker",
   "Tailwind CSS",
   "RabbitMQ",
+];
+
+// Ferramentas agrupadas — do README do perfil no GitHub + o que uso na Altec.
+// Usado pela landing (faixas da seção Ferramentas) e pela nota "Stack & specs" do GuiOS.
+// Para incluir uma ferramenta, basta acrescentar o nome no grupo certo.
+export const toolGroups: {
+  id: string;
+  label: LocalizedText;
+  items: string[];
+}[] = [
+  {
+    id: "frontend",
+    label: { pt: "Frontend", en: "Frontend" },
+    items: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "JavaScript",
+      "Tailwind CSS",
+      "Vue.js",
+      "Flutter",
+      "Motion",
+      "Zustand",
+    ],
+  },
+  {
+    id: "backend",
+    label: { pt: "Backend & dados", en: "Backend & data" },
+    items: [
+      "PHP",
+      "Node.js",
+      "NestJS",
+      "C#",
+      "MySQL",
+      "PostgreSQL",
+      "Supabase",
+      "Prisma",
+      "Redis",
+      "RabbitMQ",
+      "Socket.IO",
+    ],
+  },
+  {
+    id: "tools",
+    label: { pt: "Infra & ferramentas", en: "Infra & tooling" },
+    items: [
+      "Docker",
+      "Nginx",
+      "Vercel",
+      "GitHub Actions",
+      "Git",
+      "Vitest",
+      "Playwright",
+      "PHPUnit",
+      "PHPStan",
+      "Figma",
+    ],
+  },
 ];

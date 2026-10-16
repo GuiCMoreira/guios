@@ -23,6 +23,12 @@ export interface Project {
   image?: string;
   /** "wip" = em desenvolvimento ativo, exibido com selo na vitrine. */
   status?: "wip";
+  /** Explicação para quem não é da área (recrutadores, curiosos). */
+  plain?: {
+    what: LocalizedText;
+    problem: LocalizedText;
+    myPart: LocalizedText;
+  };
 }
 
 export interface CareerEntry {
@@ -47,5 +53,7 @@ export interface WindowState {
   pos: { x: number; y: number };
   /** tamanho definido pelo usuário via resize; null = tamanho padrão do app */
   size: { w: number; h: number } | null;
+  /** true depois que o usuário arrasta ou redimensiona: a posição dele passa a valer. */
+  userPlaced?: boolean;
   payload?: string;
 }

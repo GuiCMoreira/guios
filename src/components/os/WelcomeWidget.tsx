@@ -16,6 +16,7 @@ export function WelcomeWidget() {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
+      data-desktop-widget="welcome"
       className="glass absolute top-[22%] left-[8%] z-10 max-w-md rounded-3xl p-8"
       aria-label={t("welcome.hello") + " Guilherme Carvalho"}
     >

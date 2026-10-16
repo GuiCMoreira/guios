@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { AppId, WindowState } from "./types";
+import { placeWindow } from "./window-placement";
 
 // Posições iniciais escalonadas para as janelas não nascerem empilhadas.
 const DEFAULT_POS: Record<AppId, { x: number; y: number }> = {
@@ -30,7 +31,10 @@ function initialWindows(): Record<AppId, WindowState> {
 }
 
 // Ao fechar/minimizar a focada, promove a janela visível de maior z.
-function nextFocus(windows: Record<AppId, WindowState>, closing: AppId): AppId | null {
+function nextFocus(
+  windows: Record<AppId, WindowState>,
+  closing: AppId,
+): AppId | null {
   const candidates = Object.values(windows).filter(
     (w) => w.appId !== closing && w.open && !w.minimized,
   );
@@ -77,28 +81,45 @@ export const useOSStore = create<OSStore>((set) => ({
   recent: [],
 
   openApp: (id, payload) =>
-    set((s) => ({
-      windows: {
-        ...s.windows,
-        [id]: {
-          ...s.windows[id],
-          open: true,
-          minimized: false,
-          z: s.zTop + 1,
-          // payload novo substitui; sem payload novo, preserva navegação atual do app
-          payload: payload ?? s.windows[id].payload,
+    set((s) => {
+      // Janela que estava fechada e que o usuário nunca arrastou/redimensionou nasce
+      // na área livre da mesa (fora do cartão de apresentação e do clima).
+      const cur = s.windows[id];
+      const openCount = Object.values(s.windows).filter(
+        (w) => w.open && !w.minimized,
+      ).length;
+      const placed =
+        !cur.open && !cur.userPlaced ? placeWindow(id, openCount) : null;
+      return {
+        windows: {
+          ...s.windows,
+          [id]: {
+            ...s.windows[id],
+            ...(placed ? { pos: placed.pos, size: placed.size } : {}),
+            open: true,
+            minimized: false,
+            z: s.zTop + 1,
+            // payload novo substitui; sem payload novo, preserva navegação atual do app
+            payload: payload ?? s.windows[id].payload,
+          },
         },
-      },
-      zTop: s.zTop + 1,
-      focused: id,
-      recent: [id, ...s.recent.filter((r) => r !== id)].slice(0, 4),
-    })),
+        zTop: s.zTop + 1,
+        focused: id,
+        recent: [id, ...s.recent.filter((r) => r !== id)].slice(0, 4),
+      };
+    }),
 
   closeApp: (id) =>
     set((s) => ({
       windows: {
         ...s.windows,
-        [id]: { ...s.windows[id], open: false, minimized: false, maximized: false, payload: undefined },
+        [id]: {
+          ...s.windows[id],
+          open: false,
+          minimized: false,
+          maximized: false,
+          payload: undefined,
+        },
       },
       focused: s.focused === id ? nextFocus(s.windows, id) : s.focused,
     })),
@@ -113,7 +134,11 @@ export const useOSStore = create<OSStore>((set) => ({
     set((s) => ({
       windows: {
         ...s.windows,
-        [id]: { ...s.windows[id], maximized: !s.windows[id].maximized, z: s.zTop + 1 },
+        [id]: {
+          ...s.windows[id],
+          maximized: !s.windows[id].maximized,
+          z: s.zTop + 1,
+        },
       },
       zTop: s.zTop + 1,
       focused: id,
@@ -135,12 +160,18 @@ export const useOSStore = create<OSStore>((set) => ({
 
   setPos: (id, pos) =>
     set((s) => ({
-      windows: { ...s.windows, [id]: { ...s.windows[id], pos } },
+      windows: {
+        ...s.windows,
+        [id]: { ...s.windows[id], pos, userPlaced: true },
+      },
     })),
 
   setSize: (id, size) =>
     set((s) => ({
-      windows: { ...s.windows, [id]: { ...s.windows[id], size } },
+      windows: {
+        ...s.windows,
+        [id]: { ...s.windows[id], size, userPlaced: true },
+      },
     })),
 
   clearPayload: (id) =>
@@ -153,6 +184,5 @@ export const useOSStore = create<OSStore>((set) => ({
   setPowerState: (s) => set({ powerState: s }),
   setSystemDialog: (d) => set({ systemDialog: d }),
 
-  closeAll: () =>
-    set(() => ({ windows: initialWindows(), focused: null })),
+  closeAll: () => set(() => ({ windows: initialWindows(), focused: null })),
 }));

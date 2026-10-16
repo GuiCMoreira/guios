@@ -8,7 +8,7 @@ interface ProjectCardProps {
   onOpen: (id: string) => void;
 }
 
-// Placeholder visual: monograma sobre gradiente derivado do nome (sem imagens na v1).
+// Reserva para projeto sem captura: monograma sobre gradiente derivado do nome.
 const TILE_GRADIENTS = [
   "from-indigo-600/70 to-violet-800/70",
   "from-emerald-600/70 to-teal-800/70",
@@ -24,7 +24,7 @@ function tileGradient(id: string): string {
 }
 
 export function ProjectCard({ project, onOpen }: ProjectCardProps) {
-  const { tx } = useI18n();
+  const { t, tx } = useI18n();
 
   return (
     <button
@@ -32,13 +32,30 @@ export function ProjectCard({ project, onOpen }: ProjectCardProps) {
       onClick={() => onOpen(project.id)}
       className="group flex flex-col overflow-hidden rounded-xl border border-line bg-inset text-left transition-all hover:border-line-strong hover:bg-fill-1"
     >
-      <div
-        className={`flex h-24 items-center justify-center bg-gradient-to-br ${tileGradient(project.id)}`}
-      >
-        <span className="font-display text-3xl font-bold text-white/80 transition-transform group-hover:scale-110">
-          {project.name.slice(0, 2).toUpperCase()}
-        </span>
-      </div>
+      {project.image ? (
+        <div className="relative aspect-video w-full overflow-hidden border-b border-line bg-fill-1">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={project.image}
+            alt=""
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+          />
+          {project.status === "wip" && (
+            <span className="absolute top-2 left-2 rounded-full bg-black/60 px-2 py-0.5 font-mono text-[9px] tracking-wide text-white uppercase backdrop-blur">
+              {t("projects.wip")}
+            </span>
+          )}
+        </div>
+      ) : (
+        <div
+          className={`flex h-24 items-center justify-center bg-gradient-to-br ${tileGradient(project.id)}`}
+        >
+          <span className="font-display text-3xl font-bold text-white/80 transition-transform group-hover:scale-110">
+            {project.name.slice(0, 2).toUpperCase()}
+          </span>
+        </div>
+      )}
       <div className="flex flex-1 flex-col gap-1.5 p-4">
         <div className="flex items-baseline justify-between gap-2">
           <h3 className="font-mono text-[13px] font-semibold text-text-hi">{project.name}</h3>

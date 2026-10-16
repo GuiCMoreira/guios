@@ -140,3 +140,20 @@
 - **Ferramentas**: 30 itens em fonte menor; carrossel reto da stack mantido com losango menor.
 - **Topo**: `GuiCMoreira` no header e fotos originais em alta (3x4 no topo, 9:16 no "Sobre"),
   regravadas sem metadados.
+
+## [5.1.0] — 2026-10-16
+
+### GuiOS para quem não é da área e README novo
+
+- **App Projetos com capturas**: cada projeto mostra a imagem no card e no detalhe; o detalhe abre em
+  duas colunas conforme a largura da janela e explica em linguagem simples o que é, que problema
+  resolve e o que o Guilherme fez, antes da parte técnica ("Por dentro").
+- **App Sobre detalhado**: notas Sobre, Experiência (Altec, FATEC, projetos pessoais) e Stack & specs
+  reescritas em blocos; grupos de ferramentas compartilhados com a landing.
+- **Janelas na área livre da mesa**: abrem sem cobrir o cartão de apresentação nem o clima, encolhem
+  em telas menores e saem em cascata; janela movida pelo usuário mantém a posição.
+- **Reduzir movimento sem erro de hidratação**: hook próprio (`useReducedMotionSafe`) e mesma
+  estrutura de DOM nos dois modos; zero erros de console com e sem a preferência.
+- Boot do GuiOS não mostra mais aviso de i18n no primeiro quadro.
+- **README reformulado** com as três camadas (landing, GuiOS, laboratório), decisões técnicas,
+  testes e capturas novas em webp.

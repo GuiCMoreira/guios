@@ -233,6 +233,11 @@ const dict: Record<string, LocalizedText> = {
   "projects.noDemo": { pt: "sem demo pública", en: "no public demo" },
   "projects.highlights": { pt: "Destaques técnicos", en: "Technical highlights" },
   "projects.stack": { pt: "Stack", en: "Stack" },
+  "projects.wip": { pt: "em desenvolvimento", en: "in development" },
+  "projects.plain.what": { pt: "O que é", en: "What it is" },
+  "projects.plain.problem": { pt: "Que problema resolve", en: "What problem it solves" },
+  "projects.plain.myPart": { pt: "O que eu fiz", en: "What I did" },
+  "projects.inside": { pt: "Por dentro (para quem é da área)", en: "Under the hood (for developers)" },
   "projects.empty": { pt: "Nenhum projeto nesta categoria.", en: "No projects in this category." },
 
   // Terminal
