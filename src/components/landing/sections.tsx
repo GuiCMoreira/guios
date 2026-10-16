@@ -3,19 +3,14 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useReducedMotionSafe } from "./fx/useReducedMotionSafe";
 import Link from "next/link";
-import {
-  AnimatePresence,
-  motion,
-  useMotionValueEvent,
-  useScroll,
-  useTransform,
-} from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { ArrowRight, ArrowUpRight, X } from "lucide-react";
 import type { Project } from "@/lib/types";
 import { useI18n } from "@/lib/i18n";
 import { career, education, toolGroups } from "@/data/career";
 import { projects, PHOTO_9X16, GITHUB_URL } from "@/data/projects";
-import { GuiOSShowcase } from "./GuiOSShowcase";
+import { GuiOSScreen, GuiOSShowcase } from "./GuiOSShowcase";
+import { MacbookScroll } from "@/components/aceternity/MacbookScroll";
 import { Magnetic, SplitWords } from "./fx/bits";
 import {
   GlareImage,
@@ -507,76 +502,69 @@ export function ProjectsSection() {
   );
 }
 
-// ----- GuiOS: a tela se levanta com o scroll -----
+// ----- GuiOS: o notebook abre e a tela sai dele (MacBook Scroll, Aceternity) -----
 
 export function GuiOSSection() {
   const { t } = useI18n();
   const reduced = useReducedMotionSafe();
-  const ref = useRef<HTMLElement>(null);
   const stage = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"],
-  });
-  // -88° = tampa deitada sobre o teclado; 0° = aberta, de pé
-  const tilt = useTransform(scrollYProgress, [0.04, 0.6], [-88, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.6], [0.78, 1]);
-  // Texto e botão aparecem quando a tela termina de abrir e FICAM: só somem se o
-  // visitante voltar a rolar para cima (histerese entre 0.4 e 0.6).
-  const [ctaShown, setCtaShown] = useState(false);
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    if (v > 0.6) setCtaShown(true);
-    else if (v < 0.4) setCtaShown(false);
-  });
+
+  const heading = (
+    <div className="text-center">
+      <p className="font-mono text-xs text-text-lo md:text-sm">
+        <span className="text-fx-ink">gui@os</span>:
+        <PromptCommand text="~/guios$ ./boot --preview" />
+      </p>
+      <h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.03em] text-balance md:text-5xl">
+        {t("landing.os.title.before")}
+        <Gradient>{t("landing.os.title.mark")}</Gradient>
+      </h2>
+    </div>
+  );
+
+  // a tela inteira é o link para o GuiOS (o iframe não recebe clique)
+  const screen = (
+    <Link
+      href="/os"
+      aria-label={t("landing.os.cta")}
+      data-cursor="hover"
+      data-cursor-label={t("landing.cursor.open")}
+      className="absolute inset-0 block"
+    >
+      <GuiOSScreen label={t("landing.os.preview")} />
+    </Link>
+  );
 
   return (
     <section
-      ref={ref}
       id="guios"
-      className="relative scroll-mt-0 border-y border-line bg-fill-1 lg:h-[260vh]"
+      className="relative scroll-mt-0 overflow-hidden border-y border-line bg-fill-1"
     >
-      <div
-        ref={stage}
-        className="relative flex flex-col items-center px-[clamp(20px,5vw,96px)] py-20 lg:sticky lg:top-0 lg:h-screen lg:justify-center lg:overflow-hidden lg:pt-20 lg:pb-8"
-      >
+      <div ref={stage} className="relative px-[clamp(20px,5vw,96px)]">
         <SectionCrosshair container={stage} />
-        <div className="text-center">
-          <p className="font-mono text-xs text-text-lo md:text-sm">
-            <span className="text-fx-ink">gui@os</span>:
-            <PromptCommand text="~/guios$ ./boot --preview" />
-          </p>
-          <h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.03em] text-balance md:text-5xl">
-            {t("landing.os.title.before")}
-            <Gradient>{t("landing.os.title.mark")}</Gradient>
-          </h2>
+
+        {/* desktop: o notebook abre com o scroll e a tela cresce até quem lê */}
+        {!reduced && (
+          <div className="hidden md:block">
+            <MacbookScroll title={heading} screen={screen} />
+          </div>
+        )}
+
+        {/* celular, tablet e "reduzir movimento": mockup parado (o MacbookScroll
+            tem 512px fixos e não foi feito para ficar parado) */}
+        <div className={reduced ? "py-20" : "py-20 md:hidden"}>
+          {heading}
+          <div className="relative mx-auto mt-8 max-w-4xl">
+            <GuiOSShowcase label={t("landing.os.preview")} />
+            <Link
+              href="/os"
+              aria-label={t("landing.os.cta")}
+              className="absolute inset-0"
+            />
+          </div>
         </div>
 
-        <motion.div
-          style={reduced ? undefined : { scale }}
-          className="mt-8 w-full max-w-[min(74vw,calc((100vh-400px)*1.6))] max-lg:max-w-full"
-        >
-          <Link
-            href="/os"
-            aria-label={t("landing.os.cta")}
-            data-cursor="hover"
-            data-cursor-label={t("landing.cursor.open")}
-            className="block"
-          >
-            <GuiOSShowcase
-              label={t("landing.os.preview")}
-              tilt={reduced ? undefined : tilt}
-            />
-          </Link>
-        </motion.div>
-
-        <motion.div
-          initial={false}
-          animate={
-            reduced || ctaShown ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
-          }
-          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-8 flex max-w-3xl flex-col items-center gap-5 text-center md:flex-row md:text-left"
-        >
+        <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-5 pb-20 text-center md:flex-row md:text-left">
           <p className="text-sm leading-relaxed text-text-lo">
             {t("landing.os.body")}
           </p>
@@ -588,7 +576,7 @@ export function GuiOSSection() {
               </span>
             </StarButton>
           </Magnetic>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
