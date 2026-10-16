@@ -1,12 +1,13 @@
 import { EMAIL } from "@/data/projects";
-import { SITE_URL } from "@/lib/site";
 import { sanitizeContact, validateContact, type ContactPayload } from "@/lib/contact";
 
 /*
- * Recebe o formulário de contato e entrega no e-mail do Guilherme.
+ * Recebe o formulário de contato, valida e entrega no e-mail do Guilherme.
  * Entrega: Resend se RESEND_API_KEY estiver configurada na Vercel; senão,
- * FormSubmit (gratuito, sem chave — o primeiro envio dispara um e-mail de
- * ativação que precisa ser confirmado uma vez). CONTACT_TO troca o destino.
+ * FormSubmit (gratuito, sem chave). O FormSubmit fica atrás do Cloudflare, que
+ * recusa chamadas vindas de IPs de datacenter (erro 1010 a partir da Vercel):
+ * por isso a rota devolve o pedido pronto (`relay`) e quem o envia é o
+ * navegador do visitante. CONTACT_TO troca o destino.
  */
 
 const TO = process.env.CONTACT_TO ?? EMAIL;
@@ -32,6 +33,8 @@ function rateLimited(ip: string) {
   return recent.length > MAX_PER_WINDOW;
 }
 
+const subject = (p: ContactPayload) => `Portfólio — ${TOPIC_LABEL[p.topic]} — ${p.name}`;
+
 function summary(p: ContactPayload) {
   const lines = [
     `Assunto: ${TOPIC_LABEL[p.topic]}`,
@@ -47,34 +50,12 @@ function summary(p: ContactPayload) {
   return lines.filter((l): l is string => typeof l === "string").join("\n");
 }
 
-async function deliver(p: ContactPayload) {
-  const subject = `Portfólio — ${TOPIC_LABEL[p.topic]} — ${p.name}`;
-  const key = process.env.RESEND_API_KEY;
-  if (key) {
-    const r = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        from: process.env.CONTACT_FROM ?? "Portfólio <onboarding@resend.dev>",
-        to: [TO],
-        subject,
-        text: summary(p),
-        ...(p.email ? { reply_to: p.email } : {}),
-      }),
-    });
-    return r.ok;
-  }
-  const r = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(TO)}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      // a FormSubmit recusa envios sem página de origem
-      Origin: SITE_URL,
-      Referer: `${SITE_URL}/`,
-    },
-    body: JSON.stringify({
-      _subject: subject,
+/** Pedido ao FormSubmit que o navegador do visitante repassa (ver POST). */
+function formSubmitRelay(p: ContactPayload) {
+  return {
+    url: `https://formsubmit.co/ajax/${encodeURIComponent(TO)}`,
+    body: {
+      _subject: subject(p),
       _template: "box",
       _captcha: "false",
       ...(p.email ? { _replyto: p.email } : {}),
@@ -86,11 +67,23 @@ async function deliver(p: ContactPayload) {
       LinkedIn: p.linkedin ?? "—",
       "Melhor horário": p.period ? PERIOD_LABEL[p.period] : "—",
       Mensagem: p.message,
+    },
+  };
+}
+
+async function sendWithResend(p: ContactPayload, key: string) {
+  const r = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      from: process.env.CONTACT_FROM ?? "Portfólio <onboarding@resend.dev>",
+      to: [TO],
+      subject: subject(p),
+      text: summary(p),
+      ...(p.email ? { reply_to: p.email } : {}),
     }),
   });
-  if (!r.ok) return false;
-  const data = (await r.json().catch(() => null)) as { success?: string | boolean } | null;
-  return data?.success === true || data?.success === "true";
+  return r.ok;
 }
 
 export async function POST(request: Request) {
@@ -108,11 +101,11 @@ export async function POST(request: Request) {
   const errors = validateContact(payload);
   if (Object.keys(errors).length) return Response.json({ ok: false, errors }, { status: 422 });
 
+  const key = process.env.RESEND_API_KEY;
+  if (!key) return Response.json({ ok: true, relay: formSubmitRelay(payload) });
+
   try {
-    const sent = await deliver(payload);
-    if (!sent) return Response.json({ ok: false, error: "form.err.delivery" }, { status: 502 });
-    return Response.json({ ok: true });
-  } catch {
-    return Response.json({ ok: false, error: "form.err.delivery" }, { status: 502 });
-  }
+    if (await sendWithResend(payload, key)) return Response.json({ ok: true });
+  } catch {}
+  return Response.json({ ok: false, error: "form.err.delivery" }, { status: 502 });
 }
