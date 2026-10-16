@@ -23,6 +23,12 @@ export interface Project {
   image?: string;
   /** "wip" = em desenvolvimento ativo, exibido com selo na vitrine. */
   status?: "wip";
+  /** Explicação para quem não é da área (recrutadores, curiosos). */
+  plain?: {
+    what: LocalizedText;
+    problem: LocalizedText;
+    myPart: LocalizedText;
+  };
 }
 
 export interface CareerEntry {

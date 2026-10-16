@@ -13,7 +13,7 @@ import {
 import { ArrowRight, ArrowUpRight, X } from "lucide-react";
 import type { Project } from "@/lib/types";
 import { useI18n } from "@/lib/i18n";
-import { career, education } from "@/data/career";
+import { career, education, toolGroups } from "@/data/career";
 import { projects, PHOTO_9X16, GITHUB_URL } from "@/data/projects";
 import { GuiOSShowcase } from "./GuiOSShowcase";
 import { Magnetic, SplitWords } from "./fx/bits";
@@ -512,25 +512,9 @@ export function GuiOSSection() {
 
 // ————— Ferramentas: faixas que andam com o scroll —————
 
-// Do README do perfil no GitHub + o que uso na Altec. Para incluir uma ferramenta,
-// basta acrescentar o nome na linha certa.
-const STACK_ROWS = [
-  {
-    key: "landing.stack.frontend",
-    items: ["Next.js", "React", "TypeScript", "JavaScript", "Tailwind CSS", "Vue.js", "Flutter", "Motion", "Zustand"],
-  },
-  {
-    key: "landing.stack.backend",
-    items: ["PHP", "Node.js", "NestJS", "C#", "MySQL", "PostgreSQL", "Supabase", "Prisma", "Redis", "RabbitMQ", "Socket.IO"],
-  },
-  {
-    key: "landing.stack.tools",
-    items: ["Docker", "Nginx", "Vercel", "GitHub Actions", "Git", "Vitest", "Playwright", "PHPUnit", "PHPStan", "Figma"],
-  },
-];
 
 export function StackSection() {
-  const { t } = useI18n();
+  const { t, tx } = useI18n();
   return (
     <section id="stack" className="scroll-mt-24 py-20 md:py-32">
       <Container>
@@ -540,7 +524,7 @@ export function StackSection() {
           aside={t("landing.sec.stackAside")}
         />
       </Container>
-      <ScrollRows rows={STACK_ROWS.map((r) => ({ label: t(r.key).toLowerCase(), items: r.items }))} />
+      <ScrollRows rows={toolGroups.map((g) => ({ label: tx(g.label).toLowerCase(), items: g.items }))} />
     </section>
   );
 }

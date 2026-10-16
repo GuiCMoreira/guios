@@ -98,3 +98,14 @@ em tema escuro, claro e 390px; sem scroll lateral; zero erros de console.
 - Cards de projeto com a mesma altura (frase reservando 2 linhas, linha do ano com altura fixa).
 - NavalhaGo e FinanceMy recortados em 16:9 a partir do topo (pedido: preencher o card; cortar embaixo pode).
 - Modal do projeto em duas colunas (imagem à esquerda, informações à direita) a partir de 1024px; verificado sem rolagem para os 6 projetos em 1920×1080, 1536×864, 1440×900, 1366×768, 1280×720 e 1024×768. No celular continua empilhado (sem largura para duas colunas).
+
+## GuiOS: projetos e Sobre (16/10/2026)
+
+- App Projetos: capturas nos cards (monograma só como reserva) e detalhe em duas colunas
+  conforme a largura da janela (container query): imagem fixa à esquerda; à direita "O que é",
+  "Que problema resolve" e "O que eu fiz" em linguagem simples, seguidos de "Por dentro" (técnico).
+  Os textos simples ficam no campo `plain` de cada projeto em `src/data/projects.ts`.
+- App Sobre: notas em blocos (seções, listas, linha do tempo, etiquetas, chave/valor). Sobre com
+  quem sou, o que faço, como trabalho e contato; Experiência com Altec (frentes levantadas dos
+  repositórios com commits), FATEC (TCC) e projetos pessoais; Stack & specs com os grupos de
+  ferramentas (agora em `toolGroups`, compartilhado com a landing) e números.
