@@ -29,6 +29,30 @@ const Threads = dynamic(() => import("@/components/rb/Threads"), { ssr: false })
 const ShinyText = dynamic(() => import("@/components/rb/ShinyText"), { ssr: false });
 const GradientText = dynamic(() => import("@/components/rb/GradientText"), { ssr: false });
 
+
+/**
+ * true quando o chunk do efeito já carregou. Enquanto isso, quem usa renderiza a
+ * versão estática com o conteúdo — o HTML do servidor nunca chega vazio.
+ */
+function useReady(load: () => Promise<unknown>) {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    let alive = true;
+    load().then(() => alive && setReady(true));
+    return () => {
+      alive = false;
+    };
+  }, [load]);
+  return ready;
+}
+
+const loadStar = () => import("@/components/rb/StarBorder");
+const loadGlare = () => import("@/components/rb/GlareHover");
+const loadGradient = () => import("@/components/rb/GradientText");
+const loadShiny = () => import("@/components/rb/ShinyText");
+const loadDecrypt = () => import("@/components/rb/DecryptedText");
+const loadRotating = () => import("@/components/rb/RotatingText");
+
 export const SKY = "#7dd3fc";
 export const SKY_DEEP = "#0ea5e9";
 
@@ -136,9 +160,13 @@ export function HeroName({ first, last }: { first: string; last: string }) {
 /** #06 — cargo que alterna. */
 export function RoleRotator({ prefix, roles }: { prefix: string; roles: string[] }) {
   const reduced = useReducedMotion();
+  const ready = useReady(loadRotating);
   return (
     <span className="inline-flex items-center gap-2 font-mono text-sm text-text-lo md:text-base">
       {prefix}
+      {!ready ? (
+        <span className="rounded-md bg-fx px-2 py-0.5 text-black">{roles[0]}</span>
+      ) : (
       <RotatingText
         texts={roles}
         auto={!reduced}
@@ -146,6 +174,7 @@ export function RoleRotator({ prefix, roles }: { prefix: string; roles: string[]
         staggerDuration={0.02}
         mainClassName="overflow-hidden rounded-md bg-fx px-2 py-0.5 text-black"
       />
+      )}
     </span>
   );
 }
@@ -154,6 +183,8 @@ export function RoleRotator({ prefix, roles }: { prefix: string; roles: string[]
 
 /** #05 — comando do prompt se descriptografa ao entrar na tela. */
 export function PromptCommand({ text }: { text: string }) {
+  const ready = useReady(loadDecrypt);
+  if (!ready) return <span className="text-text-lo">{text}</span>;
   return (
     <DecryptedText
       text={text}
@@ -170,6 +201,8 @@ export function PromptCommand({ text }: { text: string }) {
 export function Shiny({ text, className }: { text: string; className?: string }) {
   // o ShinyText converte a cor para RGB sozinho e não entende var(): cores literais por tema
   const dark = useDark();
+  const ready = useReady(loadShiny);
+  if (!ready) return <span className={`text-text-lo ${className ?? ""}`}>{text}</span>;
   return (
     <ShinyText
       text={text}
@@ -184,6 +217,8 @@ export function Shiny({ text, className }: { text: string; className?: string })
 
 /** #23 — gradiente azul animado nas frases de destaque (no lugar do marca-texto). */
 export function Gradient({ children, className }: { children: ReactNode; className?: string }) {
+  const ready = useReady(loadGradient);
+  if (!ready) return <span className={`text-fx-ink ${className ?? ""}`}>{children}</span>;
   return (
     <GradientText colors={[SKY_DEEP, SKY, "#a5b4fc", SKY_DEEP]} animationSpeed={6} className={className}>
       {children}
@@ -201,16 +236,21 @@ export function Gradient({ children, className }: { children: ReactNode; classNa
 export function CursorLayer({ children }: { children: ReactNode }) {
   const dark = useDark();
   const reduced = useReducedMotion();
+  // As faíscas ficam numa camada fixa por cima, sem envolver a página: o conteúdo
+  // continua vindo pronto do servidor (antes, envolvido por um componente só-client,
+  // a página inteira só aparecia depois do JavaScript carregar).
   return (
-    <ClickSpark
-      sparkColor={dark ? SKY : SKY_DEEP}
-      sparkCount={10}
-      sparkRadius={30}
-      glow={0.5}
-      disabled={!!reduced}
-      className="min-h-dvh"
-    >
+    <>
       {children}
+      <ClickSpark
+        global
+        sparkColor={dark ? SKY : SKY_DEEP}
+        sparkCount={10}
+        sparkRadius={30}
+        glow={0.5}
+        disabled={!!reduced}
+        className="pointer-events-none !fixed inset-0 z-[95] !h-dvh !w-full"
+      />
       <TargetCursor
         targetSelector="[data-cursor]"
         cursorColor={dark ? "#f2f4f8" : "#1d1d1f"}
@@ -218,7 +258,7 @@ export function CursorLayer({ children }: { children: ReactNode }) {
         blendMode="normal"
         spinDuration={3}
       />
-    </ClickSpark>
+    </>
   );
 }
 
@@ -245,6 +285,23 @@ type StarProps = ComponentProps<typeof StarBorder>;
 /** #13 — estrelas orbitando a borda dos botões principais (fundo cheio: continuam sendo o CTA). */
 export function StarButton(props: StarProps) {
   const dark = useDark();
+  const ready = useReady(loadStar);
+  if (!ready) {
+    const { as, children, className, ...rest } = props as StarProps & {
+      as?: React.ElementType;
+      className?: string;
+      children?: ReactNode;
+    };
+    const Tag = (as ?? "button") as React.ElementType;
+    return (
+      <Tag
+        {...rest}
+        className={`inline-flex items-center rounded-full bg-text-hi px-6 py-3 text-(--landing-bg) ${className ?? ""}`}
+      >
+        {children}
+      </Tag>
+    );
+  }
   return (
     <StarBorder
       color={dark ? SKY : SKY_DEEP}
@@ -258,6 +315,8 @@ export function StarButton(props: StarProps) {
 
 /** #14 — reflexo de vidro atravessando a imagem do projeto no hover. */
 export function GlareImage({ children, className }: { children: ReactNode; className?: string }) {
+  const ready = useReady(loadGlare);
+  if (!ready) return <div className={className}>{children}</div>;
   return (
     <GlareHover
       width="100%"
