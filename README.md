@@ -217,5 +217,6 @@ O histórico de versões, do lançamento ao Safari, está no [CHANGELOG](CHANGEL
 ## Créditos
 
 - Ícones da Lixeira, Safari e Ajustes: [WhiteSur icon theme](https://github.com/vinceliuice/WhiteSur-icon-theme) (GPL-3), de Vince Liuice.
+- Efeitos do laboratório (`/lab`) e componentes em `src/components/rb`: [React Bits](https://reactbits.dev) (MIT + Commons Clause), de David Haz.
 - Wallpapers: [Lorem Picsum](https://picsum.photos/) (fotos do Unsplash).
 - Demais ícones de apps: recriações próprias em SVG.

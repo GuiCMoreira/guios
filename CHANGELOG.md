@@ -38,6 +38,25 @@
 - Preparado para rodar demos dos projetos embutidas quando forem hospedadas.
 - Ícone de bússola estilo macOS; no mobile o Safari entra na grade da home.
 
+## [4.1.0] — 2026-10-15
+
+### Scroll coreografado e laboratório 🧪
+
+- **Cada seção rola de um jeito**: o hero se afasta (encolhe, desfoca e some), os
+  **projetos travam a tela e passam na horizontal** (contador e barra de progresso),
+  a **tela do MacBook se levanta** até mostrar o GuiOS de frente, as ferramentas viram
+  faixas gigantes que deslizam em sentidos opostos, a experiência vira **cartões que
+  empilham**, o texto do "Sobre" **acende palavra por palavra** e o título do contato
+  cresce até ocupar a tela.
+- **Acento azul claro** no lugar do amarelo (com versão escura para texto no tema claro,
+  mantendo contraste AA).
+- **Cursor centralizado**: o anel recebia o deslocamento de −50% três vezes (classe do
+  Tailwind no wrapper, classe no anel e `style` do motion).
+- **Carrossel da stack legível**: a velocidade era em % por frame; agora é em % por
+  segundo, com aceleração do scroll limitada a 3x.
+- **/lab**: 24 protótipos do React Bits rodando com o conteúdo e as cores do portfólio,
+  com botão de aprovar e "copiar lista" para escolher o que entra no site.
+
 ## [4.0.0] — 2026-10-15
 
 ### Landing "a parte de fora do GuiOS" ⚡

@@ -39,3 +39,4 @@ yarn-error.log*
 *Zone.Identifier
 *.html:Zone.Identifier
 Landing Altec*
+.playwright-mcp/
