@@ -35,8 +35,8 @@ const dict: Record<string, LocalizedText> = {
   "landing.os.title.before": { pt: "Este portfólio tem um ", en: "This portfolio ships with an " },
   "landing.os.title.mark": { pt: "sistema operacional.", en: "operating system." },
   "landing.os.body": {
-    pt: "O GuiOS é um mini-macOS que eu construí do zero dentro deste site: janelas que arrastam e redimensionam, dock, terminal com easter eggs e até um navegador com buscador próprio. É este mesmo portfólio — do jeito divertido. A prévia ao lado é o sistema de verdade, rodando agora.",
-    en: "GuiOS is a mini-macOS I built from scratch inside this site: draggable, resizable windows, a dock, a terminal full of easter eggs and even a browser with its own search engine. Same portfolio — the fun way. The preview here is the real system, running right now.",
+    pt: "O GuiOS é um mini-macOS que eu construí do zero dentro deste site: janelas que arrastam e redimensionam, dock, terminal com easter eggs e até um navegador com buscador próprio. É este mesmo portfólio — do jeito divertido. A prévia acima é o sistema de verdade, rodando agora.",
+    en: "GuiOS is a mini-macOS I built from scratch inside this site: draggable, resizable windows, a dock, a terminal full of easter eggs and even a browser with its own search engine. Same portfolio — the fun way. The preview above is the real system, running right now.",
   },
   "landing.os.cta": { pt: "Entrar no GuiOS", en: "Enter GuiOS" },
   "landing.os.hint": {
@@ -51,6 +51,11 @@ const dict: Record<string, LocalizedText> = {
     en: "Private repository — code available on request",
   },
   "landing.projects.details": { pt: "Ver detalhes", en: "View details" },
+  "landing.projects.scrollHint": { pt: "continue rolando", en: "keep scrolling" },
+  "landing.projects.intro": {
+    pt: "Do microsserviço com filas ao sistema operacional no navegador. Clique em qualquer um para ver os bastidores.",
+    en: "From queue-driven microservices to an operating system in the browser. Click any of them to see behind the scenes.",
+  },
   "landing.projects.close": { pt: "Fechar", en: "Close" },
   "landing.exp.now": { pt: "atual", en: "present" },
   "landing.stack.frontend": { pt: "Frontend", en: "Frontend" },

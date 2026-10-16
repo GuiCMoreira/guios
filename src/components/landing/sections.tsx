@@ -1,15 +1,30 @@
 "use client";
 
-import { useEffect, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
 import Link from "next/link";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ArrowUpRight, X } from "lucide-react";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "motion/react";
+import { ArrowRight, ArrowUpRight, X } from "lucide-react";
 import type { Project } from "@/lib/types";
 import { useI18n } from "@/lib/i18n";
 import { career, education } from "@/data/career";
 import { projects, AVATAR_URL, GITHUB_URL } from "@/data/projects";
 import { GuiOSShowcase } from "./GuiOSShowcase";
 import { Magnetic, SplitWords } from "./fx/bits";
+import {
+  PinnedHorizontal,
+  ScrollRows,
+  SlideCounter,
+  StackCards,
+  WordReveal,
+  useMediaQuery,
+} from "./fx/scroll";
 
 // ————— blocos compartilhados —————
 
@@ -46,17 +61,19 @@ function PromptHeading({
   command,
   title,
   aside,
+  className = "mb-12 md:mb-16",
 }: {
   command: string;
   title: string;
   aside?: string;
+  className?: string;
 }) {
   return (
-    <Reveal className="mb-12 md:mb-16">
+    <Reveal className={className}>
       <div className="flex items-end justify-between gap-4 border-b border-line pb-5">
         <div>
           <p className="font-mono text-xs text-text-lo md:text-sm">
-            <span className="text-amber-500">gui@os</span>:{command}
+            <span className="text-fx-ink">gui@os</span>:{command}
           </p>
           <h2 className="mt-3 font-display text-4xl font-bold tracking-[-0.03em] md:text-6xl">
             <SplitWords text={title} />
@@ -90,7 +107,7 @@ function moveSpot(e: ReactPointerEvent<HTMLElement>) {
 function WipBadge() {
   const { t } = useI18n();
   return (
-    <span className="rounded-full bg-amber-400/15 px-2 py-0.5 font-mono text-[10px] tracking-wide text-amber-600 uppercase dark:text-amber-400">
+    <span className="rounded-full bg-fx/15 px-2 py-0.5 font-mono text-[10px] tracking-wide text-fx-ink uppercase">
       {t("landing.projects.wip")}
     </span>
   );
@@ -165,7 +182,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
             <ul className="mt-6 space-y-2.5">
               {project.highlights.map((h, i) => (
                 <li key={i} className="flex gap-2.5 text-sm leading-relaxed text-text-lo">
-                  <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400" aria-hidden />
+                  <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-fx" aria-hidden />
                   <span>{h[lang]}</span>
                 </li>
               ))}
@@ -212,79 +229,210 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
   );
 }
 
-/** Larguras assimétricas no xl (12 colunas): ritmo editorial em vez de grade uniforme. */
-const SPANS = ["xl:col-span-7", "xl:col-span-5", "xl:col-span-5", "xl:col-span-7", "xl:col-span-6", "xl:col-span-6"];
-
-export function ProjectsSection() {
+/** Card da grade vertical (mobile, tablet e reduced-motion). */
+function ProjectCard({ p, onOpen }: { p: Project; onOpen: () => void }) {
   const { lang, t } = useI18n();
-  const [openId, setOpenId] = useState<string | null>(null);
-  const open = projects.find((p) => p.id === openId) ?? null;
-
   return (
-    <section id="projetos" className="scroll-mt-24 py-20 md:py-32">
-      <Container>
-        <PromptHeading
-          command="~/projetos$ ls --destaques"
-          title={t("landing.sec.projects")}
-          aside={t("landing.sec.projectsAside")}
-        />
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-12 xl:gap-6">
-          {projects.map((p, i) => (
-            <Reveal key={p.id} delay={Math.min(i % 2, 1) * 0.08} className={SPANS[i % SPANS.length]}>
-              <button
-                type="button"
-                onClick={() => setOpenId(p.id)}
-                onPointerMove={moveSpot}
-                data-cursor="hover"
-                data-cursor-label={t("landing.cursor.open")}
-                aria-label={`${p.name} — ${t("landing.projects.details")}`}
-                className="spotlight-card group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-line bg-(--landing-card) text-left transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-xl hover:shadow-black/5"
-              >
-                {p.image && (
-                  <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-line bg-fill-1">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={p.image}
-                      alt=""
-                      loading="lazy"
-                      className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
-                    />
-                  </div>
-                )}
-                <div className="flex flex-1 flex-col p-6">
-                  <div className="flex items-center justify-between gap-3 font-mono text-[11px] tracking-[0.15em] text-text-lo uppercase">
-                    <span className="flex items-center gap-2">
-                      {p.year} · {p.category === "web" ? "Web" : "Mobile"}
-                      {p.status === "wip" && <WipBadge />}
-                    </span>
-                    <ArrowUpRight className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </div>
-                  <h3 className="mt-3 font-display text-2xl font-semibold tracking-tight">{p.name}</h3>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-text-lo">{p.tagline[lang]}</p>
-                  <div className="mt-5 flex flex-wrap gap-1.5">
-                    {p.stack.slice(0, 4).map((s) => (
-                      <Chip key={s}>{s}</Chip>
-                    ))}
-                    {p.stack.length > 4 && <Chip>+{p.stack.length - 4}</Chip>}
-                  </div>
-                </div>
-              </button>
-            </Reveal>
-          ))}
+    <button
+      type="button"
+      onClick={onOpen}
+      onPointerMove={moveSpot}
+      data-cursor="hover"
+      data-cursor-label={t("landing.cursor.open")}
+      aria-label={`${p.name} — ${t("landing.projects.details")}`}
+      className="spotlight-card group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-line bg-(--landing-card) text-left transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-xl hover:shadow-black/5"
+    >
+      {p.image && (
+        <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-line bg-fill-1">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={p.image}
+            alt=""
+            loading="lazy"
+            className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
+          />
         </div>
-        <Reveal className="mt-10">
+      )}
+      <div className="flex flex-1 flex-col p-6">
+        <div className="flex items-center justify-between gap-3 font-mono text-[11px] tracking-[0.15em] text-text-lo uppercase">
+          <span className="flex items-center gap-2">
+            {p.year} · {p.category === "web" ? "Web" : "Mobile"}
+            {p.status === "wip" && <WipBadge />}
+          </span>
+          <ArrowUpRight className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        </div>
+        <h3 className="mt-3 font-display text-2xl font-semibold tracking-tight">{p.name}</h3>
+        <p className="mt-2 flex-1 text-sm leading-relaxed text-text-lo">{p.tagline[lang]}</p>
+        <div className="mt-5 flex flex-wrap gap-1.5">
+          {p.stack.slice(0, 4).map((s) => (
+            <Chip key={s}>{s}</Chip>
+          ))}
+          {p.stack.length > 4 && <Chip>+{p.stack.length - 4}</Chip>}
+        </div>
+      </div>
+    </button>
+  );
+}
+
+/**
+ * Slide da trilha horizontal: imagem grande com parallax próprio (a captura
+ * desliza dentro da moldura no sentido contrário ao da trilha).
+ */
+function ProjectSlide({
+  p,
+  index,
+  total,
+  progress,
+  onOpen,
+}: {
+  p: Project;
+  index: number;
+  total: number;
+  progress: MotionValue<number>;
+  onOpen: () => void;
+}) {
+  const { lang, t } = useI18n();
+  const center = (index + 1) / (total + 1);
+  const imgX = useTransform(progress, [center - 0.35, center + 0.35], ["7%", "-7%"]);
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      onPointerMove={moveSpot}
+      data-cursor="hover"
+      data-cursor-label={t("landing.cursor.open")}
+      aria-label={`${p.name} — ${t("landing.projects.details")}`}
+      className="spotlight-card group flex w-[min(58vw,980px)] shrink-0 flex-col overflow-hidden rounded-[28px] border border-line bg-(--landing-card) text-left transition-[border-color,box-shadow] duration-300 hover:border-line-strong hover:shadow-2xl hover:shadow-black/10"
+    >
+      <div className="relative aspect-[16/9] max-h-[52vh] w-full overflow-hidden border-b border-line bg-fill-1">
+        {p.image && (
+          <motion.img
+            src={p.image}
+            alt=""
+            loading="lazy"
+            style={{ x: imgX }}
+            className="absolute inset-y-0 -left-[8%] h-full w-[116%] max-w-none object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
+          />
+        )}
+        <span className="absolute top-4 left-4 rounded-full bg-black/55 px-3 py-1 font-mono text-[11px] text-white backdrop-blur">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+      </div>
+      <div className="flex items-end justify-between gap-6 p-6 md:p-7">
+        <div className="min-w-0">
+          <div className="flex items-center gap-2 font-mono text-[11px] tracking-[0.15em] text-text-lo uppercase">
+            {p.year} · {p.category === "web" ? "Web" : "Mobile"}
+            {p.status === "wip" && <WipBadge />}
+          </div>
+          <h3 className="mt-2 font-display text-3xl font-bold tracking-tight md:text-4xl">{p.name}</h3>
+          <p className="mt-2 max-w-xl text-sm leading-relaxed text-text-lo md:text-base">{p.tagline[lang]}</p>
+        </div>
+        <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-line transition-all duration-300 group-hover:border-fx group-hover:bg-fx group-hover:text-black">
+          <ArrowUpRight className="h-5 w-5" />
+        </span>
+      </div>
+    </button>
+  );
+}
+
+function HorizontalProjects({ onOpen }: { onOpen: (id: string) => void }) {
+  const { t } = useI18n();
+  return (
+    <PinnedHorizontal
+      footer={(progress) => (
+        <div className="mt-8 flex items-center gap-6 px-[clamp(20px,5vw,96px)]">
+          <SlideCounter progress={progress} total={projects.length + 2} />
+          <div className="h-px flex-1 bg-line">
+            <motion.div style={{ scaleX: progress }} className="h-px origin-left bg-fx" />
+          </div>
+          <span className="flex items-center gap-2 font-mono text-xs text-text-lo">
+            {t("landing.projects.scrollHint")}
+            <ArrowRight className="h-3.5 w-3.5 animate-pulse" />
+          </span>
+        </div>
+      )}
+    >
+      {(progress) => (
+        <>
+          <div className="flex w-[min(34vw,560px)] shrink-0 flex-col justify-center pr-6">
+            <p className="font-mono text-sm text-text-lo">
+              <span className="text-fx-ink">gui@os</span>:~/projetos$ ls --destaques
+            </p>
+            <h2 className="mt-4 font-display text-6xl leading-[0.95] font-bold tracking-[-0.04em] xl:text-8xl">
+              <SplitWords text={t("landing.sec.projects")} />
+            </h2>
+            <p className="mt-6 max-w-sm leading-relaxed text-text-lo">{t("landing.projects.intro")}</p>
+          </div>
+          {projects.map((p, i) => (
+            <ProjectSlide
+              key={p.id}
+              p={p}
+              index={i}
+              total={projects.length}
+              progress={progress}
+              onOpen={() => onOpen(p.id)}
+            />
+          ))}
           <a
             href={GITHUB_URL}
             target="_blank"
             rel="noreferrer"
             data-cursor="hover"
-            className="group inline-flex items-center gap-1.5 font-mono text-sm underline decoration-line underline-offset-4 transition-colors hover:decoration-amber-400"
+            data-cursor-label="GitHub ↗"
+            className="group flex aspect-square w-[min(28vw,420px)] shrink-0 flex-col justify-between rounded-[28px] border border-dashed border-line-strong p-8 transition-colors hover:border-fx"
           >
-            {t("landing.projects.all")}
-            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <span className="font-mono text-sm text-text-lo">~/github$ ls -a</span>
+            <span className="font-display text-4xl leading-tight font-bold tracking-tight">
+              {t("landing.projects.all")}
+            </span>
+            <ArrowUpRight className="h-10 w-10 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
           </a>
-        </Reveal>
-      </Container>
+        </>
+      )}
+    </PinnedHorizontal>
+  );
+}
+
+export function ProjectsSection() {
+  const { t } = useI18n();
+  const reduced = useReducedMotion();
+  const wide = useMediaQuery("(min-width: 1024px)");
+  const [openId, setOpenId] = useState<string | null>(null);
+  const open = projects.find((p) => p.id === openId) ?? null;
+  const horizontal = wide && !reduced;
+
+  return (
+    <section id="projetos" className={horizontal ? "" : "scroll-mt-24 py-20 md:py-32"}>
+      {horizontal ? (
+        <HorizontalProjects onOpen={setOpenId} />
+      ) : (
+        <Container>
+          <PromptHeading
+            command="~/projetos$ ls --destaques"
+            title={t("landing.sec.projects")}
+            aside={t("landing.sec.projectsAside")}
+          />
+          <div className="grid gap-5 md:grid-cols-2">
+            {projects.map((p, i) => (
+              <Reveal key={p.id} delay={Math.min(i % 2, 1) * 0.08}>
+                <ProjectCard p={p} onOpen={() => setOpenId(p.id)} />
+              </Reveal>
+            ))}
+          </div>
+          <Reveal className="mt-10">
+            <a
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noreferrer"
+              data-cursor="hover"
+              className="group inline-flex items-center gap-1.5 font-mono text-sm underline decoration-line underline-offset-4 transition-colors hover:decoration-fx"
+            >
+              {t("landing.projects.all")}
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          </Reveal>
+        </Container>
+      )}
       <AnimatePresence>
         {open && <ProjectModal project={open} onClose={() => setOpenId(null)} />}
       </AnimatePresence>
@@ -292,58 +440,77 @@ export function ProjectsSection() {
   );
 }
 
-// ————— GuiOS —————
+// ————— GuiOS: a tela se levanta com o scroll —————
 
 export function GuiOSSection() {
   const { t } = useI18n();
+  const reduced = useReducedMotion();
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const tilt = useTransform(scrollYProgress, [0, 0.6], [62, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.6], [0.78, 1]);
+  const ctaOpacity = useTransform(scrollYProgress, [0.55, 0.75], [0, 1]);
+  const ctaY = useTransform(scrollYProgress, [0.55, 0.75], [30, 0]);
+
   return (
-    <section id="guios" className="scroll-mt-24 border-y border-line bg-fill-1 py-20 md:py-32">
-      <Container>
-        <PromptHeading command="~/guios$ ./boot --preview" title={t("landing.sec.os")} />
-        <div className="grid items-center gap-10 lg:grid-cols-[4fr_6fr] lg:gap-16">
-          <Reveal>
-            <h3 className="font-display text-3xl font-semibold tracking-tight text-balance md:text-[2.8rem] md:leading-[1.08]">
-              {t("landing.os.title.before")}
-              <span className="mark">{t("landing.os.title.mark")}</span>
-            </h3>
-            <p className="mt-5 max-w-prose leading-relaxed text-text-lo">{t("landing.os.body")}</p>
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Magnetic strength={0.25}>
-                <Link
-                  href="/os"
-                  data-cursor="hover"
-                  className="inline-flex items-center gap-2 rounded-full bg-text-hi px-7 py-3.5 text-sm font-semibold text-(--landing-bg)"
-                >
-                  {t("landing.os.cta")}
-                  <ArrowUpRight className="h-4 w-4" />
-                </Link>
-              </Magnetic>
-              <p className="font-mono text-xs text-text-lo">{t("landing.os.hint")}</p>
-            </div>
-          </Reveal>
-          <Reveal delay={0.1}>
+    <section
+      ref={ref}
+      id="guios"
+      className="relative scroll-mt-0 border-y border-line bg-fill-1 lg:h-[260vh]"
+    >
+      <div className="flex flex-col items-center px-[clamp(20px,5vw,96px)] py-20 lg:sticky lg:top-0 lg:h-screen lg:justify-center lg:overflow-hidden lg:pt-20 lg:pb-8">
+        <div className="text-center">
+          <p className="font-mono text-xs text-text-lo md:text-sm">
+            <span className="text-fx-ink">gui@os</span>:~/guios$ ./boot --preview
+          </p>
+          <h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.03em] text-balance md:text-5xl">
+            {t("landing.os.title.before")}
+            <span className="mark">{t("landing.os.title.mark")}</span>
+          </h2>
+        </div>
+
+        <motion.div
+          style={reduced ? undefined : { scale }}
+          className="mt-8 w-full max-w-[min(78vw,calc((100vh-330px)*1.6))] max-lg:max-w-full"
+        >
+          <Link
+            href="/os"
+            aria-label={t("landing.os.cta")}
+            data-cursor="hover"
+            data-cursor-label={t("landing.cursor.open")}
+            className="block"
+          >
+            <GuiOSShowcase label={t("landing.os.preview")} tilt={reduced ? undefined : tilt} />
+          </Link>
+        </motion.div>
+
+        <motion.div
+          style={reduced ? undefined : { opacity: ctaOpacity, y: ctaY }}
+          className="mt-8 flex max-w-3xl flex-col items-center gap-5 text-center md:flex-row md:text-left"
+        >
+          <p className="text-sm leading-relaxed text-text-lo">{t("landing.os.body")}</p>
+          <Magnetic strength={0.25} className="shrink-0">
             <Link
               href="/os"
-              aria-label={t("landing.os.cta")}
               data-cursor="hover"
-              data-cursor-label={t("landing.cursor.open")}
-              className="block transition-transform duration-300 hover:scale-[1.015]"
+              className="inline-flex items-center gap-2 rounded-full bg-text-hi px-7 py-3.5 text-sm font-semibold whitespace-nowrap text-(--landing-bg)"
             >
-              <GuiOSShowcase label={t("landing.os.preview")} />
+              {t("landing.os.cta")}
+              <ArrowUpRight className="h-4 w-4" />
             </Link>
-          </Reveal>
-        </div>
-      </Container>
+          </Magnetic>
+        </motion.div>
+      </div>
     </section>
   );
 }
 
-// ————— Ferramentas —————
+// ————— Ferramentas: faixas que andam com o scroll —————
 
-const STACK_GROUPS = [
+const STACK_ROWS = [
   { key: "landing.stack.frontend", items: ["Next.js", "React", "TypeScript", "Tailwind CSS", "React Native"] },
-  { key: "landing.stack.backend", items: ["PHP", "Node.js", "MySQL", "RabbitMQ"] },
-  { key: "landing.stack.tools", items: ["Docker", "Git"] },
+  { key: "landing.stack.backend", items: ["PHP", "Node.js", "MySQL", "PostgreSQL", "RabbitMQ"] },
+  { key: "landing.stack.tools", items: ["Docker", "Git", "Supabase", "Vitest", "Playwright"] },
 ];
 
 export function StackSection() {
@@ -356,39 +523,64 @@ export function StackSection() {
           title={t("landing.sec.stack")}
           aside={t("landing.sec.stackAside")}
         />
-        <div className="grid gap-5 md:grid-cols-3">
-          {STACK_GROUPS.map((g, i) => (
-            <Reveal key={g.key} delay={i * 0.06}>
-              <div
-                onPointerMove={moveSpot}
-                className="spotlight-card h-full rounded-2xl border border-line bg-(--landing-card) p-7"
-              >
-                <p className="font-mono text-xs text-text-lo">
-                  <span className="text-amber-500">dir</span> {t(g.key).toLowerCase()}/
-                </p>
-                <ul className="mt-5 space-y-2.5">
-                  {g.items.map((item) => (
-                    <li
-                      key={item}
-                      className="border-b border-line pb-2.5 font-medium last:border-0 last:pb-0"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-          ))}
-        </div>
       </Container>
+      <ScrollRows rows={STACK_ROWS.map((r) => ({ label: t(r.key).toLowerCase(), items: r.items }))} />
     </section>
   );
 }
 
-// ————— Experiência —————
+// ————— Experiência: cartões que empilham —————
 
 export function ExperienceSection() {
   const { lang, t } = useI18n();
+  const cards = [
+    ...career.map((c) => (
+      <div key={c.id} className="grid min-h-[min(56vh,460px)] gap-6 p-8 md:grid-cols-[1fr_1.4fr] md:p-12">
+        <div className="flex flex-col justify-between gap-6">
+          <p className="font-mono text-sm text-fx-ink">
+            {c.start} — {c.end ?? t("landing.exp.now")}
+          </p>
+          <div>
+            <h3 className="font-display text-4xl leading-[1.02] font-bold tracking-[-0.03em] md:text-6xl">
+              {c.role[lang]}
+            </h3>
+            <p className="mt-3 text-lg text-text-lo">
+              {c.company} <span className="font-mono text-xs">· {c.location}</span>
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-col justify-end gap-6">
+          <p className="text-base leading-relaxed text-text-lo md:text-lg">{c.summary[lang]}</p>
+          <div className="flex flex-wrap gap-1.5">
+            {c.stack.map((s) => (
+              <Chip key={s}>{s}</Chip>
+            ))}
+          </div>
+        </div>
+      </div>
+    )),
+    <div key="edu" className="grid min-h-[min(56vh,460px)] gap-6 p-8 md:grid-cols-[1fr_1.4fr] md:p-12">
+      <div className="flex flex-col justify-between gap-6">
+        <p className="font-mono text-sm text-fx-ink">
+          {education.start} — {education.end}
+        </p>
+        <div>
+          <p className="font-mono text-xs text-text-lo">
+            <span className="text-fx-ink">tag</span> {t("landing.sec.edu").toLowerCase()}
+          </p>
+          <h3 className="mt-2 font-display text-4xl leading-[1.02] font-bold tracking-[-0.03em] md:text-6xl">
+            {education.institution}
+          </h3>
+        </div>
+      </div>
+      <div className="flex flex-col justify-end">
+        <p className="font-display text-2xl leading-snug font-semibold text-text-lo md:text-3xl">
+          {education.degree[lang]}
+        </p>
+      </div>
+    </div>,
+  ];
+
   return (
     <section id="experiencia" className="scroll-mt-24 border-y border-line bg-fill-1 py-20 md:py-32">
       <Container>
@@ -397,52 +589,13 @@ export function ExperienceSection() {
           title={t("landing.sec.exp")}
           aside={t("landing.sec.expAside")}
         />
-        <div className="space-y-10 md:space-y-14">
-          {career.map((c, i) => (
-            <Reveal key={c.id} delay={i * 0.06}>
-              <div className="grid gap-3 md:grid-cols-[220px_1fr] md:gap-10">
-                <p className="pt-1 font-mono text-sm text-text-lo">
-                  {c.start} — {c.end ?? t("landing.exp.now")}
-                </p>
-                <div>
-                  <h3 className="font-display text-2xl font-semibold tracking-tight">
-                    {c.role[lang]} <span className="font-normal text-text-lo">· {c.company}</span>
-                  </h3>
-                  <p className="mt-1 font-mono text-xs text-text-lo">{c.location}</p>
-                  <p className="mt-3 max-w-prose leading-relaxed text-text-lo">{c.summary[lang]}</p>
-                  <div className="mt-4 flex flex-wrap gap-1.5">
-                    {c.stack.map((s) => (
-                      <Chip key={s}>{s}</Chip>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-
-          <Reveal>
-            <div className="grid gap-3 border-t border-line pt-10 md:grid-cols-[220px_1fr] md:gap-10">
-              <p className="pt-1 font-mono text-sm text-text-lo">
-                {education.start} — {education.end}
-              </p>
-              <div>
-                <p className="font-mono text-xs text-text-lo">
-                  <span className="text-amber-500">tag</span> {t("landing.sec.edu").toLowerCase()}
-                </p>
-                <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight">
-                  {education.degree[lang]}{" "}
-                  <span className="font-normal text-text-lo">· {education.institution}</span>
-                </h3>
-              </div>
-            </div>
-          </Reveal>
-        </div>
+        <StackCards>{cards}</StackCards>
       </Container>
     </section>
   );
 }
 
-// ————— Sobre —————
+// ————— Sobre: o texto acende conforme a leitura —————
 
 export function AboutSection() {
   const { t } = useI18n();
@@ -450,26 +603,31 @@ export function AboutSection() {
     <section id="sobre" className="scroll-mt-24 py-20 md:py-32">
       <Container>
         <PromptHeading command="~/sobre$ cat bio.md" title={t("landing.sec.about")} />
-        <div className="grid items-start gap-10 md:grid-cols-[240px_1fr] md:gap-16">
-          <Reveal>
+        <div className="grid items-start gap-10 lg:grid-cols-[280px_1fr] lg:gap-20">
+          <div className="lg:sticky lg:top-28">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={AVATAR_URL}
               alt="Guilherme Carvalho"
-              width={240}
-              height={240}
+              width={280}
+              height={280}
               loading="lazy"
-              className="aspect-square w-44 rounded-3xl border border-line object-cover md:w-full"
+              className="aspect-square w-44 rounded-3xl border border-line object-cover lg:w-full"
             />
-          </Reveal>
-          <Reveal delay={0.08}>
-            <div className="max-w-3xl space-y-4 leading-relaxed text-text-lo md:text-lg">
-              <p>{t("landing.about.p1")}</p>
-              <p>{t("landing.about.p2")}</p>
-            </div>
-          </Reveal>
+          </div>
+          <div className="max-w-5xl space-y-10">
+            <WordReveal
+              text={t("landing.about.p1")}
+              className="font-display text-2xl leading-[1.3] font-semibold tracking-tight md:text-4xl"
+            />
+            <WordReveal
+              text={t("landing.about.p2")}
+              className="font-display text-2xl leading-[1.3] font-semibold tracking-tight md:text-4xl"
+            />
+          </div>
         </div>
       </Container>
     </section>
   );
 }
+

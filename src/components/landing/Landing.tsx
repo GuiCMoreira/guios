@@ -11,6 +11,7 @@ import { mainStack } from "@/data/career";
 import { CursorFX } from "./fx/CursorFX";
 import { LandingContextMenu } from "./fx/LandingContextMenu";
 import { Magnetic, ScrollProgress, TiltPhoto, VelocityMarquee } from "./fx/bits";
+import { ZoomIn } from "./fx/scroll";
 import {
   AboutSection,
   Container,
@@ -35,7 +36,7 @@ function Header() {
     <header className="fixed inset-x-0 top-0 z-40 border-b border-line bg-(--landing-bg)/75 backdrop-blur-xl">
       <Container className="flex h-14 items-center justify-between">
         <a href="#top" data-cursor="hover" className="font-mono text-sm font-semibold tracking-tight">
-          gui<span className="text-amber-500">@</span>os
+          gui<span className="text-fx-ink">@</span>os
         </a>
         <nav className="hidden items-center gap-7 md:flex" aria-label="Seções">
           {NAV.map((item) => (
@@ -45,7 +46,7 @@ function Header() {
               data-cursor="hover"
               className="group relative font-mono text-[13px] text-text-lo transition-colors hover:text-text-hi"
             >
-              <span className="text-amber-500/0 transition-colors group-hover:text-amber-500">./</span>
+              <span className="text-fx-ink/0 transition-colors group-hover:text-fx-ink">./</span>
               {t(item.key)}
             </a>
           ))}
@@ -91,6 +92,10 @@ function Hero() {
   const { scrollY } = useScroll();
   // parallax sutil: a foto sobe mais devagar que o texto ao rolar
   const photoY = useTransform(scrollY, [0, 600], [0, reduced ? 0 : 70]);
+  // ao rolar, o hero se afasta: encolhe, desfoca e some — a página "entra" no conteúdo
+  const exitScale = useTransform(scrollY, [0, 700], [1, 0.9]);
+  const exitOpacity = useTransform(scrollY, [150, 700], [1, 0]);
+  const exitBlur = useTransform(scrollY, [150, 700], ["blur(0px)", "blur(8px)"]);
 
   const enter = (delay: number) => ({
     initial: reduced ? { opacity: 0 } : { opacity: 0, y: 24 },
@@ -105,10 +110,14 @@ function Hero() {
         aria-hidden
         className="absolute inset-0 opacity-[0.35] [background-image:radial-gradient(var(--line-strong)_1px,transparent_1px)] [background-size:28px_28px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,black,transparent)]"
       />
+      <motion.div
+        style={reduced ? undefined : { scale: exitScale, opacity: exitOpacity, filter: exitBlur }}
+        className="relative origin-top"
+      >
       <Container className="relative">
         <motion.p {...enter(0)} className="font-mono text-sm text-text-lo">
-          <span className="text-amber-500">gui@os</span>:~$ whoami
-          <span className="blink ml-1 inline-block h-[1em] w-[0.55em] translate-y-[2px] bg-amber-400" />
+          <span className="text-fx-ink">gui@os</span>:~$ whoami
+          <span className="blink ml-1 inline-block h-[1em] w-[0.55em] translate-y-[2px] bg-fx" />
         </motion.p>
 
         <div className="mt-6 grid items-center gap-10 lg:grid-cols-[1fr_auto] lg:gap-20">
@@ -169,7 +178,7 @@ function Hero() {
                 <a
                   href={`mailto:${EMAIL}`}
                   data-cursor="hover"
-                  className="group inline-flex items-center gap-1 font-mono text-sm underline decoration-line underline-offset-4 transition-colors hover:decoration-amber-400"
+                  className="group inline-flex items-center gap-1 font-mono text-sm underline decoration-line underline-offset-4 transition-colors hover:decoration-fx"
                 >
                   {t("landing.nav.contact").toLowerCase()}@gui
                   <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -201,6 +210,7 @@ function Hero() {
           </span>
         </motion.div>
       </Container>
+      </motion.div>
     </section>
   );
 }
@@ -208,14 +218,14 @@ function Hero() {
 function StackMarquee() {
   return (
     <div aria-hidden className="border-y border-line bg-fill-1 py-5 select-none md:py-7">
-      <VelocityMarquee baseSpeed={1.4}>
+      <VelocityMarquee baseSpeed={0.6}>
         {mainStack.map((s) => (
           <span
             key={s}
             className="flex items-center font-display text-3xl font-bold tracking-tight whitespace-nowrap text-text-hi/80 md:text-5xl"
           >
             <span className="px-5">{s}</span>
-            <span className="text-amber-400">✦</span>
+            <span className="text-fx">✦</span>
           </span>
         ))}
       </VelocityMarquee>
@@ -228,16 +238,16 @@ function ContactSection() {
   return (
     <section id="contato" className="scroll-mt-24 border-t border-line bg-fill-1 py-24 md:py-40">
       <Container>
-        <Reveal>
+        <ZoomIn>
           <p className="font-mono text-sm text-text-lo">
-            <span className="text-amber-500">gui@os</span>:~$ ./contato --agora
+            <span className="text-fx-ink">gui@os</span>:~$ ./contato --agora
           </p>
           <h2 className="mt-5 font-display text-[clamp(2.4rem,6.5vw,6rem)] leading-[1.02] font-bold tracking-[-0.03em] text-balance">
             {t("landing.contact.title.before")}
             <span className="mark">{t("landing.contact.title.mark")}</span>
           </h2>
           <p className="mt-6 max-w-xl leading-relaxed text-text-lo md:text-lg">{t("landing.contact.body")}</p>
-        </Reveal>
+        </ZoomIn>
         <Reveal delay={0.1} className="mt-12 flex flex-wrap items-center gap-4">
           <Magnetic strength={0.25}>
             <a

@@ -17,6 +17,9 @@
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
   --color-inset: var(--inset);
+  /* Acento da landing: azul claro (decorativo) e sua versão de texto (contraste AA) */
+  --color-fx: var(--fx);
+  --color-fx-ink: var(--fx-ink);
 
   /* Fixos (boot/terminal são escuros nos dois temas) */
   --color-ink: #07080c;
@@ -45,7 +48,9 @@
   /* Landing editorial (off-white no claro, quase-preto no escuro) */
   --landing-bg: #fafaf8;
   --landing-card: #ffffff;
-  --mark: rgba(250, 204, 21, 0.55);
+  --fx: #38bdf8;
+  --fx-ink: #0369a1;
+  --mark: rgba(56, 189, 248, 0.32);
 }
 
 .dark {
@@ -68,7 +73,9 @@
 
   --landing-bg: #0b0c0f;
   --landing-card: #14151a;
-  --mark: rgba(250, 204, 21, 0.28);
+  --fx: #7dd3fc;
+  --fx-ink: #7dd3fc;
+  --mark: rgba(125, 211, 252, 0.24);
 }
 
 html,
@@ -134,7 +141,7 @@ html {
   transition: opacity 0.35s ease;
   background: radial-gradient(
     420px circle at var(--spot-x, 50%) var(--spot-y, 50%),
-    rgba(250, 204, 21, 0.1),
+    rgba(56, 189, 248, 0.13),
     transparent 65%
   );
 }

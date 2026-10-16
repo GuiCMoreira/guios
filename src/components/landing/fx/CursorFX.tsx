@@ -78,7 +78,7 @@ export function CursorFX() {
       {/* anel com mola */}
       <motion.div
         style={{ x: ringX, y: ringY }}
-        className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2"
+        className="absolute top-0 left-0"
       >
         <motion.div
           animate={
@@ -90,7 +90,6 @@ export function CursorFX() {
           }
           transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
           className="flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white mix-blend-difference"
-          style={{ translateX: "-50%", translateY: "-50%" }}
         >
           {label && (
             <span className="font-mono text-[10px] whitespace-nowrap text-white">{label}</span>
@@ -103,7 +102,7 @@ export function CursorFX() {
           {Array.from({ length: 8 }).map((_, i) => (
             <span
               key={i}
-              className="click-spark absolute block h-[2px] w-[9px] rounded-full bg-amber-400"
+              className="click-spark absolute block h-[2px] w-[9px] rounded-full bg-fx"
               style={{ transform: `rotate(${i * 45}deg)` }}
             />
           ))}
