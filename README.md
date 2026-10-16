@@ -195,7 +195,7 @@ funciona; o formulário entrega pelo FormSubmit para o e-mail do Guilherme.
 | `RESEND_API_KEY`       | Entrega o formulário pelo Resend em vez do FormSubmit                                 |
 | `CONTACT_TO`           | Para onde vai a mensagem (padrão: o e-mail em `src/data/projects.ts`)                 |
 | `CONTACT_FROM`         | Remetente no Resend (padrão: `Portfólio <onboarding@resend.dev>`)                     |
-| `NEXT_PUBLIC_SITE_URL` | URL pública, usada em metadata, sitemap e no cabeçalho de origem enviado ao FormSubmit |
+| `NEXT_PUBLIC_SITE_URL` | URL pública, usada em metadata e sitemap |
 
 ```bash
 npm run lint       # ESLint
@@ -205,8 +205,8 @@ npm run build      # build de produção
 
 O deploy é na Vercel, a partir da branch `main`. Cada branch empurrada ganha uma prévia própria.
 
-> O FormSubmit pede uma confirmação por e-mail no primeiro envio para um endereço novo. Até ela ser
-> clicada, o formulário responde erro.
+> O FormSubmit pede uma confirmação por e-mail no primeiro envio de cada domínio (produção,
+> `localhost`, prévias). Até ela ser clicada, o formulário daquele domínio responde erro.
 
 ---
 
@@ -293,6 +293,12 @@ Contra robôs, sem captcha: um campo-armadilha (`website`) que humanos não veem
 — quando vem preenchido, a API responde sucesso e não envia nada — e um limite de 5 envios a cada
 10 minutos por IP. A entrega usa o Resend se houver `RESEND_API_KEY` e o FormSubmit caso contrário,
 para o site funcionar no primeiro deploy sem configurar nada.
+
+O FormSubmit fica atrás do Cloudflare, que recusa chamadas vindas de IPs de datacenter: a partir da
+Vercel, a resposta é `403 · Error 1010`. Por isso, sem Resend, a rota valida e devolve o pedido
+pronto (`relay`), e quem o envia ao FormSubmit é o navegador do visitante — o endpoint `/ajax` foi
+feito para isso e aceita CORS. O FormSubmit também ativa cada domínio uma vez: envios de
+`localhost` ou de uma prévia da Vercel pedem ativação própria e não chegam até ela ser feita.
 
 </details>
 

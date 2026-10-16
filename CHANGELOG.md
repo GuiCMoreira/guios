@@ -157,3 +157,12 @@
 - Boot do GuiOS não mostra mais aviso de i18n no primeiro quadro.
 - **README reformulado** com as três camadas (landing, GuiOS, laboratório), decisões técnicas,
   testes e capturas novas em webp.
+
+## [5.1.1] — 2026-10-16
+
+### Formulário de contato volta a entregar
+
+- O FormSubmit (atrás do Cloudflare) passou a recusar as chamadas feitas a partir dos servidores da
+  Vercel (`403 · Error 1010`, bloqueio por IP de datacenter), e toda mensagem terminava em "Não
+  consegui entregar". Agora a rota valida e devolve o pedido pronto, e o navegador do visitante o
+  envia ao FormSubmit. Com `RESEND_API_KEY`, a entrega continua saindo do servidor.

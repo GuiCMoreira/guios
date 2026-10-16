@@ -102,6 +102,17 @@ function Field({
 const inputCls =
   "w-full rounded-xl border border-line bg-(--landing-bg) px-4 py-3 text-[15px] text-text-hi placeholder:text-text-lo/60 transition-colors focus:border-fx focus:outline-none";
 
+
+async function relayToFormSubmit(relay: { url: string; body: Record<string, string> }) {
+  const r = await fetch(relay.url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify(relay.body),
+  });
+  if (!r.ok) return false;
+  const data = (await r.json().catch(() => null)) as { success?: string | boolean } | null;
+  return data?.success === true || data?.success === "true";
+}
 export function ContactForm() {
   const { t } = useI18n();
   const reduced = useReducedMotionSafe();
@@ -173,7 +184,18 @@ export function ContactForm() {
         ok?: boolean;
         error?: string;
         errors?: ContactErrors;
+        relay?: { url: string; body: Record<string, string> };
       };
+      if (r.ok && data.ok && data.relay) {
+        // o servidor validou; o envio ao FormSubmit sai daqui (ver /api/contato)
+        if (await relayToFormSubmit(data.relay)) {
+          setStatus("sent");
+          return;
+        }
+        setServerError("form.err.delivery");
+        setStatus("error");
+        return;
+      }
       if (r.ok && data.ok) {
         setStatus("sent");
         return;
