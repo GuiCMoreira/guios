@@ -49,12 +49,13 @@ export function SplitWords({ text, className }: { text: string; className?: stri
   return (
     <motion.span
       className={className}
-      aria-label={text}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, margin: "-60px" }}
       transition={{ staggerChildren: 0.05 }}
     >
+      {/* leitores de tela leem o texto inteiro; a cópia animada fica oculta deles */}
+      <span className="sr-only">{text}</span>
       {text.split(" ").map((w, i) => (
         <span key={i} aria-hidden className="inline-block overflow-hidden pb-[0.08em] align-bottom">
           <motion.span
