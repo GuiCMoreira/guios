@@ -87,6 +87,13 @@ const dict: Record<string, LocalizedText> = {
   "landing.ctx.close": { pt: "Fechar menu", en: "Close menu" },
   "landing.cursor.open": { pt: "abrir ↗", en: "open ↗" },
   "landing.hero.role": { pt: "desenvolvedor fullstack", en: "fullstack developer" },
+  // listas separadas por "|" (o dicionário só guarda strings)
+  "landing.hero.rolePrefix": { pt: "// desenvolvedor", en: "//" },
+  "landing.hero.roles": {
+    pt: "fullstack|backend|frontend|de sistemas",
+    en: "fullstack developer|backend developer|frontend developer|systems builder",
+  },
+  "landing.hero.flap": { pt: "DISPONÍVEL|FULLSTACK|NEXT + PHP", en: "AVAILABLE|FULLSTACK|NEXT + PHP" },
   "landing.hint.rightClick": {
     pt: "psiu — experimenta o botão direito",
     en: "psst — try right-clicking",

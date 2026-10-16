@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import {
   AnimatePresence,
@@ -17,6 +17,7 @@ import { career, education } from "@/data/career";
 import { projects, AVATAR_URL, GITHUB_URL } from "@/data/projects";
 import { GuiOSShowcase } from "./GuiOSShowcase";
 import { Magnetic, SplitWords } from "./fx/bits";
+import { GlareImage, Gradient, PromptCommand, SectionCrosshair, StarButton } from "./fx/rb";
 import {
   PinnedHorizontal,
   ScrollRows,
@@ -73,7 +74,7 @@ function PromptHeading({
       <div className="flex items-end justify-between gap-4 border-b border-line pb-5">
         <div>
           <p className="font-mono text-xs text-text-lo md:text-sm">
-            <span className="text-fx-ink">gui@os</span>:{command}
+            <span className="text-fx-ink">gui@os</span>:<PromptCommand text={command} />
           </p>
           <h2 className="mt-3 font-display text-4xl font-bold tracking-[-0.03em] md:text-6xl">
             <SplitWords text={title} />
@@ -91,15 +92,6 @@ function Chip({ children }: { children: ReactNode }) {
       {children}
     </span>
   );
-}
-
-/** Acende o holofote do .spotlight-card seguindo o mouse — direto no style, sem re-render. */
-function moveSpot(e: ReactPointerEvent<HTMLElement>) {
-  if (e.pointerType !== "mouse") return;
-  const el = e.currentTarget;
-  const r = el.getBoundingClientRect();
-  el.style.setProperty("--spot-x", `${e.clientX - r.left}px`);
-  el.style.setProperty("--spot-y", `${e.clientY - r.top}px`);
 }
 
 // ————— Projetos —————
@@ -236,20 +228,21 @@ function ProjectCard({ p, onOpen }: { p: Project; onOpen: () => void }) {
     <button
       type="button"
       onClick={onOpen}
-      onPointerMove={moveSpot}
       data-cursor="hover"
       data-cursor-label={t("landing.cursor.open")}
-      className="spotlight-card group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-line bg-(--landing-card) text-left transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-xl hover:shadow-black/5"
+      className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-line bg-(--landing-card) text-left transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-xl hover:shadow-black/5"
     >
       {p.image && (
         <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-line bg-fill-1">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={p.image}
-            alt=""
-            loading="lazy"
-            className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
-          />
+          <GlareImage className="absolute inset-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={p.image}
+              alt=""
+              loading="lazy"
+              className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
+            />
+          </GlareImage>
         </div>
       )}
       <div className="flex flex-1 flex-col p-6">
@@ -298,20 +291,21 @@ function ProjectSlide({
     <button
       type="button"
       onClick={onOpen}
-      onPointerMove={moveSpot}
       data-cursor="hover"
       data-cursor-label={t("landing.cursor.open")}
-      className="spotlight-card group flex w-[min(58vw,980px)] shrink-0 flex-col overflow-hidden rounded-[28px] border border-line bg-(--landing-card) text-left transition-[border-color,box-shadow] duration-300 hover:border-line-strong hover:shadow-2xl hover:shadow-black/10"
+      className="group flex w-[min(58vw,980px)] shrink-0 flex-col overflow-hidden rounded-[28px] border border-line bg-(--landing-card) text-left transition-[border-color,box-shadow] duration-300 hover:border-line-strong hover:shadow-2xl hover:shadow-black/10"
     >
       <div className="relative aspect-[16/9] max-h-[52vh] w-full overflow-hidden border-b border-line bg-fill-1">
         {p.image && (
-          <motion.img
-            src={p.image}
-            alt=""
-            loading="lazy"
-            style={{ x: imgX }}
-            className="absolute inset-y-0 -left-[8%] h-full w-[116%] max-w-none object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
-          />
+          <GlareImage className="absolute inset-0">
+            <motion.img
+              src={p.image}
+              alt=""
+              loading="lazy"
+              style={{ x: imgX }}
+              className="absolute inset-y-0 -left-[8%] h-full w-[116%] max-w-none object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
+            />
+          </GlareImage>
         )}
         <span className="absolute top-4 left-4 rounded-full bg-black/55 px-3 py-1 font-mono text-[11px] text-white backdrop-blur">
           {String(index + 1).padStart(2, "0")}
@@ -356,7 +350,7 @@ function HorizontalProjects({ onOpen }: { onOpen: (id: string) => void }) {
         <>
           <div className="flex w-[min(34vw,560px)] shrink-0 flex-col justify-center pr-6">
             <p className="font-mono text-sm text-text-lo">
-              <span className="text-fx-ink">gui@os</span>:~/projetos$ ls --destaques
+              <span className="text-fx-ink">gui@os</span>:<PromptCommand text="~/projetos$ ls --destaques" />
             </p>
             <h2 className="mt-4 font-display text-6xl leading-[0.95] font-bold tracking-[-0.04em] xl:text-8xl">
               <SplitWords text={t("landing.sec.projects")} />
@@ -446,6 +440,7 @@ export function GuiOSSection() {
   const { t } = useI18n();
   const reduced = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
+  const stage = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const tilt = useTransform(scrollYProgress, [0, 0.6], [62, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.6], [0.78, 1]);
@@ -458,14 +453,18 @@ export function GuiOSSection() {
       id="guios"
       className="relative scroll-mt-0 border-y border-line bg-fill-1 lg:h-[260vh]"
     >
-      <div className="flex flex-col items-center px-[clamp(20px,5vw,96px)] py-20 lg:sticky lg:top-0 lg:h-screen lg:justify-center lg:overflow-hidden lg:pt-20 lg:pb-8">
+      <div
+        ref={stage}
+        className="relative flex flex-col items-center px-[clamp(20px,5vw,96px)] py-20 lg:sticky lg:top-0 lg:h-screen lg:justify-center lg:overflow-hidden lg:pt-20 lg:pb-8"
+      >
+        <SectionCrosshair container={stage} />
         <div className="text-center">
           <p className="font-mono text-xs text-text-lo md:text-sm">
-            <span className="text-fx-ink">gui@os</span>:~/guios$ ./boot --preview
+            <span className="text-fx-ink">gui@os</span>:<PromptCommand text="~/guios$ ./boot --preview" />
           </p>
           <h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.03em] text-balance md:text-5xl">
             {t("landing.os.title.before")}
-            <span className="mark">{t("landing.os.title.mark")}</span>
+            <Gradient>{t("landing.os.title.mark")}</Gradient>
           </h2>
         </div>
 
@@ -490,14 +489,12 @@ export function GuiOSSection() {
         >
           <p className="text-sm leading-relaxed text-text-lo">{t("landing.os.body")}</p>
           <Magnetic strength={0.25} className="shrink-0">
-            <Link
-              href="/os"
-              data-cursor="hover"
-              className="inline-flex items-center gap-2 rounded-full bg-text-hi px-7 py-3.5 text-sm font-semibold whitespace-nowrap text-(--landing-bg)"
-            >
-              {t("landing.os.cta")}
-              <ArrowUpRight className="h-4 w-4" />
-            </Link>
+            <StarButton as={Link} href="/os" data-cursor="hover">
+              <span className="inline-flex items-center gap-2 text-sm font-semibold whitespace-nowrap">
+                {t("landing.os.cta")}
+                <ArrowUpRight className="h-4 w-4" />
+              </span>
+            </StarButton>
           </Magnetic>
         </motion.div>
       </div>

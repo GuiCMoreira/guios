@@ -8,9 +8,21 @@ import { useTheme } from "@/lib/theme";
 import { GitHubIcon, LinkedInIcon } from "@/components/ui/icons";
 import { AVATAR_URL, EMAIL, GITHUB_URL, INSTAGRAM_URL, LINKEDIN_URL } from "@/data/projects";
 import { mainStack } from "@/data/career";
-import { CursorFX } from "./fx/CursorFX";
 import { LandingContextMenu } from "./fx/LandingContextMenu";
-import { Magnetic, ScrollProgress, TiltPhoto, VelocityMarquee } from "./fx/bits";
+import { Magnetic, ScrollProgress, TiltPhoto } from "./fx/bits";
+import {
+  AvailabilityFlap,
+  ContactThreads,
+  CursorLayer,
+  Gradient,
+  HeroDots,
+  HeroName,
+  PromptCommand,
+  RoleRotator,
+  Shiny,
+  StackLoop,
+  StarButton,
+} from "./fx/rb";
 import { ZoomIn } from "./fx/scroll";
 import {
   AboutSection,
@@ -105,41 +117,27 @@ function Hero() {
 
   return (
     <section className="relative flex min-h-[max(100dvh,640px)] flex-col justify-center overflow-hidden pt-20 pb-16">
-      {/* grade de pontos de fundo, apagando para as bordas */}
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-[0.35] [background-image:radial-gradient(var(--line-strong)_1px,transparent_1px)] [background-size:28px_28px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,black,transparent)]"
-      />
+      <HeroDots />
       <motion.div
         style={reduced ? undefined : { scale: exitScale, opacity: exitOpacity, filter: exitBlur }}
         className="relative origin-top"
       >
       <Container className="relative">
         <motion.p {...enter(0)} className="font-mono text-sm text-text-lo">
-          <span className="text-fx-ink">gui@os</span>:~$ whoami
+          <span className="text-fx-ink">gui@os</span>:~$ <PromptCommand text="whoami" />
           <span className="blink ml-1 inline-block h-[1em] w-[0.55em] translate-y-[2px] bg-fx" />
         </motion.p>
 
         <div className="mt-6 grid items-center gap-10 lg:grid-cols-[1fr_auto] lg:gap-20">
           <div>
-            <motion.h1 {...enter(0.08)} className="font-display font-bold tracking-[-0.04em]">
-              <span className="block text-[clamp(3rem,10vw,9.5rem)] leading-[0.95]">Guilherme</span>
-              <span className="text-outline block text-[clamp(3rem,10vw,9.5rem)] leading-[0.95]">
-                Carvalho
-              </span>
-            </motion.h1>
+            <motion.div {...enter(0.08)}>
+              <HeroName first="Guilherme" last="Carvalho" />
+            </motion.div>
 
             <motion.div {...enter(0.18)} className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
-              <p className="font-mono text-sm text-text-lo md:text-base">
-                {"//"} {t("landing.hero.role")}
-              </p>
-              <p className="flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] text-text-lo uppercase">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60 motion-reduce:animate-none" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-                </span>
-                {t("landing.open")}
-              </p>
+              <RoleRotator prefix={t("landing.hero.rolePrefix")} roles={t("landing.hero.roles").split("|")} />
+              <AvailabilityFlap words={t("landing.hero.flap").split("|")} />
+              <span className="sr-only">{t("landing.open")}</span>
             </motion.div>
 
             <motion.p {...enter(0.26)} className="mt-5 max-w-xl leading-relaxed text-text-lo md:text-lg">
@@ -148,14 +146,12 @@ function Hero() {
 
             <motion.div {...enter(0.34)} className="mt-9 flex flex-wrap items-center gap-4">
               <Magnetic strength={0.3}>
-                <a
-                  href="#projetos"
-                  data-cursor="hover"
-                  className="inline-flex items-center gap-2 rounded-full bg-text-hi px-7 py-3.5 text-sm font-semibold text-(--landing-bg)"
-                >
-                  {t("welcome.cta")}
-                  <ArrowDown className="h-4 w-4" />
-                </a>
+                <StarButton as="a" href="#projetos" data-cursor="hover">
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold">
+                    {t("welcome.cta")}
+                    <ArrowDown className="h-4 w-4" />
+                  </span>
+                </StarButton>
               </Magnetic>
               {[
                 { label: "GitHub", href: GITHUB_URL, icon: <GitHubIcon className="h-4 w-4" /> },
@@ -205,7 +201,7 @@ function Hero() {
             {t("landing.scroll")}
           </span>
           <span className="hidden items-center gap-2 md:flex">
-            {t("landing.hint.rightClick")}
+            <Shiny text={t("landing.hint.rightClick")} />
             <span className="rounded border border-line px-1.5 py-0.5">btn 2</span>
           </span>
         </motion.div>
@@ -217,18 +213,8 @@ function Hero() {
 
 function StackMarquee() {
   return (
-    <div aria-hidden className="border-y border-line bg-fill-1 py-5 select-none md:py-7">
-      <VelocityMarquee baseSpeed={0.6}>
-        {mainStack.map((s) => (
-          <span
-            key={s}
-            className="flex items-center font-display text-3xl font-bold tracking-tight whitespace-nowrap text-text-hi/80 md:text-5xl"
-          >
-            <span className="px-5">{s}</span>
-            <span className="text-fx">✦</span>
-          </span>
-        ))}
-      </VelocityMarquee>
+    <div className="border-y border-line bg-fill-1 py-6 select-none md:py-10">
+      <StackLoop items={mainStack} />
     </div>
   );
 }
@@ -236,28 +222,27 @@ function StackMarquee() {
 function ContactSection() {
   const { t } = useI18n();
   return (
-    <section id="contato" className="scroll-mt-24 border-t border-line bg-fill-1 py-24 md:py-40">
-      <Container>
+    <section id="contato" className="relative scroll-mt-24 overflow-hidden border-t border-line bg-fill-1 py-24 md:py-40">
+      <ContactThreads />
+      <Container className="relative">
         <ZoomIn>
           <p className="font-mono text-sm text-text-lo">
-            <span className="text-fx-ink">gui@os</span>:~$ ./contato --agora
+            <span className="text-fx-ink">gui@os</span>:~$ <PromptCommand text="./contato --agora" />
           </p>
           <h2 className="mt-5 font-display text-[clamp(2.4rem,6.5vw,6rem)] leading-[1.02] font-bold tracking-[-0.03em] text-balance">
             {t("landing.contact.title.before")}
-            <span className="mark">{t("landing.contact.title.mark")}</span>
+            <Gradient>{t("landing.contact.title.mark")}</Gradient>
           </h2>
           <p className="mt-6 max-w-xl leading-relaxed text-text-lo md:text-lg">{t("landing.contact.body")}</p>
         </ZoomIn>
         <Reveal delay={0.1} className="mt-12 flex flex-wrap items-center gap-4">
           <Magnetic strength={0.25}>
-            <a
-              href={`mailto:${EMAIL}`}
-              data-cursor="hover"
-              className="inline-flex items-center gap-2 rounded-full bg-text-hi px-7 py-4 font-mono text-sm font-semibold text-(--landing-bg)"
-            >
-              {EMAIL}
-              <ArrowUpRight className="h-4 w-4" />
-            </a>
+            <StarButton as="a" href={`mailto:${EMAIL}`} data-cursor="hover">
+              <span className="inline-flex items-center gap-2 font-mono text-sm font-semibold">
+                {EMAIL}
+                <ArrowUpRight className="h-4 w-4" />
+              </span>
+            </StarButton>
           </Magnetic>
           {[
             { label: "GitHub", href: GITHUB_URL, icon: <GitHubIcon className="h-5 w-5" /> },
@@ -314,9 +299,9 @@ function Footer() {
 
 export function Landing() {
   return (
+    <CursorLayer>
     <main id="top" className="min-h-dvh bg-(--landing-bg) text-text-hi">
       <ScrollProgress />
-      <CursorFX />
       <LandingContextMenu />
       <Header />
       <Hero />
@@ -329,5 +314,6 @@ export function Landing() {
       <ContactSection />
       <Footer />
     </main>
+    </CursorLayer>
   );
 }

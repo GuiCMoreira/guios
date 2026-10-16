@@ -1,12 +1,11 @@
 import Link from "next/link";
+import { FuzzyCode } from "@/components/landing/fx/FuzzyCode";
 
-// 404 temático: kernel panic do GuiOS. Página estática, funciona sem JS.
+// 404 temático: kernel panic do GuiOS. Funciona sem JS (o "404" com interferência é só um bônus).
 export default function NotFound() {
   return (
     <main className="flex min-h-dvh flex-col items-center justify-center bg-[#07080c] p-8 text-center font-mono">
-      <p className="text-6xl" aria-hidden>
-        💥
-      </p>
+      <FuzzyCode />
       <h1 className="mt-6 text-xl font-bold text-white">KERNEL PANIC — 404</h1>
       <div className="mt-4 max-w-md space-y-1 text-[13px] leading-relaxed text-neutral-400">
         <p>panic: page_not_found at 0x00000194</p>
