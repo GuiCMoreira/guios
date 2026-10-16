@@ -240,13 +240,13 @@ function ProjectCard({ p, onOpen }: { p: Project; onOpen: () => void }) {
               src={p.image}
               alt=""
               loading="lazy"
-              className="h-full w-full object-contain"
+              className="absolute inset-0 h-full w-full object-contain"
             />
           </GlareImage>
         </div>
       )}
       <div className="flex flex-1 flex-col p-6">
-        <div className="flex items-center justify-between gap-3 font-mono text-[11px] tracking-[0.15em] text-text-lo uppercase">
+        <div className="flex h-5 items-center justify-between gap-3 font-mono text-[11px] tracking-[0.15em] text-text-lo uppercase">
           <span className="flex items-center gap-2">
             {p.year} · {p.category === "web" ? "Web" : "Mobile"}
             {p.status === "wip" && <WipBadge />}
@@ -294,7 +294,7 @@ function ProjectSlide({
         {p.image && (
           <GlareImage className="absolute inset-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={p.image} alt="" loading="lazy" className="h-full w-full object-contain" />
+            <img src={p.image} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-contain" />
           </GlareImage>
         )}
         <span className="absolute top-4 left-4 rounded-full bg-black/55 px-3 py-1 font-mono text-[11px] text-white backdrop-blur">
@@ -303,13 +303,13 @@ function ProjectSlide({
       </div>
       <div className="flex items-end justify-between gap-6 p-6 md:p-7">
         <div className="min-w-0">
-          <div className="flex items-center gap-2 font-mono text-[11px] tracking-[0.15em] text-text-lo uppercase">
+          <div className="flex h-5 items-center gap-2 font-mono text-[11px] tracking-[0.15em] text-text-lo uppercase">
             {p.year} · {p.category === "web" ? "Web" : "Mobile"}
             {p.status === "wip" && <WipBadge />}
           </div>
           <h3 className="mt-2 font-display text-3xl font-bold tracking-tight md:text-4xl">{p.name}</h3>
           <span className="sr-only">— {t("landing.projects.details")}</span>
-          <p className="mt-2 max-w-xl text-sm leading-relaxed text-text-lo md:text-base">{p.tagline[lang]}</p>
+          <p className="mt-2 line-clamp-2 min-h-[2lh] max-w-xl text-sm leading-relaxed text-text-lo md:text-base">{p.tagline[lang]}</p>
         </div>
         <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-line transition-all duration-300 group-hover:border-fx group-hover:bg-fx group-hover:text-black">
           <ArrowUpRight className="h-5 w-5" />
