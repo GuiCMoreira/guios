@@ -196,3 +196,14 @@
 - O GuiOS abre com o **gradiente** como papel de parede (antes, a água-viva). Vale para quem nunca
   escolheu outro nos Ajustes e para a prévia no MacBook da landing; quem já escolheu mantém a
   escolha. O padrão fica em `DEFAULT_WALLPAPER`, em `src/lib/wallpaper.tsx`.
+
+## [5.3.0] - 2026-10-16
+
+### Troca de tema com fade
+
+- Trocar entre claro e escuro não dá mais o clarão de uma vez: a página faz um fade de 3 segundos
+  do tema antigo para o novo (View Transitions API), incluindo os efeitos em canvas e WebGL. Vale
+  para a landing e para o GuiOS.
+- Rolar, tocar ou apertar uma tecla durante o fade encerra o fade na hora (a imagem parada com a
+  página se mexendo por baixo pareceria travada).
+- Com "reduzir movimento", ou em navegador sem suporte, a troca continua instantânea.
