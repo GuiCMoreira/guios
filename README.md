@@ -304,6 +304,12 @@ pronto (`relay`), e quem o envia ao FormSubmit é o navegador do visitante. O en
 feito para isso e aceita CORS. O FormSubmit também ativa cada domínio uma vez: envios de
 `localhost` ou de uma prévia da Vercel pedem ativação própria e não chegam até ela ser feita.
 
+Os dois serviços já falharam de jeitos diferentes (bloqueio da Vercel em 16/10, FormSubmit fora do
+ar em 22/10, com envios pendurados por minutos). Por isso o envio tem prazo: 15 segundos no
+navegador para tudo e 10 segundos no servidor para o Resend. Passou disso, o visitante vê
+"Não consegui entregar a mensagem agora", com o link do LinkedIn, em vez de um botão girando.
+Em produção, a entrega é pelo Resend.
+
 </details>
 
 <details>
