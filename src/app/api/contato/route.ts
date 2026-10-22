@@ -1,5 +1,9 @@
 import { EMAIL } from "@/data/projects";
-import { sanitizeContact, validateContact, type ContactPayload } from "@/lib/contact";
+import {
+  sanitizeContact,
+  validateContact,
+  type ContactPayload,
+} from "@/lib/contact";
 
 /*
  * Recebe o formulário de contato, valida e entrega no e-mail do Guilherme.
@@ -18,7 +22,11 @@ const TOPIC_LABEL: Record<ContactPayload["topic"], string> = {
   parceria: "Parceria",
   oi: "Só um oi",
 };
-const PERIOD_LABEL = { manha: "Manhã", tarde: "Tarde", noite: "Noite" } as const;
+const PERIOD_LABEL = {
+  manha: "Manhã",
+  tarde: "Tarde",
+  noite: "Noite",
+} as const;
 
 // Limite simples por IP (best-effort: cada instância serverless tem a sua memória).
 const hits = new Map<string, number[]>();
@@ -33,7 +41,8 @@ function rateLimited(ip: string) {
   return recent.length > MAX_PER_WINDOW;
 }
 
-const subject = (p: ContactPayload) => `Portfólio | ${TOPIC_LABEL[p.topic]} | ${p.name}`;
+const subject = (p: ContactPayload) =>
+  `Portfólio | ${TOPIC_LABEL[p.topic]} | ${p.name}`;
 
 function summary(p: ContactPayload) {
   const lines = [
@@ -73,8 +82,13 @@ function formSubmitRelay(p: ContactPayload) {
 
 async function sendWithResend(p: ContactPayload, key: string) {
   const r = await fetch("https://api.resend.com/emails", {
+    // abaixo dos 15s do navegador, para ele receber a resposta de erro certa
+    signal: AbortSignal.timeout(10_000),
     method: "POST",
-    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${key}`,
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
       from: process.env.CONTACT_FROM ?? "Portfólio <onboarding@resend.dev>",
       to: [TO],
@@ -87,19 +101,28 @@ async function sendWithResend(p: ContactPayload, key: string) {
 }
 
 export async function POST(request: Request) {
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
+  const ip =
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
   if (rateLimited(ip)) {
-    return Response.json({ ok: false, error: "form.err.rate" }, { status: 429 });
+    return Response.json(
+      { ok: false, error: "form.err.rate" },
+      { status: 429 },
+    );
   }
 
   const payload = sanitizeContact(await request.json().catch(() => null));
-  if (!payload) return Response.json({ ok: false, error: "form.err.generic" }, { status: 400 });
+  if (!payload)
+    return Response.json(
+      { ok: false, error: "form.err.generic" },
+      { status: 400 },
+    );
 
   // robô preencheu o campo invisível: finge sucesso e descarta
   if (payload.website) return Response.json({ ok: true });
 
   const errors = validateContact(payload);
-  if (Object.keys(errors).length) return Response.json({ ok: false, errors }, { status: 422 });
+  if (Object.keys(errors).length)
+    return Response.json({ ok: false, errors }, { status: 422 });
 
   const key = process.env.RESEND_API_KEY;
   if (!key) return Response.json({ ok: true, relay: formSubmitRelay(payload) });
@@ -107,5 +130,8 @@ export async function POST(request: Request) {
   try {
     if (await sendWithResend(payload, key)) return Response.json({ ok: true });
   } catch {}
-  return Response.json({ ok: false, error: "form.err.delivery" }, { status: 502 });
+  return Response.json(
+    { ok: false, error: "form.err.delivery" },
+    { status: 502 },
+  );
 }

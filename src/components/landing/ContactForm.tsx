@@ -102,15 +102,24 @@ function Field({
 const inputCls =
   "w-full rounded-xl border border-line bg-(--landing-bg) px-4 py-3 text-[15px] text-text-hi placeholder:text-text-lo/60 transition-colors focus:border-fx focus:outline-none";
 
+// Prazo do envio inteiro (nossa API + repasse ao FormSubmit). Sem ele, um serviço
+// de e-mail fora do ar deixa o botão girando por minutos (aconteceu em 22/10/2026).
+const SEND_TIMEOUT_MS = 15_000;
 
-async function relayToFormSubmit(relay: { url: string; body: Record<string, string> }) {
+async function relayToFormSubmit(
+  relay: { url: string; body: Record<string, string> },
+  signal: AbortSignal,
+) {
   const r = await fetch(relay.url, {
+    signal,
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
     body: JSON.stringify(relay.body),
   });
   if (!r.ok) return false;
-  const data = (await r.json().catch(() => null)) as { success?: string | boolean } | null;
+  const data = (await r.json().catch(() => null)) as {
+    success?: string | boolean;
+  } | null;
   return data?.success === true || data?.success === "true";
 }
 export function ContactForm() {
@@ -174,8 +183,12 @@ export function ContactForm() {
     }
     setStatus("sending");
     setServerError(null);
+    const signal = AbortSignal.timeout(SEND_TIMEOUT_MS);
+    // depois que a API validou, qualquer falha é de entrega, não "algo deu errado"
+    let validated = false;
     try {
       const r = await fetch("/api/contato", {
+        signal,
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(p),
@@ -188,7 +201,8 @@ export function ContactForm() {
       };
       if (r.ok && data.ok && data.relay) {
         // o servidor validou; o envio ao FormSubmit sai daqui (ver /api/contato)
-        if (await relayToFormSubmit(data.relay)) {
+        validated = true;
+        if (await relayToFormSubmit(data.relay, signal)) {
           setStatus("sent");
           return;
         }
@@ -203,8 +217,12 @@ export function ContactForm() {
       if (data.errors) setErrors(data.errors);
       setServerError(data.error ?? "form.err.generic");
       setStatus("error");
-    } catch {
-      setServerError("form.err.generic");
+    } catch (err) {
+      const timedOut =
+        err instanceof DOMException && err.name === "TimeoutError";
+      setServerError(
+        timedOut || validated ? "form.err.delivery" : "form.err.generic",
+      );
       setStatus("error");
     }
   };

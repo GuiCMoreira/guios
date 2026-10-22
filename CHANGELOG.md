@@ -196,3 +196,14 @@
 - O GuiOS abre com o **gradiente** como papel de parede (antes, a água-viva). Vale para quem nunca
   escolheu outro nos Ajustes e para a prévia no MacBook da landing; quem já escolheu mantém a
   escolha. O padrão fica em `DEFAULT_WALLPAPER`, em `src/lib/wallpaper.tsx`.
+
+## [5.2.2] - 2026-10-22
+
+### Formulário com prazo de envio
+
+- O FormSubmit saiu do ar (Cloudflare `522`) e os envios ficavam pendurados por mais de 90 segundos
+  antes do erro. A entrega em produção passou a ser pelo Resend (`RESEND_API_KEY` na Vercel).
+- O envio agora tem prazo: 15 segundos no navegador para o envio inteiro e 10 segundos no servidor
+  para o Resend. Passou disso, aparece "Não consegui entregar a mensagem agora" com o link do
+  LinkedIn. Falhas depois que a mensagem foi validada também mostram esse aviso, em vez do genérico
+  "Algo deu errado".
