@@ -207,3 +207,14 @@
   para o Resend. Passou disso, aparece "Não consegui entregar a mensagem agora" com o link do
   LinkedIn. Falhas depois que a mensagem foi validada também mostram esse aviso, em vez do genérico
   "Algo deu errado".
+
+## [5.3.0] - 2026-10-27
+
+### Novo projeto: Projetor Android
+
+- **Projetor Android** entrou na vitrine (landing, app Projetos, Safari e terminal): o tutorial
+  para tirar o adware de um projetor Android barato e trocar a tela inicial do fabricante por um
+  launcher próprio em Kotlin, no estilo macOS. Captura do repositório, explicação em linguagem
+  simples e parte técnica, em português e inglês.
+- A categoria **Mobile** voltou à barra lateral do app Projetos (tinha saído quando a vitrine
+  ficou só com projetos web).
