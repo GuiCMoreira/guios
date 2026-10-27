@@ -286,10 +286,64 @@ const allProjects: Project[] = [
       },
     ],
   },
+  {
+    id: "projetor-android",
+    name: "Projetor Android",
+    year: 2026,
+    category: "mobile",
+    featured: true,
+    stack: ["Kotlin", "Android", "ADB", "Shell"],
+    github: "https://github.com/GuiCMoreira/projetor-android-otimizado",
+    image: "/projects/projetor-android.webp",
+    tagline: {
+      pt: "Adware removido e uma tela inicial própria, no estilo macOS, num projetor barato",
+      en: "Adware removed and a custom macOS-style home screen on a cheap projector",
+    },
+    plain: {
+      what: {
+        pt: "Um guia completo, com código, para deixar um projetor Android barato rápido e sem propaganda. Tirei o adware escondido e troquei a tela inicial do fabricante por uma que eu mesmo escrevi.",
+        en: "A complete guide, with code, to make a cheap Android projector fast and ad-free. I removed the hidden adware and replaced the manufacturer's home screen with one I wrote myself.",
+      },
+      problem: {
+        pt: "Projetores baratos vêm lentos, com a tela inicial cheia de anúncios e um app de propaganda disfarçado de peça do Android. E o menu do fabricante esconde as opções que permitiriam mexer nisso.",
+        en: "Cheap projectors come slow, with a home screen full of ads and an adware app disguised as part of Android. And the manufacturer's menu hides the options that would let you change any of it.",
+      },
+      myPart: {
+        pt: "Descobri como liberar o acesso escondido, removi o adware, medi tudo antes e depois e criei do zero a nova tela inicial, no estilo do Mac: ela gasta até 44% menos memória e abre em quase metade do tempo.",
+        en: "I found a way to unlock the hidden access, removed the adware, measured everything before and after, and built the new home screen from scratch in a Mac style: it uses up to 44% less memory and opens in almost half the time.",
+      },
+    },
+    description: {
+      pt: "Tutorial passo a passo feito num Bettdow 1073 com Android 12: ADB ativado sem o menu de desenvolvedor, diagnóstico antes de mexer, remoção do adware, desativação reversível do que sobrava e um launcher próprio em Kotlin, sem nenhuma biblioteca (nem AndroidX). O launcher tem barra de menu e Dock de vidro, Launchpad, Central de Controle, clima, calendário, \"Continuar assistindo\" e descanso de tela no estilo do Mac, sem nada rodando em segundo plano. A lógica pura é coberta por 97 testes.",
+      en: "Step-by-step tutorial done on a Bettdow 1073 running Android 12: ADB enabled without the developer menu, diagnosis before touching anything, adware removal, reversible disabling of the leftovers and a custom launcher in Kotlin with no libraries at all (not even AndroidX). The launcher has a menu bar and a glass Dock, Launchpad, Control Center, weather, calendar, \"Continue watching\" and a Mac-style screensaver, with nothing running in the background. The pure logic is covered by 97 tests.",
+    },
+    highlights: [
+      {
+        pt: "Memória da tela inicial de 101 MB para 57 a 71 MB, e abertura de 1,7 s para menos de 1,1 s",
+        en: "Home screen memory down from 101 MB to 57-71 MB, and launch time from 1.7 s to under 1.1 s",
+      },
+      {
+        pt: "O firmware ignorava a tela inicial padrão do Android: a chave própria do fabricante foi descoberta e contornada pelo ADB",
+        en: "The firmware ignored Android's default home screen: the manufacturer's own setting was found and worked around over ADB",
+      },
+      {
+        pt: "Nenhuma dependência e nada em segundo plano; cada alteração tem o comando de volta",
+        en: "No dependencies and nothing in the background; every change comes with its undo command",
+      },
+    ],
+  },
 ];
 
 // Ordem da vitrine (landing, GuiOS e Safari usam a mesma).
-const ORDER = ["eliteh-protect", "valorant-strathub", "guios", "restaurant-digital", "navalhago", "financemy"];
+const ORDER = [
+  "eliteh-protect",
+  "valorant-strathub",
+  "guios",
+  "restaurant-digital",
+  "navalhago",
+  "financemy",
+  "projetor-android",
+];
 
 export const projects: Project[] = [...allProjects].sort((a, b) => {
   const ia = ORDER.indexOf(a.id);

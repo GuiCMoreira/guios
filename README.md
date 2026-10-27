@@ -68,7 +68,7 @@ A versão atual separa os dois públicos sem abrir mão de nenhum:
 |                         |                                                                                                                                                       |
 | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Topo**                | Nome desenhado em TechText sobre uma grade de pontos que reage ao mouse, cargo que alterna (fullstack, web, PHP…), foto com tilt 3D e atalhos sociais |
-| **Projetos**            | A tela trava e os seis projetos passam na horizontal, com contador e barra de progresso. Cada card abre um modal em duas colunas que nunca rola        |
+| **Projetos**            | A tela trava e os sete projetos passam na horizontal, com contador e barra de progresso. Cada card abre um modal em duas colunas que nunca rola        |
 | **GuiOS no MacBook**    | Com o scroll, a tela do notebook se levanta, sai dele e cresce até quem lê, com o GuiOS real rodando lá dentro (MacBook Scroll, do Aceternity UI)     |
 | **Ferramentas**         | Faixas de tecnologias que deslizam e aceleram com a velocidade do scroll, agrupadas em front-end, back-end e ferramentas                              |
 | **Experiência**         | Cartões que empilham: Altec (trabalho), FATEC (formação) e projetos pessoais e estudos                                                                |
@@ -277,7 +277,7 @@ do arrasto, e mede o alvo no DOM, por isso a janela não treme ao soltar.
 Um modal com rolagem esconde a metade de baixo, e a metade de baixo é onde estão os botões de demo
 e GitHub. A partir de 1024px o modal é duas colunas (captura à esquerda, informações à direita) com
 proporções que mudam por breakpoint, e um modo compacto para telas baixas
-(`[@media(max-height:820px)]`). Verificado sem rolagem para os seis projetos em 1920×1080, 1536×864,
+(`[@media(max-height:820px)]`). Verificado sem rolagem para os sete projetos em 1920×1080, 1536×864,
 1440×900, 1366×768, 1280×720 e 1024×768. No celular continua empilhado.
 
 Os cards da vitrine têm a mesma altura por construção: imagem em `aspect-video`, linha do ano com
@@ -373,7 +373,7 @@ Os roteiros cobrem o que costuma quebrar sem ninguém ver:
 - HTML do servidor com todo o texto da página
 - nenhuma rolagem lateral em 390px
 - cards da vitrine com a mesma altura em quatro resoluções
-- modal sem rolagem nos seis projetos em seis resoluções
+- modal sem rolagem nos sete projetos em seis resoluções
 - janelas do GuiOS sem cobrir o cartão nem o clima em quatro resoluções
 - formulário: erro por campo, campo-armadilha, limite de envios e entrega real
 
